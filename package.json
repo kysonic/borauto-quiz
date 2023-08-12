@@ -1,0 +1,18 @@
+{
+  "name": "taco-burrito-game-vr",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^4.4.5",
+    "vite-plugin-mkcert": "^1.16.0"
+  },
+  "dependencies": {
+    "aframe-event-set-component": "^5.0.0"
+  }
+}

@@ -280,10 +280,10 @@
   resolved "https://registry.yarnpkg.com/@webgpu/types/-/types-0.1.54.tgz#0e692514314d910da56f43e17f5fff9bbd153607"
   integrity sha512-81oaalC8LFrXjhsczomEQ0u3jG+TqE6V9QHLA8GNZq/Rnot0KDugu3LhSYSlie8tSdooAN1Hov05asrUUp9qgg==
 
-aframe-orbit-controls-component@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/aframe-orbit-controls-component/-/aframe-orbit-controls-component-1.0.0.tgz#23d64322bf172a659ab0cf2f0871fcc4e8810b0f"
-  integrity sha512-OCt4O44Kk6lkISNNFJXFX5oc4zlezobA/2p54z46srWqRyBUVF4M/B+hXcRoObbdsoJ7z/KA8HXg652bVRxEbg==
+aframe-orbit-controls@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/aframe-orbit-controls/-/aframe-orbit-controls-1.3.2.tgz#e0ddb8ff0b6cd5703ba4af279db3be793b72b33d"
+  integrity sha512-j4e14ko3ELmfMF8FWEXtVSqSObYtoJpyhyZ9l2HY23iLY3Z7qmT/kRJ24wDQT/CEmToi3a9j7MqUeLDcbLALDA==
 
 aframe@^1.7.0:
   version "1.7.0"
@@ -828,11 +828,6 @@ three-bmfont-text@dmarcos/three-bmfont-text#eed4878795be9b3e38cf6aec6b903f56acd1
     layout-bmfont-text "^1.2.0"
     nice-color-palettes "^3.0.0"
     quad-indices "^2.0.1"
-
-three@^0.128.0:
-  version "0.128.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.128.0.tgz#884dacca6a330e45600a09ec5439283f50b76aa6"
-  integrity sha512-i0ap/E+OaSfzw7bD1TtYnPo3VEplkl70WX5fZqZnfZsE3k3aSFudqrrC9ldFZfYFkn1zwDmBcdGfiIm/hnbyZA==
 
 "three@npm:super-three@0.173.4":
   version "0.173.4"

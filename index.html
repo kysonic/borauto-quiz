@@ -5,7 +5,15 @@
         <link rel="stylesheet" href="./src/css/main.css" />
     </head>
     <body>
-        <a-scene renderer="antialias: true;">
+        <div id="ui">
+            <div>Speed: <span id="speed">0</span> km/h</div>
+            <div>Gear: <span id="gear">1</span></div>
+            <div>RPM: <span id="rpm">800</span></div>
+            <div class="rpm-bar">
+                <div class="rpm-fill" style="width: 11%"></div>
+            </div>
+        </div>
+        <a-scene>
             <a-box
                 id="table"
                 width="3"
@@ -31,8 +39,12 @@
                 color="#FAFAFA"
             ></a-plane>
             <a-star position="0 1.1 -4" rotation="-90 0 0"></a-star>
-            <a-track position="0 1 -4" color="green"></a-track>
-            <a-camera position="0 1.8 0"></a-camera>
+            <a-track position="0 1.01 -4" color="green"></a-track>
+            <a-entity
+                camera
+                look-controls="enabled: false"
+                orbit-controls="target: 0 1 -4; minDistance: 1; maxDistance: 2.5; initialPosition: 0 2 -3; rotateSpeed: 0.5"
+            ></a-entity>
             <a-light
                 type="directional"
                 color="#ffffff"

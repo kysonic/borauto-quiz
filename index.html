@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="./src/css/main.css" />
     </head>
     <body>
-        <a-scene shadow="type: pcfsoft">
+        <a-scene renderer="antialias: true;">
             <a-box
                 id="table"
                 width="3"
@@ -30,10 +30,8 @@
                 height="10"
                 color="#FAFAFA"
             ></a-plane>
-            <a-track
-                position="0 1 -4"
-                color="green"
-            ></a-track>
+            <a-star position="0 1.1 -4" rotation="-90 0 0"></a-star>
+            <a-track position="0 1 -4" color="green"></a-track>
             <a-camera position="0 1.8 0"></a-camera>
             <a-light
                 type="directional"

@@ -2,7 +2,7 @@ let t = 0;
 
 AFRAME.registerComponent('car', {
     schema: {
-        speed: { default: 5 },
+        speed: { default: 20 },
     },
     init() {
         console.log('Hello Car', this.el);

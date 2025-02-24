@@ -5,8 +5,44 @@
         <link rel="stylesheet" href="./src/css/main.css" />
     </head>
     <body>
-        <a-scene hud>
-            <a-box position="-2 1.8 -2" color="red"></a-box>
+        <a-scene shadow="type: pcfsoft">
+            <a-box
+                id="table"
+                width="3"
+                depth="2"
+                height="1"
+                position="0 0.5 -4"
+                color="#ccc"
+            ></a-box>
+            <a-box
+                id="car"
+                car
+                width="0.2"
+                height="0.1"
+                depth="0.1"
+                position="0 1 -4"
+                color="red"
+            ></a-box>
+            <a-plane
+                position="0 0 -4"
+                rotation="-90 0 0"
+                width="10"
+                height="10"
+                color="#FAFAFA"
+            ></a-plane>
+            <a-track
+                position="0 1 -4"
+                color="green"
+            ></a-track>
+            <a-camera position="0 1.8 0"></a-camera>
+            <a-light
+                type="directional"
+                color="#ffffff"
+                intensity="1"
+                position="0 5 -5"
+                castShadow="true"
+            >
+            </a-light>
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
     </body>

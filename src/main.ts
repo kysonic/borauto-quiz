@@ -1,3 +1,5 @@
 import 'aframe';
-
-console.log('Hello world');
+// Components
+import './components/car';
+// Primitives
+import './primitives/track';

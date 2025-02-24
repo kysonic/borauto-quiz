@@ -1,41 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kysonic/a-frame-router-templates@0.0.2/dist/assets/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.misc.min.js"></script>
-    <script src="https://unpkg.com/super-hands@^3.0.3/dist/super-hands.min.js"></script>
-    <script src="https://unpkg.com/aframe-state-component@7.1.0/dist/aframe-state-component.min.js"></script>
-    <script type="module" src="src/main.js"></script>
-    <title>South Park - Taco Burrito Game VR</title>
-    <script>
-      window.html = (strings, ...values) =>
-        String.raw({ raw: strings }, ...values);
-    </script>
-  </head>
-  <body>
-    <a-scene game-manager physics="debug: false;" hud shadow="type: pcfsoft">
-      <a-assets>
-        <a-asset-item id="room" src="/assets/models/CartmansRoom.glb"></a-asset-item>
-        <a-asset-item id="window" src="/assets/models/Window.glb"></a-asset-item>
-        <img id="town" src="/assets/img/town.jpg"></img>
-        <img id="roomReflections" src="/assets/img/room-reflections.png"></img>
-      </a-assets>
-      <a-entity id="room" gltf-model="#room" position="0 -2 0"  shadow="cast: true; receive: false"></a-entity>
-      <a-box id="window1" material="metalness: 1; roughness: 0; sphericalEnvMap: #roomReflections" rotation="0 90 0" position="-9.9 1 5.4" scale="1.7 1.3 0.01" opacity="0.5"></a-box>
-      <a-box id="window2" material="metalness: 1; roughness: 0; sphericalEnvMap: #roomReflections" rotation="0 90 0" position="-9.9 1 3.4" scale="1.7 1.3 0.01" opacity="0.5"></a-box>
-      <a-box id="window3" material="metalness: 1; roughness: 0; sphericalEnvMap: #roomReflections" rotation="0 90 0" position="-9.9 2.5 5.4" scale="1.7 1.3 0.01" opacity="0.5"></a-box>
-      <a-box id="window4" material="metalness: 1; roughness: 0; sphericalEnvMap: #roomReflections" rotation="0 90 0" position="-9.9 2.5 3.4" scale="1.7 1.3 0.01" opacity="0.5"></a-box>
-      <a-camera
-        id="camera"
-        position="0 1.2 0"
-        restrict-position
-      >
-      </a-camera>
-      <a-sky color="#ECECEC" src="#town" radius="3000"></a-sky>
-    </a-scene>
-  </body>
+<html>
+    <head>
+        <title>Borauto Quiz</title>
+        <link rel="stylesheet" href="./src/css/main.css" />
+    </head>
+    <body>
+        <a-scene hud>
+            <a-box position="-2 1.8 -2" color="red"></a-box>
+        </a-scene>
+        <script type="module" src="/src/main.ts"></script>
+    </body>
 </html>

@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+}
+#ui {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-family: Arial;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 100;
+}
+.rpm-bar {
+    width: 200px;
+    height: 20px;
+    border: 1px solid #555;
+    margin: 5px 0;
+    position: relative;
+    overflow: hidden;
+}
+.rpm-fill {
+    height: 100%;
+    background: linear-gradient(to right, #00ff00 70%, #ff0000);
+    transition: width 0.2s ease;
+}

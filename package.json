@@ -1,5 +1,5 @@
 {
-  "name": "taco-burrito-game-vr",
+  "name": "borauto-quiz",
   "private": false,
   "version": "0.0.1",
   "type": "module",
@@ -13,6 +13,7 @@
     "vite-plugin-mkcert": "^1.16.0"
   },
   "dependencies": {
-    "aframe-event-set-component": "^5.0.0"
+    "aframe": "^1.7.0",
+    "three": "^0.128.0"
   }
 }

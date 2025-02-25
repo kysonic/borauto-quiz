@@ -1,3 +1,7 @@
+export const car = {
+    top: 0.52,
+};
+
 export const gearSettings = {
     1: {
         maxSpeed: 10, // km/h
@@ -33,5 +37,14 @@ export const gearSettings = {
         optimalRPM: 5500,
         maxRPM: 6500,
         curve: [0.001, 0.2, 0.6, 0.85, 0.5, 0.3, 0.01],
+    },
+};
+
+export const controls = {
+    desktop: {
+        accelerate: 'Space',
+        break: 'ShiftLeft',
+        gearUp: 'ArrowUp',
+        gearDown: 'ArrowDown',
     },
 };

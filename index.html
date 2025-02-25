@@ -13,11 +13,11 @@
                 <div class="rpm-fill" style="width: 11%"></div>
             </div>
         </div>
-        <a-scene renderer="antialias: true; gammaOutput: true">
+        <a-scene renderer="antialias: true">
             <a-assets>
                 <a-asset-item
                     id="car"
-                    src="/assets/models/cars/911.glb"
+                    src="/assets/models/cars/simple.glb"
                 ></a-asset-item>
                 <a-asset-item
                     id="track"
@@ -26,15 +26,25 @@
             </a-assets>
             <a-box
                 id="table"
-                width="7"
-                depth="5"
+                width="4"
+                depth="3"
                 height="1"
-                position="0 0.5 0"
+                position="0 0 0"
                 color="#ccc"
             ></a-box>
-            <a-entity gltf-model="#car" car scale="0.1 0.1 0.1" position="0 1.1 0"></a-entity>
-            <a-track position="0 1.1 0" rotation="90 0 0"></a-track>
-            <a-entity gltf-model="#track" scale="0.06 0.06 0.06" position="0.04 1.00489 0"></a-entity>
+            <a-entity id="ui" position="0.02719 0.50995 -1.25583" rotation="-90 0 180">  
+                <a-plane width="1" height="0.3" color="#333" opacity="0.8"></a-plane>  
+                <a-text id="speed" align="center" color="#FFF" position="0 0 0" width="0.9" text="value: 0"></a-text>  
+                <a-text id="gear"  align="center" color="#FFF" position="-0.1 0 0" width="0.9" text="value: 0"></a-text>  
+                <a-text id="rpm"  align="center" color="#FFF" position="0.1 0 0" width="0.9" text="value: 0"></a-text>  
+            </a-entity>
+            <a-entity gltf-model="#car" car scale="0.1 0.1 0.1"></a-entity>
+            <!-- <a-track position="0 0.55 0" rotation="90 0 0"></a-track> -->
+            <a-entity
+                gltf-model="#track"
+                scale="0.03 0.03 0.03"
+                position="0.04 0.5 0"
+            ></a-entity>
             <a-plane
                 position="0 0 0"
                 rotation="-90 0 0"
@@ -42,11 +52,23 @@
                 height="10"
                 color="#FAFAFA"
             ></a-plane>
+        
+            </a-text>
+            <a-entity id="rig" camera-holder>
+                <a-entity
+                    camera
+                    look-controls="enabled: false"
+                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 3 -2; rotateSpeed: 0.5"
+                >
+            </a-entity>
             <a-entity
-                camera
-                look-controls="enabled: false"
-                orbit-controls="target: 0 2 0; minDistance: 4; maxDistance: 6; initialPosition: 0 6 3; rotateSpeed: 0.5"
-            ></a-entity>
+            id="right-controller"
+            laser-controls="hand: right"
+        ></a-entity>
+        <a-entity
+            id="left-controller"
+            laser-controls="hand: left"
+        ></a-entity>
             <a-entity
                 light="color: #d5d9af; distance: 5.38; intensity: 7.85; type: spot"
                 position="0 3.85523 0"

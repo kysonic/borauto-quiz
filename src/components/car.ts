@@ -1,5 +1,9 @@
-import { gearSettings } from '../config';
-import { shapePoints, totalPoints } from '../primitives/track-points';
+import { controls, gearSettings } from '../config';
+import {
+    shapePoints,
+    shapePoints3D,
+    totalPoints,
+} from '../primitives/track-points';
 
 AFRAME.registerComponent('car', {
     schema: {},
@@ -14,33 +18,66 @@ AFRAME.registerComponent('car', {
         this.lastTime = performance.now();
         this.progress = 0;
 
+        this.speedUi = this.el.sceneEl.querySelector('#speed');
+        this.gearUi = this.el.sceneEl.querySelector('#gear');
+        this.rpmUi = this.el.sceneEl.querySelector('#rpm');
+
         this.controls();
     },
 
     controls() {
         window.addEventListener('keydown', this.onKeyDown.bind(this));
         window.addEventListener('keyup', this.onKeyUp.bind(this));
+
+        this.rightController =
+            this.el.sceneEl.querySelector('#right-controller');
+
+        this.rightController.addEventListener('triggerdown', () => {
+            this.throttle = 1;
+        });
+        this.rightController.addEventListener('triggerup', () => {
+            this.throttle = 0;
+        });
+        this.rightController.addEventListener('gripdown', () => {
+            this.throttle = -1;
+        });
+        this.rightController.addEventListener('gripup', () => {
+            this.throttle = 0;
+        });
+
+        this.rightController.addEventListener('thumbstickmoved', (evt) => {
+            const { y } = evt.detail;
+
+            if (y > 0.5) {
+                this.shiftGear(false);
+            } else if (y < -0.5) {
+                this.shiftGear(true);
+            }
+        });
     },
 
     onKeyDown(e) {
         switch (e.code) {
-            case 'ArrowUp':
+            case controls.desktop.accelerate:
                 this.throttle = 1;
                 break;
-            case 'ArrowDown':
+            case controls.desktop.break:
                 this.throttle = -1;
                 break;
-            case 'Space':
+            case controls.desktop.gearUp:
                 this.shiftGear(true);
                 break;
-            case 'ShiftLeft':
+            case controls.desktop.gearDown:
                 this.shiftGear(false);
                 break;
         }
     },
 
     onKeyUp(e) {
-        if (e.code === 'ArrowUp' || e.code === 'ArrowDown') {
+        if (
+            e.code === controls.desktop.accelerate ||
+            e.code === controls.desktop.break
+        ) {
             this.throttle = 0;
         }
     },
@@ -122,20 +159,16 @@ AFRAME.registerComponent('car', {
         const nextIndex = (currentIndex + 1) % totalPoints;
 
         // Интерполяция позиции
-        const point = shapePoints[currentIndex];
-        const nextPoint = shapePoints[nextIndex];
+        const point = shapePoints3D[currentIndex];
+        const nextPoint = shapePoints3D[nextIndex];
         const alpha = t * totalPoints - currentIndex;
 
-        this.el.object3D.position.lerpVectors(
-            new THREE.Vector3(point.x, 1.1, point.y),
-            new THREE.Vector3(nextPoint.x, 1.1, nextPoint.y),
-            alpha,
-        );
+        this.el.object3D.position.lerpVectors(point, nextPoint, alpha);
 
         // Плавный поворот
         // Расчет направления движения
         const deltaX = nextPoint.x - point.x;
-        const deltaZ = nextPoint.y - point.y;
+        const deltaZ = nextPoint.z - point.z;
 
         this.el.object3D.rotation.y = Math.atan2(deltaX, deltaZ);
     },
@@ -151,5 +184,9 @@ AFRAME.registerComponent('car', {
         document.querySelector('.rpm-fill').style.width = `${
             (this.rpm / 6500) * 100
         }%`;
+
+        this.speedUi.setAttribute('text', { value: Math.floor(this.speed) });
+        this.gearUi.setAttribute('text', { value: this.currentGear });
+        this.rpmUi.setAttribute('text', { value: Math.floor(this.rpm) });
     },
 });

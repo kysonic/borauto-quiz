@@ -1,6 +1,8 @@
-const width = 3 * 2; // Полная ширина по X
-const height = 1.5 * 2; // Полная высота по Z
-const radius = 1.2; // Радиус скругления
+import { car } from '../config';
+
+const width = 1.45 * 2; // Полная ширина по X
+const height = 0.75 * 2; // Полная высота по Z
+const radius = 0.6; // Радиус скругления
 
 // Создаем форму с закруглёнными углами
 const shape = new THREE.Shape();
@@ -35,3 +37,6 @@ shape.quadraticCurveTo(
 
 export const shapePoints = shape.getSpacedPoints(500);
 export const totalPoints = shapePoints.length;
+export const shapePoints3D = shapePoints.map(
+    (point) => new THREE.Vector3(point.x, car.top, point.y),
+);

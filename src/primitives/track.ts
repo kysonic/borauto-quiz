@@ -1,15 +1,11 @@
+import { shapePoints } from './track-points';
+
 AFRAME.registerComponent('track', {
     schema: {
         color: { type: 'color', default: '#FFF' },
     },
     init() {
-        const points = [];
-        for (let i = 0; i < Math.PI * 2; i += 0.1) {
-            points.push(
-                new THREE.Vector3(Math.sin(i) * 1, 0, Math.sin(i * 2) * 0.5),
-            );
-        }
-        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const geometry = new THREE.BufferGeometry().setFromPoints(shapePoints);
         const material = new THREE.LineBasicMaterial({
             color: this.data.color,
         });

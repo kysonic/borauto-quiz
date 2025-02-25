@@ -1,4 +1,5 @@
 import { gearSettings } from '../config';
+import { shapePoints, totalPoints } from '../primitives/track-points';
 
 AFRAME.registerComponent('car', {
     schema: {},
@@ -10,6 +11,8 @@ AFRAME.registerComponent('car', {
         this.currentGear = 1;
         this.rpm = 800;
         this.isShifting = false;
+        this.lastTime = performance.now();
+        this.progress = 0;
 
         this.controls();
     },
@@ -25,7 +28,7 @@ AFRAME.registerComponent('car', {
                 this.throttle = 1;
                 break;
             case 'ArrowDown':
-                this.throttle = -0.7;
+                this.throttle = -1;
                 break;
             case 'Space':
                 this.shiftGear(true);
@@ -43,74 +46,98 @@ AFRAME.registerComponent('car', {
     },
 
     shiftGear(up) {
-        if (this.isShifting) {
-            return false;
-        }
-
+        if (this.isShifting) return;
         const newGear = this.currentGear + (up ? 1 : -1);
 
-        if (newGear < 1 || newGear > 5) {
-            return false;
-        }
+        if (newGear < 1 || newGear > 5) return;
 
         this.isShifting = true;
         this.currentGear = newGear;
 
-        // Эффект переключения передачи
         setTimeout(() => {
             this.isShifting = false;
-            this.rpm = Math.max(800, this.rpm - 500);
+            this.rpm *= 0.7;
         }, 300);
     },
 
     tick() {
-        this.updatePhysics();
+        const now = performance.now();
+        const deltaTime = (now - this.lastTime) / 1000;
+        this.lastTime = now;
+        this.updatePhysics(deltaTime);
         this.updatePosition();
         this.updateUi();
     },
 
-    updatePhysics() {
+    getAccelerationFactor(gear, speedRatio) {
+        const curve = gear.curve;
+        const segments = curve.length - 2;
+        const position = speedRatio * segments;
+        const index = Math.min(Math.floor(position), segments);
+        const fraction = position - index;
+
+        const factor =
+            curve[index] * (1 - fraction) + curve[index + 1] * fraction;
+
+        return factor;
+    },
+
+    updatePhysics(deltaTime) {
         const gear = gearSettings[this.currentGear];
         const speedRatio = this.speed / gear.maxSpeed;
 
-        if (this.throttle === 0) {
-            this.speed *= 0.993;
-            this.rpm *= 0.97;
+        // Расчет ускорения
+        const accelerationFactor = this.getAccelerationFactor(gear, speedRatio);
+        const acceleration =
+            gear.peakAcceleration * accelerationFactor * this.throttle;
+
+        // Естественное замедление
+        const naturalDeceleration = 2.5 * deltaTime; // 2.5 м/с²
+
+        // Торможение
+        if (this.throttle < 0) {
+            const brakeForce = 8.0 * deltaTime; // 8 м/с²
+            this.speed = Math.max(0, this.speed - brakeForce * 3.6);
+        } else if (this.throttle === 0) {
+            // Сопротивление качению и аэродинамика
+            this.speed = Math.max(0, this.speed - naturalDeceleration * 3.6);
         } else {
-            // Расчет ускорения
-            let acceleration = gear.acceleration * (1 - speedRatio);
-            acceleration *= this.throttle * (this.rpm > 5000 ? 0.8 : 1);
-            this.speed += acceleration;
-
-            // Ограничение скорости
-            this.speed = Math.min(this.speed, gear.maxSpeed);
+            // Интеграция ускорения
+            this.speed += acceleration * deltaTime * 3.6;
         }
 
-        // Расчет оборотов
-        this.rpm = 800 + this.speed * gear.rpmMultiplier;
-        this.rpm = Math.min(this.rpm, gear.maxRpm);
+        // Ограничение скорости для текущей передачи
+        this.speed = Math.min(this.speed, gear.maxSpeed);
 
-        // Ограничение при красной зоне
-        if (this.rpm >= gear.maxRpm - 200) {
-            this.speed *= 0.995;
-            this.rpm = gear.maxRpm - 200;
-        }
+        // Расчет RPM
+        this.rpm = 800 + (this.speed / gear.maxSpeed) * (gear.maxRPM - 800);
+        this.rpm = Math.min(this.rpm, gear.maxRPM);
     },
 
     updatePosition() {
-        this.t += this.speed * 0.0007;
+        this.progress += this.speed * 0.025;
 
-        // Траектория в виде восьмерки
-        const x = Math.sin(this.t) * 1;
-        const z = Math.sin(this.t * 2) * 0.5;
+        const t = (this.progress % totalPoints) / totalPoints;
+        const currentIndex = Math.floor(t * totalPoints);
+        const nextIndex = (currentIndex + 1) % totalPoints;
 
-        this.el.object3D.position.set(x, 1.03, z - 4);
+        // Интерполяция позиции
+        const point = shapePoints[currentIndex];
+        const nextPoint = shapePoints[nextIndex];
+        const alpha = t * totalPoints - currentIndex;
+
+        this.el.object3D.position.lerpVectors(
+            new THREE.Vector3(point.x, 1.1, point.y),
+            new THREE.Vector3(nextPoint.x, 1.1, nextPoint.y),
+            alpha,
+        );
 
         // Плавный поворот
-        const dx = Math.cos(this.t) * 1;
-        const dz = Math.cos(this.t * 2) * 1;
+        // Расчет направления движения
+        const deltaX = nextPoint.x - point.x;
+        const deltaZ = nextPoint.y - point.y;
 
-        this.el.object3D.rotation.y = Math.atan2(dx, dz) + Math.PI / 2;
+        this.el.object3D.rotation.y = Math.atan2(deltaX, deltaZ);
     },
 
     updateUi() {

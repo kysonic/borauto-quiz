@@ -1,8 +1,8 @@
 import { car } from '../config';
 
-const width = 1.45 * 2; // Полная ширина по X
-const height = 0.75 * 2; // Полная высота по Z
-const radius = 0.6; // Радиус скругления
+const width = 1.5 * 2; // Полная ширина по X
+const height = 0.76 * 2; // Полная высота по Z
+const radius = 0.65; // Радиус скругления
 
 // Создаем форму с закруглёнными углами
 const shape = new THREE.Shape();

@@ -18,9 +18,9 @@ AFRAME.registerComponent('car', {
         this.lastTime = performance.now();
         this.progress = 0;
 
-        this.speedUi = this.el.sceneEl.querySelector('#speed');
-        this.gearUi = this.el.sceneEl.querySelector('#gear');
-        this.rpmUi = this.el.sceneEl.querySelector('#rpm');
+        this.speedUi = this.el.sceneEl.querySelector('#speed-vr');
+        this.gearUi = this.el.sceneEl.querySelector('#gear-vr');
+        this.rpmUi = this.el.sceneEl.querySelector('#rpm-vr');
 
         this.controls();
     },

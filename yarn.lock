@@ -280,6 +280,13 @@
   resolved "https://registry.yarnpkg.com/@webgpu/types/-/types-0.1.54.tgz#0e692514314d910da56f43e17f5fff9bbd153607"
   integrity sha512-81oaalC8LFrXjhsczomEQ0u3jG+TqE6V9QHLA8GNZq/Rnot0KDugu3LhSYSlie8tSdooAN1Hov05asrUUp9qgg==
 
+a-frame-router-templates@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/a-frame-router-templates/-/a-frame-router-templates-0.0.4.tgz#8e12cffdf160ac2ee199adbb508ec21878e6d8e1"
+  integrity sha512-vlflJXwzQ9OMth184pqca3yTMKQvsxU4otmceRDqXuYvdj5VQHRMYAq9zEVT7oYD5DTyqAU2g1WBdv3/oydmdQ==
+  dependencies:
+    aframe "^1.7.0"
+
 aframe-orbit-controls@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/aframe-orbit-controls/-/aframe-orbit-controls-1.3.2.tgz#e0ddb8ff0b6cd5703ba4af279db3be793b72b33d"

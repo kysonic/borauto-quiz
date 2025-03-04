@@ -1,7 +1,13 @@
 import 'aframe';
+import 'a-frame-router-templates';
 import 'aframe-orbit-controls';
 // Components
 import './components/car';
 import './components/camera-holder';
 // Primitives
 import './primitives/track';
+// Templates
+import './templates/camera';
+import './templates/env';
+import './templates/ui';
+import './templates/effects';

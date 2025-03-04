@@ -17,99 +17,14 @@
             renderer="antialias: true"
             light="defaultLightsEnabled: false"
             fog="type: linear; color: #64c2c4; far: 5; near: 0; density: 6.45025"
+            id="scene"
+            router
         >
-            <a-assets>
-                <a-asset-item
-                    id="car"
-                    src="/assets/models/cars/simple.glb"
-                ></a-asset-item>
-                <a-asset-item
-                    id="track"
-                    src="/assets/models/env/track.glb"
-                ></a-asset-item>
-            </a-assets>
-            <a-box
-                id="table"
-                width="5"
-                depth="3"
-                height="0.9"
-                position="0 0 0"
-                color="#ccc"
-            ></a-box>
-            <a-plane
-                id="floor"
-                position="0 0 0"
-                rotation="-90 0 0"
-                width="25"
-                height="25"
-                color="#000"
-            ></a-plane>
-            <a-entity
-                id="ui-vr"
-                position="0.02719 0.49 -1.31"
-                rotation="-99 0 180"
-            >
-                <a-plane
-                    width="1"
-                    height="0.3"
-                    color="#333"
-                    opacity="0.8"
-                ></a-plane>
-                <a-text
-                    id="speed-vr"
-                    align="center"
-                    color="#FFF"
-                    position="0 0 0"
-                    width="0.9"
-                    text="value: 0"
-                ></a-text>
-                <a-text
-                    id="gear-vr"
-                    align="center"
-                    color="#FFF"
-                    position="-0.1 0 0"
-                    width="0.9"
-                    text="value: 0"
-                ></a-text>
-                <a-text
-                    id="rpm-vr"
-                    align="center"
-                    color="#FFF"
-                    position="0.1 0 0"
-                    width="0.9"
-                    text="value: 0"
-                ></a-text>
-            </a-entity>
+            <a-template name="camera"></a-template>
+            <a-template name="env"></a-template>
+            <a-template name="ui"></a-template>
+            <a-template name="effects"></a-template>
             <a-entity gltf-model="#car" car scale="0.1 0.1 0.1"></a-entity>
-            <a-entity
-                gltf-model="#track"
-                scale="0.03 0.03 0.03"
-                position="0 0.51 0.03"
-            ></a-entity>
-            <!-- <a-track position="0 0.55 0" rotation="90 0 0"></a-track> -->
-
-            <a-entity id="rig" camera-holder>
-                <a-entity
-                    camera
-                    look-controls="enabled: false"
-                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 2.5 -3; rotateSpeed: 0.5; maxPolarAngle: 90"
-                ></a-entity>
-            </a-entity>
-            <a-entity
-                id="right-controller"
-                laser-controls="hand: right"
-            ></a-entity>
-            <a-entity
-                id="left-controller"
-                laser-controls="hand: left"
-            ></a-entity>
-            <a-entity
-                light="intensity: 5"
-                position="2.17821 4.06991 -2.32725"
-                data-aframe-default-light=""
-                aframe-injected=""
-            ></a-entity>
-            <a-sky color="black"></a-sky>
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
     </body>

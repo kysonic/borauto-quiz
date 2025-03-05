@@ -11,6 +11,9 @@ AFRAME.registerSystem('game-manager', {
         this.sceneEl.addEventListener('game-start', this.startGame.bind(this));
 
         this.router.changeRoute(startPage);
+        // setTimeout(() => {
+        //     this.sceneEl.dispatchEvent(new CustomEvent('game-start'));
+        // }, 1000);
     },
 
     startGame() {

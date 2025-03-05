@@ -1,3 +1,5 @@
+import { Font } from '../../config';
+
 AFRAME.registerTemplate(
     'game',
     /*html*/ ` 
@@ -16,6 +18,7 @@ AFRAME.registerTemplate(
         rotation="-99 0 180"
     >
         <a-rounded position="-0.5 0 0" opacity="0.5" color="#000" width="1" height="0.3" radius="0.1"></a-rounded>
+        <!-- tachometer -->
         <a-image position="0.3 0.15 0.02" width="0.2" height="0.2" rotation="0 0 0" src="#tachometer-img"></a-image>      
         <a-image id="arrow-vr" position="0.3 0.15 0.025" width="0.013" height="0.136" rotation="0 0 0" src="#arrow-img"></a-image>    
         <a-text
@@ -23,7 +26,7 @@ AFRAME.registerTemplate(
             position="0.36 0.12 0.03"
             rotation="0 0 0"
             align="center"
-            font="/assets/fonts/Roboto-msdf.json"
+            font="${Font}"
             value="0 kmh"
             width="0.5"
             color="#FFF"
@@ -34,12 +37,45 @@ AFRAME.registerTemplate(
             position="0.36 0.09 0.03"
             rotation="0 0 0"
             align="center"
-            font="/assets/fonts/Roboto-msdf.json"
+            font="${Font}"
             value="1"
             width="0.5"
             color="#FFF"
             material="color: #FFF;"
         ></a-text>  
+        <!-- info -->
+        <a-text
+            id="timer-number-vr"
+            position="-0.31 0.22 0.03"
+            rotation="0 0 0"
+            align="center"
+            font="${Font}"
+            value="00:30:00"
+            width="1"
+            color="#FFF"
+            material="color: #FFF;"
+        ></a-text>  
+        <a-text
+            position="-0.31 0.16 0.03"
+            rotation="0 0 0"
+            align="center"
+            font="${Font}"
+            value="КРУГОВ ПРОИДЕНО:"
+            width="0.5"
+            color="#FFF"
+            material="color: #FFF;"
+        ></a-text>
+        <a-text
+            id="laps-number-vr"
+            position="-0.31 0.09 0.03"
+            rotation="0 0 0"
+            align="center"
+            font="${Font}"
+            value="0"
+            width="2"
+            color="#FFF"
+            material="color: #FFF;"
+        ></a-text>
     </a-entity>
     <a-entity countdown>
         <a-rounded position="-0.15 0.8 -0.6" opacity="0.2" color="#000" width="0.3" height="0.5" radius="0.1"></a-rounded>
@@ -50,7 +86,7 @@ AFRAME.registerTemplate(
             position="0.005 1.16 -0.62"
             rotation="0 180 0"
             align="center"
-            font="/assets/fonts/Roboto-msdf.json"
+            font="${Font}"
             value="4"
             width="2"
             color="#FFF"
@@ -61,7 +97,7 @@ AFRAME.registerTemplate(
             position="0 0.93 -0.62"
             rotation="0 180 0"
             align="center"
-            font="/assets/fonts/Roboto-msdf.json"
+            font="${Font}"
             value=""
             width="2"
             color="#FFF"

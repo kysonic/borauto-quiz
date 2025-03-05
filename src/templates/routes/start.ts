@@ -1,3 +1,5 @@
+import { Font } from '../../config';
+
 AFRAME.registerTemplate(
     'start',
     /*html*/ ` 
@@ -13,11 +15,11 @@ AFRAME.registerTemplate(
             position="0 1.3 -0.43"
             rotation="0 180 0"
             align="center"
-            font="/assets/fonts/Roboto-msdf.json"
-            value="HA4ATI"
+            font="${Font}"
+            value="НАЧАТЬ"
             width="2"
             color="#FFF"
-            material="color: #FFF;"
+            material="color: red;"
         >
             <a-box
                 class="intersect"

@@ -2,6 +2,8 @@ export const car = {
     top: 0.52,
 };
 
+export const Font = '/assets/fonts/Roboto-Regular-msdf.json';
+
 export const pages = {
     Start: 'start',
     Game: 'game',

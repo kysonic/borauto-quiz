@@ -1,14 +1,11 @@
 import { controls, gearSettings } from '../config';
-import {
-    shapePoints,
-    shapePoints3D,
-    totalPoints,
-} from '../primitives/track-points';
+import { shapePoints3D, totalPoints } from '../primitives/track-points';
 
 AFRAME.registerComponent('car', {
     schema: {},
 
     init() {
+        this.enabled = false;
         this.t = 0;
         this.throttle = 0;
         this.speed = 0;
@@ -17,12 +14,25 @@ AFRAME.registerComponent('car', {
         this.isShifting = false;
         this.lastTime = performance.now();
         this.progress = 0;
-
-        this.speedUi = this.el.sceneEl.querySelector('#speed-vr');
-        this.gearUi = this.el.sceneEl.querySelector('#gear-vr');
-        this.rpmUi = this.el.sceneEl.querySelector('#rpm-vr');
+        // DOM UI
+        this.speedNumberDOMNode = document.getElementById('speed-number-dom');
+        this.gearNumberDOMNode = document.getElementById('gear-number-dom');
+        this.arrowDOMNode = document.getElementById('arrow-dom');
+        // VR UI
+        this.speedNumberVRNode = document.getElementById('speed-number-vr');
+        this.gearNumberVRNode = document.getElementById('gear-number-vr');
+        this.arrowVRNode = document.getElementById('arrow-vr');
 
         this.controls();
+        // Initial position
+        this.updatePhysics(0);
+        this.updatePosition();
+
+        // Events
+        this.el.sceneEl.addEventListener(
+            'countdown-finished',
+            this.enableCar.bind(this),
+        );
     },
 
     controls() {
@@ -101,9 +111,13 @@ AFRAME.registerComponent('car', {
         const now = performance.now();
         const deltaTime = (now - this.lastTime) / 1000;
         this.lastTime = now;
-        this.updatePhysics(deltaTime);
-        this.updatePosition();
-        this.updateUi();
+
+        if (this.enabled) {
+            this.updatePhysics(deltaTime);
+            this.updatePosition();
+            this.updateDOMUi();
+            this.updateVRUi();
+        }
     },
 
     getAccelerationFactor(gear, speedRatio) {
@@ -123,28 +137,28 @@ AFRAME.registerComponent('car', {
         const gear = gearSettings[this.currentGear];
         const speedRatio = this.speed / gear.maxSpeed;
 
-        // Расчет ускорения
+        // Calculate acceleration
         const accelerationFactor = this.getAccelerationFactor(gear, speedRatio);
         const acceleration =
             gear.peakAcceleration * accelerationFactor * this.throttle;
 
-        // Естественное замедление
+        // Natural delay
         const naturalDeceleration = 2.5 * deltaTime; // 2.5 м/с²
 
-        // Торможение
+        // Breaking
         if (this.throttle < 0) {
             const brakeForce = 8.0 * deltaTime; // 8 м/с²
             this.speed = Math.max(0, this.speed - brakeForce * 3.6);
         } else if (this.throttle === 0) {
-            // Сопротивление качению и аэродинамика
+            // Air resistance
             this.speed = Math.max(0, this.speed - naturalDeceleration * 3.6);
         } else {
-            // Интеграция ускорения
+            // Acceleration integration
             this.speed += acceleration * deltaTime * 3.6;
         }
 
-        // Ограничение скорости для текущей передачи
-        this.speed = Math.min(this.speed, gear.maxSpeed);
+        // Speed limitation
+        // this.speed = Math.min(this.speed, gear.maxSpeed);
 
         // Расчет RPM
         this.rpm = 800 + (this.speed / gear.maxSpeed) * (gear.maxRPM - 800);
@@ -173,19 +187,41 @@ AFRAME.registerComponent('car', {
         this.el.object3D.rotation.y = Math.atan2(deltaX, deltaZ);
     },
 
-    updateUi() {
-        // document.getElementById('speed').textContent = Math.floor(
-        //     this.speed,
-        // ).toString();
-        // document.getElementById('gear').textContent = this.currentGear;
-        // document.getElementById('rpm').textContent = Math.floor(
-        //     this.rpm,
-        // ).toString();
-        // document.querySelector('.rpm-fill').style.width = `${
-        //     (this.rpm / 6500) * 100
-        // }%`;
-        // this.speedUi.setAttribute('text', { value: Math.floor(this.speed) });
-        // this.gearUi.setAttribute('text', { value: this.currentGear });
-        // this.rpmUi.setAttribute('text', { value: Math.floor(this.rpm) });
+    updateDOMUi() {
+        if (
+            this.speedNumberDOMNode &&
+            this.gearNumberDOMNode &&
+            this.arrowDOMNode
+        ) {
+            this.speedNumberDOMNode.textContent = Math.floor(
+                this.speed,
+            ).toString();
+            this.gearNumberDOMNode.textContent = this.currentGear;
+            this.arrowDOMNode.style.transform = `rotate(${
+                (this.rpm / 1000) * 45
+            }deg)`;
+        }
+    },
+
+    updateVRUi() {
+        if (
+            this.speedNumberVRNode &&
+            this.gearNumberVRNode &&
+            this.arrowVRNode
+        ) {
+            this.speedNumberVRNode.setAttribute(
+                'value',
+                Math.floor(this.speed).toString(),
+            );
+            this.gearNumberVRNode.setAttribute('value', this.currentGear);
+            this.arrowVRNode.setAttribute(
+                'rotation',
+                `0 0 ${-((this.rpm / 1000) * 45)}`,
+            );
+        }
+    },
+
+    enableCar() {
+        this.enabled = true;
     },
 });

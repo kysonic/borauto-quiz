@@ -17,6 +17,8 @@ import './components/camera-holder';
 import './components/a-rounded';
 import './components/a-event-emit';
 import './components/ui';
+import './components/countdown';
+import './components/timer';
 // Primitives
 import './primitives/track';
 // Routes
@@ -24,5 +26,4 @@ import './templates/routes/start';
 import './templates/routes/game';
 // Templates
 import './templates/common/env';
-import './templates/ui/ui';
 import './templates/common/effects';

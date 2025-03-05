@@ -1,8 +1,34 @@
-<div class='ui screen game' id='game-dom'>
-    <div>Speed: <span id='speed'>0</span> km/h</div>
-    <div>Gear: <span id='gear'>1</span></div>
-    <div>RPM: <span id='rpm'>800</span></div>
-    <div class='rpm-bar'>
-        <div class='rpm-fill' style='width: 11%'></div>
+<link rel='stylesheet' href='./src/css/game.css' />
+<link rel='stylesheet' href='./src/css/countdown.css' />
+
+<div class='ui game' id='game-dom'>
+    <div class='tachometer'>
+        <img src='/assets/img/tachometer.png' alt='' />
+        <img id='arrow-dom' class='arrow' src='/assets/img/arrow.png' alt='' />
+        <div class='speed'>
+            <div id='speed-number-dom'>10</div><div class='kmh'>kmh</div>
+        </div>
+        <div class='gear'>
+            <div id='gear-number-dom'>1</div>
+        </div>
+        <div class='backdrop'></div>
+    </div>
+    <div class='info'>
+        <div class='timer'>
+            <div id='timer-number-dom'>01:00:00</div>
+        </div>
+        <div class='laps'>
+            <div>КРУГОВ ПРОЙДЕНО:</div>
+            <div id='laps-number-dom'>0</div>
+        </div>
+        <div class='backdrop'></div>
+    </div>
+</div>
+
+<div class='ui countdown' id='countdown-dom'>
+    <div class='traffic-light'>
+        <div id='countdown-number-dom' class='circle red active'>3</div>
+        <div id='countdown-go-dom' class='circle green'></div>
+        <div class='backdrop'></div>
     </div>
 </div>

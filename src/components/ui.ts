@@ -6,9 +6,20 @@ AFRAME.registerComponent('ui', {
     },
 
     init() {
-        const isInXR =
-            this.el.sceneEl.is('vr-mode') || this.el.sceneEl.is('ar-mode');
-        isInXR ? this.vrMode() : this.domMode();
+        const isInVR = this.el.sceneEl.is('vr-mode');
+        isInVR ? this.vrMode() : this.domMode();
+
+        // Handlers
+        this.vrModeHandler = this.vrMode.bind(this);
+        this.domModeHandler = this.domMode.bind(this);
+        // Events
+        this.el.sceneEl.addEventListener('enter-vr', this.vrModeHandler);
+        this.el.sceneEl.addEventListener('exit-vr', this.domModeHandler);
+    },
+
+    remove() {
+        this.el.sceneEl.removeEventListener('enter-vr', this.vrModeHandler);
+        this.el.sceneEl.removeEventListener('exit-vr', this.domModeHandler);
     },
 
     vrMode() {

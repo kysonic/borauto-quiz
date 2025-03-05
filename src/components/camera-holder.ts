@@ -23,15 +23,18 @@ AFRAME.registerComponent('camera-holder', {
     },
 
     startGame() {
-        this.el.sceneEl.camera.el.removeAttribute('orbit-controls');
-        this.el.sceneEl.camera.el.setAttribute('orbit-controls', {
-            autoRotate: 'false',
-            target: '0 1 0',
-            initialPosition: '0 2 -3',
-            minDistance: 1,
-            maxDistance: 2,
-            rotateSpeed: 0.5,
-            maxPolarAngle: 90,
-        });
+        const isInVR = this.el.sceneEl.is('vr-mode');
+        if (!isInVR) {
+            this.el.sceneEl.camera.el.removeAttribute('orbit-controls');
+            this.el.sceneEl.camera.el.setAttribute('orbit-controls', {
+                autoRotate: 'false',
+                target: '0 1 0',
+                initialPosition: '0 2 -3',
+                minDistance: 1,
+                maxDistance: 2,
+                rotateSpeed: 0.5,
+                maxPolarAngle: 90,
+            });
+        }
     },
 });

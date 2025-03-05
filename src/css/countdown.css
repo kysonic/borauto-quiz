@@ -1,0 +1,42 @@
+.countdown {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  .traffic-light {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100px;
+    height: 210px;
+
+    .backdrop {
+      padding: 20px;
+      left: -20px;
+      top: -20px;
+    }
+
+    .circle {
+      position: relative;
+      z-index: 11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 40px;
+      background-color: #cacaca;
+
+      &.red.active {
+        background-color: red;
+      }
+
+      &.green.active {
+        background-color: green;
+      }
+    }
+  }
+}

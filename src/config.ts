@@ -2,6 +2,16 @@ export const car = {
     top: 0.52,
 };
 
+export const pages = {
+    Start: 'start',
+    Game: 'game',
+    Score: 'score',
+    Controls: 'controls',
+    HowToPlay: 'how-to-play',
+};
+
+export const startPage = pages.Start;
+
 export const gearSettings = {
     1: {
         maxSpeed: 10, // km/h

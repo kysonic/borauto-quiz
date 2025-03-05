@@ -2,9 +2,9 @@ AFRAME.registerTemplate(
     'ui',
     /*html*/ ` 
     <a-entity
-    id="ui-vr"
-    position="0.02719 0.49 -1.31"
-    rotation="-99 0 180"
+        id="ui-vr"
+        position="0.02719 0.49 -1.31"
+        rotation="-99 0 180"
     >
         <a-plane
             width="1"

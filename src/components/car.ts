@@ -174,19 +174,18 @@ AFRAME.registerComponent('car', {
     },
 
     updateUi() {
-        document.getElementById('speed').textContent = Math.floor(
-            this.speed,
-        ).toString();
-        document.getElementById('gear').textContent = this.currentGear;
-        document.getElementById('rpm').textContent = Math.floor(
-            this.rpm,
-        ).toString();
-        document.querySelector('.rpm-fill').style.width = `${
-            (this.rpm / 6500) * 100
-        }%`;
-
-        this.speedUi.setAttribute('text', { value: Math.floor(this.speed) });
-        this.gearUi.setAttribute('text', { value: this.currentGear });
-        this.rpmUi.setAttribute('text', { value: Math.floor(this.rpm) });
+        // document.getElementById('speed').textContent = Math.floor(
+        //     this.speed,
+        // ).toString();
+        // document.getElementById('gear').textContent = this.currentGear;
+        // document.getElementById('rpm').textContent = Math.floor(
+        //     this.rpm,
+        // ).toString();
+        // document.querySelector('.rpm-fill').style.width = `${
+        //     (this.rpm / 6500) * 100
+        // }%`;
+        // this.speedUi.setAttribute('text', { value: Math.floor(this.speed) });
+        // this.gearUi.setAttribute('text', { value: this.currentGear });
+        // this.rpmUi.setAttribute('text', { value: Math.floor(this.rpm) });
     },
 });

@@ -3,28 +3,51 @@
     <head>
         <title>Borauto Quiz</title>
         <link rel="stylesheet" href="./src/css/main.css" />
+        <meta charset="utf-8" />
     </head>
     <body>
+        <!-- Desktop version of UI -->
         <div id="ui">
-            <div>Speed: <span id="speed">0</span> km/h</div>
-            <div>Gear: <span id="gear">1</span></div>
-            <div>RPM: <span id="rpm">800</span></div>
-            <div class="rpm-bar">
-                <div class="rpm-fill" style="width: 11%"></div>
-            </div>
+            {{> start}}
+            {{> game}}
         </div>
         <a-scene
+            id="scene"
             renderer="antialias: true"
             light="defaultLightsEnabled: false"
             fog="type: linear; color: #64c2c4; far: 5; near: 0; density: 6.45025"
-            id="scene"
             router
+            game-manager
         >
-            <a-template name="camera"></a-template>
+            <!-- Camera cannot be added to template so how a-frame will do it otherwise -->
+            <a-entity id="rig" camera-holder>
+                <a-entity
+                    camera
+                    look-controls="enabled: false"
+                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 2 -3; rotateSpeed: 0.5; maxPolarAngle: 90; autoRotate: true;"
+                >
+                </a-entity>
+                <!-- Debug controllers -->
+                <!-- <a-camera>
+                    <a-cursor
+                        raycaster="objects: .intersect; far: 3"
+                    ></a-cursor>
+                </a-camera> -->
+                <a-entity
+                    id="right-controller"
+                    laser-controls="hand: right"
+                    raycaster="objects: .intersect; far: 3"
+                ></a-entity>
+                <a-entity
+                    id="left-controller"
+                    laser-controls="hand: left"
+                    raycaster="objects: .intersect; far: 3"
+                ></a-entity>
+            </a-entity>
             <a-template name="env"></a-template>
-            <a-template name="ui"></a-template>
             <a-template name="effects"></a-template>
-            <a-entity gltf-model="#car" car scale="0.1 0.1 0.1"></a-entity>
+            <a-route id="start" template="start"></a-route>
+            <a-route id="game" template="game"></a-route>
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
     </body>

@@ -6,17 +6,28 @@ AFRAME.registerSystem('game-manager', {
     domUi,
 
     init() {
+        this.laps = 0;
         this.router = this.el.systems.router;
-
-        this.sceneEl.addEventListener('game-start', this.startGame.bind(this));
-
+        // Handlers
+        this.startGameHandler = this.startGame.bind(this);
+        this.startQuizHandler = this.startQuiz.bind(this);
+        // Events
+        this.sceneEl.addEventListener('game-start', this.startGameHandler);
+        this.sceneEl.addEventListener('quiz-start', this.startQuizHandler);
+        // Init
         this.router.changeRoute(startPage);
-        // setTimeout(() => {
-        //     this.sceneEl.dispatchEvent(new CustomEvent('game-start'));
-        // }, 1000);
+    },
+
+    remove() {
+        this.sceneEl.removeEventListener('game-start', this.startGameHandler);
+        this.sceneEl.removeEventListener('quiz-start', this.startQuizHandler);
     },
 
     startGame() {
         this.router.changeRoute('game');
+    },
+
+    startQuiz() {
+        this.router.changeRoute('quiz');
     },
 });

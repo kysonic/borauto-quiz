@@ -1,5 +1,3 @@
-import { formatTime } from '../lib/time';
-
 AFRAME.registerComponent('timer', {
     init() {
         this.interval = 1000;
@@ -29,20 +27,11 @@ AFRAME.registerComponent('timer', {
     update() {
         this.time -= this.interval;
 
-        const isInVR = this.el.sceneEl.is('vr-mode');
-        !isInVR ? this.updateVr() : this.updateDom();
+        this.el.sceneEl.emit('setTime', { time: this.time });
 
         if (this.time <= 0) {
             clearInterval(this.i);
             this.el.sceneEl.emit('timer-finished');
         }
-    },
-
-    updateVr() {
-        this.vrNode.setAttribute('value', formatTime(this.time));
-    },
-
-    updateDom() {
-        this.domNode.textContent = formatTime(this.time);
     },
 });

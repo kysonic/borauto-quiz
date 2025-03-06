@@ -1,12 +1,17 @@
 import { controls, gearSettings } from '../config';
 import { shapePoints3D, totalPoints } from '../primitives/track-points';
 
+const pointsLength = 10;
+const dropPoints = [pointsLength + 1, pointsLength + pointsLength + 1];
+const lapPoints = [0, pointsLength];
+
 AFRAME.registerComponent('car', {
     schema: {},
 
     init() {
-        this.enabled = false;
+        this.enabled = true;
         this.t = 0;
+        this.isLapping = true;
         this.throttle = 0;
         this.speed = 0;
         this.currentGear = 1;
@@ -14,20 +19,11 @@ AFRAME.registerComponent('car', {
         this.isShifting = false;
         this.lastTime = performance.now();
         this.progress = 0;
-        // DOM UI
-        this.speedNumberDOMNode = document.getElementById('speed-number-dom');
-        this.gearNumberDOMNode = document.getElementById('gear-number-dom');
-        this.arrowDOMNode = document.getElementById('arrow-dom');
-        // VR UI
-        this.speedNumberVRNode = document.getElementById('speed-number-vr');
-        this.gearNumberVRNode = document.getElementById('gear-number-vr');
-        this.arrowVRNode = document.getElementById('arrow-vr');
-
+        // Controls
         this.controls();
         // Initial position
         this.updatePhysics(0);
         this.updatePosition();
-
         // Events
         this.el.sceneEl.addEventListener(
             'countdown-finished',
@@ -100,6 +96,7 @@ AFRAME.registerComponent('car', {
 
         this.isShifting = true;
         this.currentGear = newGear;
+        this.el.sceneEl.emit('setGear', { gear: this.currentGear });
 
         setTimeout(() => {
             this.isShifting = false;
@@ -115,8 +112,7 @@ AFRAME.registerComponent('car', {
         if (this.enabled) {
             this.updatePhysics(deltaTime);
             this.updatePosition();
-            this.updateDOMUi();
-            this.updateVRUi();
+            this.sendEvents();
         }
     },
 
@@ -160,7 +156,7 @@ AFRAME.registerComponent('car', {
         // Speed limitation
         // this.speed = Math.min(this.speed, gear.maxSpeed);
 
-        // Расчет RPM
+        // RPM calculation
         this.rpm = 800 + (this.speed / gear.maxSpeed) * (gear.maxRPM - 800);
         this.rpm = Math.min(this.rpm, gear.maxRPM);
     },
@@ -172,53 +168,37 @@ AFRAME.registerComponent('car', {
         const currentIndex = Math.floor(t * totalPoints);
         const nextIndex = (currentIndex + 1) % totalPoints;
 
-        // Интерполяция позиции
+        // Position interpolation
         const point = shapePoints3D[currentIndex];
         const nextPoint = shapePoints3D[nextIndex];
         const alpha = t * totalPoints - currentIndex;
 
         this.el.object3D.position.lerpVectors(point, nextPoint, alpha);
 
-        // Плавный поворот
-        // Расчет направления движения
+        // Turn
         const deltaX = nextPoint.x - point.x;
         const deltaZ = nextPoint.z - point.z;
 
         this.el.object3D.rotation.y = Math.atan2(deltaX, deltaZ);
-    },
 
-    updateDOMUi() {
+        // Laps
         if (
-            this.speedNumberDOMNode &&
-            this.gearNumberDOMNode &&
-            this.arrowDOMNode
+            currentIndex > lapPoints[0] &&
+            currentIndex <= lapPoints[1] &&
+            !this.isLapping
         ) {
-            this.speedNumberDOMNode.textContent = Math.floor(
-                this.speed,
-            ).toString();
-            this.gearNumberDOMNode.textContent = this.currentGear;
-            this.arrowDOMNode.style.transform = `rotate(${
-                (this.rpm / 1000) * 45
-            }deg)`;
+            this.isLapping = true;
+            this.el.sceneEl.emit('increaseLaps', { amount: 1 });
+        }
+
+        if (currentIndex > dropPoints[0] && currentIndex <= dropPoints[1]) {
+            this.isLapping = false;
         }
     },
 
-    updateVRUi() {
-        if (
-            this.speedNumberVRNode &&
-            this.gearNumberVRNode &&
-            this.arrowVRNode
-        ) {
-            this.speedNumberVRNode.setAttribute(
-                'value',
-                Math.floor(this.speed).toString(),
-            );
-            this.gearNumberVRNode.setAttribute('value', this.currentGear);
-            this.arrowVRNode.setAttribute(
-                'rotation',
-                `0 0 ${-((this.rpm / 1000) * 45)}`,
-            );
-        }
+    sendEvents() {
+        this.el.sceneEl.emit('setSpeed', { speed: this.speed });
+        this.el.sceneEl.emit('setRpm', { rpm: this.rpm });
     },
 
     enableCar() {

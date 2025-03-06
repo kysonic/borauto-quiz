@@ -1,0 +1,22 @@
+.quiz {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+
+    .question {
+        position: relative;
+        z-index: 11;
+        font-size: 20px;
+        padding: 0 0 20px 0;
+        color: #fff;
+    }
+
+    .buttons {
+        position: relative;
+        z-index: 11;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+    }
+}

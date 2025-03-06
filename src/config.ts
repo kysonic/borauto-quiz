@@ -6,6 +6,7 @@ export const Font = '/assets/fonts/Roboto-Regular-msdf.json';
 
 export const pages = {
     Start: 'start',
+    Quiz: 'quiz',
     Game: 'game',
     Score: 'score',
     Controls: 'controls',

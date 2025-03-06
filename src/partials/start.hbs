@@ -4,14 +4,17 @@
     <div class='block'>
         <div class='title'>
             <img class='logo' src='/assets/img/b-logo-w.png' alt='' />
-            <img class='quiz' src='/assets/img/quiz.png' alt='' />
+            <img class='quiz-img' src='/assets/img/quiz.png' alt='' />
         </div>
         <div class='buttons'>
             <button
                 class='btn'
-                onclick="document.getElementById('scene').dispatchEvent(new CustomEvent('game-start'));"
+                onclick="domUi.emit('game-start')"
             >Начать</button>
-            <button class='btn'>Управление</button>
+            <button
+                class='btn'
+                onclick="domUi.emit('quiz-start')"
+            >Управление</button>
             <button class='btn'>Как играть?</button>
         </div>
         <div class='backdrop'></div>

@@ -34,6 +34,11 @@ export const domUi = {
     showNode(node: HTMLElement) {
         node.style.display = 'flex';
     },
+
+    emit(event) {
+        document.getElementById('scene').dispatchEvent(new CustomEvent(event));
+    },
 };
 
 window.addEventListener('DOMContentLoaded', domUi.init.bind(domUi));
+window.domUi = domUi;

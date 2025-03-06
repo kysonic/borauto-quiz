@@ -1,6 +1,6 @@
 import { domUi } from '../lib/dom-ui';
 
-AFRAME.registerComponent('ui', {
+AFRAME.registerComponent('ui-switcher', {
     schema: {
         ui: { type: 'string' },
     },
@@ -28,7 +28,7 @@ AFRAME.registerComponent('ui', {
     },
 
     domMode() {
-        this.el.setAttribute('visible', 'false');
+        this.el.setAttribute('visible', 'true');
         domUi.changeScreen(this.data.ui);
     },
 });

@@ -3,6 +3,11 @@ body {
     font-family: 'Roboto';
 }
 
+.a-enter-vr.fullscreen {
+    top: 50px;
+    bottom: auto;
+}
+
 .ui {
     width: 100%;
     height: 100%;

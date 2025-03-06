@@ -13,7 +13,8 @@
     </head>
     <body>
         <!-- Desktop version of UI -->
-        <div id="ui">{{> start}} {{> game}}</div>
+        <div id="ui">{{> start}} {{> game}} {{> quiz}}</div>
+        <!-- Desktop version of UI -->
         <a-scene
             id="scene"
             renderer="antialias: true"
@@ -47,11 +48,13 @@
                     raycaster="objects: .intersect; far: 3"
                 ></a-entity>
             </a-entity>
+            <!-- Common Env -->
             <a-template name="env"></a-template>
             <a-template name="effects"></a-template>
+            <!-- Router -->
             <a-route id="start" template="start"></a-route>
             <a-route id="game" template="game"></a-route>
-            
+            <a-route id="quiz" template="quiz"></a-route>
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
     </body>

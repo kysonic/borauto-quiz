@@ -4,8 +4,7 @@ body {
 }
 
 .a-enter-vr.fullscreen {
-    top: 50px;
-    bottom: auto;
+    display: none;
 }
 
 .ui {

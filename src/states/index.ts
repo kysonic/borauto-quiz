@@ -1,4 +1,5 @@
 import { formatTime } from '../lib/time';
+import questions from '../data/questions.json';
 
 AFRAME.registerState({
     initialState: {
@@ -7,8 +8,10 @@ AFRAME.registerState({
         rpm: 800,
         time: 30 * 1000,
         laps: 0,
-        currentQuestion: {},
+        currentQuestion: questions[0],
         alreadyTakenQuestions: [],
+        questionNumber: 0,
+        nitro: 1,
     },
 
     handlers: {
@@ -39,11 +42,24 @@ AFRAME.registerState({
         pushAlreadyTakenQuestion(state, action) {
             state.alreadyTakenQuestions.push(action.id);
         },
+
+        setQuestionNumber(state, action) {
+            state.questionNumber = action.number;
+        },
+
+        increaseNitro(state) {
+            state.nitro++;
+        },
+
+        useNitro(state) {
+            state.nitro--;
+        },
     },
 
     computeState(newState) {
         newState.vrRpm = `0 0 ${-((newState.rpm / 1000) * 45)}`;
         newState.domRpm = (newState.rpm / 1000) * 45;
         newState.formattedTime = formatTime(newState.time);
+        newState.questionNumberVr = `Вопрос номер ${newState.questionNumber}:`;
     },
 });

@@ -22,7 +22,7 @@ AFRAME.registerComponent('track', {
                 ),
             );
         }
-        console.log(points);
+
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         const material = new THREE.LineBasicMaterial({
             color: this.data.color,

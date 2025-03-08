@@ -106,4 +106,53 @@
           }
         }
     }
+
+    .nitro {
+        position: absolute;
+        left: calc(50% - 160px);
+        bottom: 10px;
+        border-radius: 20px;
+        width: 320px;
+        height: 70px;
+        color: #fff;
+
+        .backdrop {
+            opacity: 0.5;
+        }
+
+        .nitro-data {
+            position: relative;
+            z-index: 11;
+
+            .nos-title {
+                font-size: 20px;
+                text-align: center;
+            }
+
+            .nos-items {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 5px;
+
+                .nos-item {
+                    width: 30px;
+                    height: 30px;
+                    opacity: 0.9;
+
+                    & svg {
+                        stroke: #ccc;
+                        fill: #ccc;
+                    }
+
+                    &.active {
+                        & svg {
+                            stroke: #995cff;
+                            fill: #995cff;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

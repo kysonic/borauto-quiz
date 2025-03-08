@@ -28,7 +28,7 @@ AFRAME.registerComponent('ui-switcher', {
     },
 
     domMode() {
-        this.el.setAttribute('visible', 'true');
+        this.el.setAttribute('visible', 'false');
         domUi.changeScreen(this.data.ui);
     },
 });

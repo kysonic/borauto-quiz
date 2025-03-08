@@ -13,15 +13,13 @@
     </head>
     <body>
         <!-- Desktop version of UI -->
-        <div id="ui">{{> start}} {{> game}} {{> quiz}}</div>
+        <div id="ui">{{> start}} {{> game}} {{> quiz}} {{> scores}}</div>
         <!-- Desktop version of UI -->
         <a-scene
             id="scene"
             renderer="antialias: true"
             light="defaultLightsEnabled: false"
             fog="type: linear; color: #64c2c4; far: 5; near: 0; density: 6.45025"
-            router
-            game-manager
         >
             <!-- Camera cannot be added to template so how a-frame will do it otherwise -->
             <a-entity id="rig" camera-holder>
@@ -55,6 +53,7 @@
             <a-route id="start" template="start"></a-route>
             <a-route id="game" template="game"></a-route>
             <a-route id="quiz" template="quiz"></a-route>
+            <a-route id="scores" template="scores"></a-route>
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
     </body>

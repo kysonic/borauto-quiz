@@ -35,8 +35,10 @@ export const domUi = {
         node.style.display = 'flex';
     },
 
-    emit(event) {
-        document.getElementById('scene').dispatchEvent(new CustomEvent(event));
+    emit(event, payload) {
+        document
+            .getElementById('scene')
+            .dispatchEvent(new CustomEvent(event, { detail: payload }));
     },
 };
 

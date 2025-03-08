@@ -8,9 +8,9 @@ AFRAME.registerComponent('event-emit', {
             type: 'string',
             default: '',
         },
-        args: {
-            type: 'array',
-            value: [],
+        detail: {
+            type: 'string',
+            value: '{}',
         },
     },
 
@@ -26,12 +26,15 @@ AFRAME.registerComponent('event-emit', {
         this.emitEvent = this.emitEvent.bind(this);
         this.el.addEventListener(this.data.__event, this.emitEvent);
     },
-
     remove() {
         this.el.removeEventListener(this.data.__event, this.emitEvent);
     },
-
     emitEvent() {
-        this.el.emit(this.data.__emit, { args: this.data.args });
+        this.el.emit(
+            this.data.__emit,
+            this.data.detail
+                ? eval(`new Object(${this.data.detail})`)
+                : undefined,
+        );
     },
 });

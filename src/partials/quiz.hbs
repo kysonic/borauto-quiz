@@ -2,17 +2,37 @@
 
 <div class='ui screen quiz' id='quiz-dom'>
     <div class='block'>
-        <div class='question'>
+        <div class='question-number'>
+            Вопрос номер
+            <span id='question-number-dom'>0</span>:
+        </div>
+        <div id='question-text-dom' class='question'>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo
             modi minima at placeat, soluta a, illum corporis delectus saepe
             ipsam similique odio facilis quam assumenda libero animi
             perspiciatis numquam deleniti?
         </div>
         <div class='buttons'>
-            <button class='btn'>Ответ 1</button>
-            <button class='btn'>Ответ 2</button>
-            <button class='btn'>Ответ 3</button>
-            <button class='btn'>Ответ 4</button>
+            <button
+                id='answer-1-dom'
+                class='btn'
+                onclick="domUi.emit('answer', { answer: 1 })"
+            >Ответ 1</button>
+            <button
+                id='answer-2-dom'
+                class='btn'
+                onclick="domUi.emit('answer', { answer: 2 })"
+            >Ответ 2</button>
+            <button
+                id='answer-3-dom'
+                class='btn'
+                onclick="domUi.emit('answer', { answer: 3 })"
+            >Ответ 3</button>
+            <button
+                id='answer-4-dom'
+                class='btn'
+                onclick="domUi.emit('answer', { answer: 4 })"
+            >Ответ 4</button>
         </div>
         <div class='backdrop'></div>
     </div>

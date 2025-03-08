@@ -6,28 +6,53 @@ AFRAME.registerSystem('game-manager', {
     domUi,
 
     init() {
-        this.laps = 0;
+        this.gameCycles = 0;
         this.router = this.el.systems.router;
         // Handlers
         this.startGameHandler = this.startGame.bind(this);
-        this.startQuizHandler = this.startQuiz.bind(this);
+        this.timerFinishedHandler = this.timerFinished.bind(this);
+        this.quizFinishedHandler = this.quizFinished.bind(this);
         // Events
         this.sceneEl.addEventListener('game-start', this.startGameHandler);
-        this.sceneEl.addEventListener('quiz-start', this.startQuizHandler);
+        this.sceneEl.addEventListener(
+            'timer-finished',
+            this.timerFinishedHandler,
+        );
+        this.sceneEl.addEventListener(
+            'quiz-finished',
+            this.quizFinishedHandler,
+        );
         // Init
         this.router.changeRoute(startPage);
     },
 
     remove() {
         this.sceneEl.removeEventListener('game-start', this.startGameHandler);
-        this.sceneEl.removeEventListener('quiz-start', this.startQuizHandler);
+        this.sceneEl.removeEventListener(
+            'timer-finished',
+            this.timerFinishedHandler,
+        );
+        this.sceneEl.removeEventListener(
+            'quiz-finished',
+            this.quizFinishedHandler,
+        );
     },
 
     startGame() {
         this.router.changeRoute('game');
     },
 
-    startQuiz() {
+    timerFinished() {
+        this.gameCycles++;
+
+        if (this.gameCycles >= 3) {
+            return this.router.changeRoute('scores');
+        }
+
         this.router.changeRoute('quiz');
+    },
+
+    quizFinished() {
+        this.router.changeRoute('game');
     },
 });

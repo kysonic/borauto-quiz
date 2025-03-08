@@ -73,8 +73,8 @@ AFRAME.registerComponent('countdown', {
 
     go() {
         const isInVR = this.el.sceneEl.is('vr-mode');
-
         isInVR ? this.VRGo() : this.DOMGo();
+
         setTimeout(() => {
             this.hide();
         }, 1000);
@@ -94,7 +94,23 @@ AFRAME.registerComponent('countdown', {
         this.countdownGoDOMNode.textContent = 'GO!';
     },
 
+    VRClear() {
+        this.countdownNumberVRNode.setAttribute('color', 'red');
+        document
+            .getElementById('countdown-go-circle-vr')
+            .setAttribute('color', '#ccc');
+        this.countdownGoVRNode.setAttribute('value', '');
+    },
+
+    DOMClear() {
+        this.countdownNumberDOMNode.classList.add('active');
+        this.countdownGoDOMNode.classList.remove('active');
+        this.countdownGoDOMNode.textContent = '';
+    },
+
     hide() {
+        const isInVR = this.el.sceneEl.is('vr-mode');
+        isInVR ? this.VRClear() : this.DOMClear();
         this.el.setAttribute('visible', 'false');
         domUi.hideNode(this.countdownDOMNode);
     },

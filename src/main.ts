@@ -11,7 +11,7 @@ import './lib/dom-ui';
 import './states/index';
 // Systems
 import './systems/game-manager';
-import './systems/dom-ui';
+import './systems/dom-state';
 // Components
 import './components/car';
 import './components/camera-holder';
@@ -20,12 +20,14 @@ import './components/a-event-emit';
 import './components/ui-switcher';
 import './components/countdown';
 import './components/timer';
+import './components/quiz-manager';
 // Primitives
 import './primitives/track';
 // Routes
 import './templates/routes/start';
 import './templates/routes/game';
 import './templates/routes/quiz';
+import './templates/routes/scores';
 // Templates
 import './templates/common/env';
 import './templates/common/effects';

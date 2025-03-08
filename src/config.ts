@@ -8,7 +8,7 @@ export const pages = {
     Start: 'start',
     Quiz: 'quiz',
     Game: 'game',
-    Score: 'score',
+    Score: 'scores',
     Controls: 'controls',
     HowToPlay: 'how-to-play',
 };
@@ -45,7 +45,7 @@ export const gearSettings = {
         curve: [0.01, 0.3, 0.7, 0.9, 0.8, 0.4, 0.08],
     },
     5: {
-        maxSpeed: 90,
+        maxSpeed: 130,
         peakAcceleration: 1.2,
         optimalRPM: 5500,
         maxRPM: 6200,
@@ -59,5 +59,10 @@ export const controls = {
         break: 'ShiftLeft',
         gearUp: 'ArrowUp',
         gearDown: 'ArrowDown',
+        nitro: 'ControlLeft',
     },
 };
+
+export const questionPerRound = 3;
+
+export const nitroMultiplayer = 2;

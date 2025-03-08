@@ -1,4 +1,4 @@
-import { controls, gearSettings } from '../config';
+import { controls, gearSettings, nitroMultiplayer } from '../config';
 import { shapePoints3D, totalPoints } from '../primitives/track-points';
 
 const pointsLength = 10;
@@ -9,7 +9,8 @@ AFRAME.registerComponent('car', {
     schema: {},
 
     init() {
-        this.enabled = true;
+        this.enabled = false;
+        this.nitro = false;
         this.t = 0;
         this.isLapping = true;
         this.throttle = 0;
@@ -21,19 +22,34 @@ AFRAME.registerComponent('car', {
         this.progress = 0;
         // Controls
         this.controls();
-        // Initial position
-        this.updatePhysics(0);
-        this.updatePosition();
+        // Handlers
+        this.enableCarHandler = this.enableCar.bind(this);
+        this.clearHandler = this.clear.bind(this);
         // Events
         this.el.sceneEl.addEventListener(
             'countdown-finished',
-            this.enableCar.bind(this),
+            this.enableCarHandler,
         );
+        // Init
+        this.updatePhysics(0);
+        this.updatePosition();
+        this.clear();
+        // Render dom state
+        const isInVR = this.el.sceneEl.is('vr-mode');
+        !isInVR && this.renderDom();
+    },
+
+    renderDom() {
+        this.el.sceneEl.systems['dom-state'].renderStateHandler('useNitro');
     },
 
     controls() {
-        window.addEventListener('keydown', this.onKeyDown.bind(this));
-        window.addEventListener('keyup', this.onKeyUp.bind(this));
+        // Handlers
+        this.keydownHandler = this.onKeyDown.bind(this);
+        this.keyupHandler = this.onKeyUp.bind(this);
+
+        window.addEventListener('keydown', this.keydownHandler);
+        window.addEventListener('keyup', this.keyupHandler);
 
         this.rightController =
             this.el.sceneEl.querySelector('#right-controller');
@@ -62,7 +78,25 @@ AFRAME.registerComponent('car', {
         });
     },
 
+    remove() {
+        this.el.sceneEl.removeEventListener(
+            'countdown-finished',
+            this.enableCarHandler,
+        );
+
+        this.clearControls();
+    },
+
+    clearControls() {
+        window.removeEventListener('keydown', this.keydownHandler);
+        window.removeEventListener('keyup', this.keyupHandler);
+    },
+
     onKeyDown(e) {
+        if (!this.enabled) {
+            return false;
+        }
+
         switch (e.code) {
             case controls.desktop.accelerate:
                 this.throttle = 1;
@@ -75,6 +109,9 @@ AFRAME.registerComponent('car', {
                 break;
             case controls.desktop.gearDown:
                 this.shiftGear(false);
+                break;
+            case controls.desktop.nitro:
+                this.useNitro();
                 break;
         }
     },
@@ -96,7 +133,7 @@ AFRAME.registerComponent('car', {
 
         this.isShifting = true;
         this.currentGear = newGear;
-        this.el.sceneEl.emit('setGear', { gear: this.currentGear });
+        this.sendGear();
 
         setTimeout(() => {
             this.isShifting = false;
@@ -133,31 +170,37 @@ AFRAME.registerComponent('car', {
         const gear = gearSettings[this.currentGear];
         const speedRatio = this.speed / gear.maxSpeed;
 
+        const multiplayer = this.nitro ? nitroMultiplayer : 1;
         // Calculate acceleration
         const accelerationFactor = this.getAccelerationFactor(gear, speedRatio);
+        const peakAcceleration = this.nitro
+            ? Math.max(gear.peakAcceleration, 1.5)
+            : gear.peakAcceleration;
         const acceleration =
-            gear.peakAcceleration * accelerationFactor * this.throttle;
+            peakAcceleration * accelerationFactor * this.throttle * multiplayer;
 
         // Natural delay
-        const naturalDeceleration = 2.5 * deltaTime; // 2.5 м/с²
+        const naturalDeceleration = 2.5 * deltaTime; // 2.5 м/s²
 
         // Breaking
         if (this.throttle < 0) {
-            const brakeForce = 8.0 * deltaTime; // 8 м/с²
+            const brakeForce = 8.0 * deltaTime; // 8 м/s²
             this.speed = Math.max(0, this.speed - brakeForce * 3.6);
         } else if (this.throttle === 0) {
             // Air resistance
             this.speed = Math.max(0, this.speed - naturalDeceleration * 3.6);
         } else {
             // Acceleration integration
-            this.speed += acceleration * deltaTime * 3.6;
+            this.speed += acceleration * deltaTime * multiplayer * 3.6;
         }
 
         // Speed limitation
         // this.speed = Math.min(this.speed, gear.maxSpeed);
 
         // RPM calculation
-        this.rpm = 800 + (this.speed / gear.maxSpeed) * (gear.maxRPM - 800);
+        this.rpm =
+            800 +
+            (this.speed / gear.maxSpeed) * (gear.maxRPM - 800) * multiplayer;
         this.rpm = Math.min(this.rpm, gear.maxRPM);
     },
 
@@ -201,7 +244,35 @@ AFRAME.registerComponent('car', {
         this.el.sceneEl.emit('setRpm', { rpm: this.rpm });
     },
 
+    sendGear() {
+        this.el.sceneEl.emit('setGear', { gear: this.currentGear });
+    },
+
     enableCar() {
         this.enabled = true;
+    },
+
+    clear() {
+        this.currentGear = 1;
+        this.speed = 0;
+        this.rpm = 800;
+
+        this.sendEvents();
+        this.sendGear();
+    },
+
+    useNitro() {
+        const nitro = this.el.sceneEl.systems['state'].state.nitro;
+
+        console.log(nitro, '<<<');
+
+        if (!this.nitro && nitro > 0) {
+            this.el.sceneEl.emit('useNitro');
+            this.nitro = true;
+
+            setTimeout(() => {
+                this.nitro = false;
+            }, 1000);
+        }
     },
 });

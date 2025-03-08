@@ -54,6 +54,26 @@ body {
     }
 }
 
+.inpt {
+    box-sizing: border-box;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    max-width: 100%;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+
+    &::placeholder {
+        color: #c2bebe;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
 
 
 

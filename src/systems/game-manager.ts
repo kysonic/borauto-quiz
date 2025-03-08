@@ -23,7 +23,9 @@ AFRAME.registerSystem('game-manager', {
             this.quizFinishedHandler,
         );
         // Init
-        this.router.changeRoute(startPage);
+        setTimeout(() => {
+            this.router.changeRoute(startPage);
+        }, 1000);
     },
 
     remove() {

@@ -21,6 +21,7 @@ import './components/ui-switcher';
 import './components/countdown';
 import './components/timer';
 import './components/quiz-manager';
+import './components/score-manager';
 // Primitives
 import './primitives/track';
 // Routes

@@ -8,12 +8,12 @@ export const pages = {
     Start: 'start',
     Quiz: 'quiz',
     Game: 'game',
-    Score: 'scores',
+    Scores: 'scores',
     Controls: 'controls',
     HowToPlay: 'how-to-play',
 };
 
-export const startPage = pages.Start;
+export const startPage = pages.Scores;
 
 export const gearSettings = {
     1: {

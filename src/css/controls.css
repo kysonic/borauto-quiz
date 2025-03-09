@@ -1,0 +1,25 @@
+.controls {
+    display: none;
+
+    .title {
+        font-size: 30px;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .schema {
+        margin-top: 20px;
+        width: 425px;
+        height: 220px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+
+        .button {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+}

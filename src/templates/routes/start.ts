@@ -47,7 +47,7 @@ AFRAME.registerTemplate(
         >
             <a-box
                 class="intersect"
-                event-emit__common="__event: mouseup; __emit: quiz-start"
+                event-emit__common="__event: mouseup; __emit: controls-start"
                 event-set__mouseenter="material.opacity: 0.5"
                 event-set__mouseleave="material.opacity: 1"
                 material="color: #995cff;"

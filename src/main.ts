@@ -32,6 +32,7 @@ import './templates/routes/game';
 import './templates/routes/quiz';
 import './templates/routes/scores';
 import './templates/routes/top-scores';
+import './templates/routes/controls';
 // Templates
 import './templates/common/env';
 import './templates/common/effects';

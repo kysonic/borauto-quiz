@@ -1,13 +1,29 @@
 AFRAME.registerComponent('camera-holder', {
     init() {
+        // Handlers
+        this.setVrCameraConfigHandler = this.setVrCameraConfig.bind(this);
+        this.startGameHandler = this.startGame.bind(this);
+        this.backToStartHandler = this.backToStart.bind(this);
+        // Events
         this.el.sceneEl.addEventListener(
             'enter-vr',
-            this.setVrCameraConfig.bind(this),
+            this.setVrCameraConfigHandler,
         );
-
+        this.el.sceneEl.addEventListener('game-start', this.startGameHandler);
         this.el.sceneEl.addEventListener(
+            'back-to-start',
+            this.backToStartHandler,
+        );
+    },
+
+    remove() {
+        this.el.sceneEl.removeEventListener(
+            'enter-vr',
+            this.setVrCameraConfigHandler,
+        );
+        this.el.sceneEl.removeEventListener(
             'game-start',
-            this.startGame.bind(this),
+            this.startGameHandler,
         );
     },
 
@@ -22,8 +38,21 @@ AFRAME.registerComponent('camera-holder', {
         this.el.sceneEl.camera.el.removeAttribute('orbit-controls');
     },
 
+    backToStart() {
+        this.el.sceneEl.camera.el.setAttribute('orbit-controls', {
+            autoRotate: 'true',
+            target: '0 1 0',
+            initialPosition: '0 2 -3',
+            minDistance: 1,
+            maxDistance: 2,
+            rotateSpeed: 0.5,
+            maxPolarAngle: 90,
+        });
+    },
+
     startGame() {
         const isInVR = this.el.sceneEl.is('vr-mode');
+
         if (!isInVR) {
             this.el.sceneEl.camera.el.removeAttribute('orbit-controls');
             this.el.sceneEl.camera.el.setAttribute('orbit-controls', {

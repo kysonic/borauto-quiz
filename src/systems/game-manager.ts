@@ -5,6 +5,7 @@ AFRAME.registerSystem('game-manager', {
     domUi,
 
     init() {
+        this.paused = 0;
         this.gameCycles = 0;
         this.router = this.el.systems.router;
         // Handlers
@@ -14,6 +15,7 @@ AFRAME.registerSystem('game-manager', {
         this.backToStartHandler = this.backToStart.bind(this);
         this.scoresSavedHandler = this.scoresSaved.bind(this);
         this.sceneLoadedHandler = this.sceneLoaded.bind(this);
+        this.controlsHandler = this.controls.bind(this);
         // Events
         this.sceneEl.addEventListener('game-start', this.startGameHandler);
         this.sceneEl.addEventListener(
@@ -27,6 +29,7 @@ AFRAME.registerSystem('game-manager', {
         this.sceneEl.addEventListener('scores-saved', this.scoresSavedHandler);
         this.sceneEl.addEventListener('back-to-start', this.backToStartHandler);
         this.sceneEl.addEventListener('loaded', this.sceneLoadedHandler);
+        this.sceneEl.addEventListener('controls-start', this.controlsHandler);
     },
 
     remove() {
@@ -84,5 +87,9 @@ AFRAME.registerSystem('game-manager', {
 
     sceneLoaded() {
         document.getElementById('loading-dom').style.display = 'none';
+    },
+
+    controls() {
+        this.router.changeRoute('controls');
     },
 });

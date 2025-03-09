@@ -30,6 +30,11 @@ body {
     padding: 50px;
 }
 
+.data {
+    position: relative;
+    z-index: 11;
+}
+
 .backdrop {
     position: absolute;
     background-color: #000;

@@ -1,5 +1,6 @@
 const stateMap = {
     increaseLaps: 'laps',
+    setLaps: 'laps',
     setSpeed: 'speed',
     setGear: 'gear',
     setRpm: 'domRpm',
@@ -8,6 +9,7 @@ const stateMap = {
     setQuestionNumber: 'questionNumber',
     increaseNitro: 'nitro',
     useNitro: 'nitro',
+    setNitro: 'nitro',
     setTopScores: 'topScores',
 };
 
@@ -24,17 +26,20 @@ const nitroHandler = (value) => {
     }
 };
 
+const lapsHandler = (value) => {
+    const lapNode = document.getElementById('laps-number-dom');
+    const scoresNode = document.getElementById('scores-laps-number-dom');
+    if (lapNode) {
+        lapNode.textContent = value;
+    }
+    if (scoresNode) {
+        scoresNode.textContent = value;
+    }
+};
+
 const config = {
-    increaseLaps: (value) => {
-        const lapNode = document.getElementById('laps-number-dom');
-        const scoresNode = document.getElementById('scores-laps-number-dom');
-        if (lapNode) {
-            lapNode.textContent = value;
-        }
-        if (scoresNode) {
-            scoresNode.textContent = value;
-        }
-    },
+    increaseLaps: lapsHandler,
+    setLaps: lapsHandler,
     setSpeed: (value) =>
         (document.getElementById('speed-number-dom').textContent = value),
     setGear: (value) =>
@@ -59,6 +64,7 @@ const config = {
 
     increaseNitro: nitroHandler,
     useNitro: nitroHandler,
+    setNitro: nitroHandler,
 
     setTopScores: (value) => {
         const resultsNode = document.getElementById('top-scores-results-dom');

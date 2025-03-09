@@ -20,6 +20,10 @@ AFRAME.registerState({
             state.laps += action.amount;
         },
 
+        setLaps(state, action) {
+            state.laps = action.laps;
+        },
+
         setSpeed(state, action) {
             state.speed = Math.floor(action.speed);
         },
@@ -54,6 +58,10 @@ AFRAME.registerState({
 
         useNitro(state) {
             state.nitro--;
+        },
+
+        setNitro(state, action) {
+            state.nitro = action.nitro;
         },
 
         setTopScores(state, action) {

@@ -1,5 +1,15 @@
 import { Font } from '../../config';
 
+// <a-entity
+//     confetti-effect="
+//       position: 0 0.5 -1;
+//       particleCount: 200;
+//       size: 0.01;
+//       border: 0.2;
+//       gravity: 0.0005;
+//       bounce: 0.1"
+//   ></a-entity>
+
 AFRAME.registerTemplate(
     'start',
     /*html*/ ` 
@@ -7,6 +17,7 @@ AFRAME.registerTemplate(
         <img id="logo-img" src="/assets/img/b-logo-w.png">
         <img id="quiz-img" src="/assets/img/quiz.png">
     </a-assets>
+    
     <a-entity id="start-vr" ui-switcher="ui: start">
         <a-rounded position="-0.65 0.8 -0.4" opacity="0.2" color="#000" width="1.3" height="1" radius="0.1"></a-rounded>
         <a-image position="0 1.6 -0.41" width="0.8" height="0.2" rotation="0 180 0" src="#logo-img"></a-image>

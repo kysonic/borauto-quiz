@@ -16,6 +16,7 @@ AFRAME.registerSystem('game-manager', {
         this.scoresSavedHandler = this.scoresSaved.bind(this);
         this.sceneLoadedHandler = this.sceneLoaded.bind(this);
         this.controlsHandler = this.controls.bind(this);
+        this.howToPlayHandler = this.howToPlay.bind(this);
         // Events
         this.sceneEl.addEventListener('game-start', this.startGameHandler);
         this.sceneEl.addEventListener(
@@ -30,6 +31,10 @@ AFRAME.registerSystem('game-manager', {
         this.sceneEl.addEventListener('back-to-start', this.backToStartHandler);
         this.sceneEl.addEventListener('loaded', this.sceneLoadedHandler);
         this.sceneEl.addEventListener('controls-start', this.controlsHandler);
+        this.sceneEl.addEventListener(
+            'how-to-play-start',
+            this.howToPlayHandler,
+        );
     },
 
     remove() {
@@ -91,5 +96,9 @@ AFRAME.registerSystem('game-manager', {
 
     controls() {
         this.router.changeRoute('controls');
+    },
+
+    howToPlay() {
+        this.router.changeRoute('how-to-play');
     },
 });

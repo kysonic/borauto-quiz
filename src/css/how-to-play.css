@@ -1,0 +1,27 @@
+.how-to-play {
+    display: none;
+
+    .title {
+        font-size: 30px;
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .text {
+        margin-top: 10px;
+        font-size: 20px;
+        color: #fff;
+        text-align: left;
+        white-space: pre-line;
+    }
+
+    .buttons {
+        margin-top: 10px;
+
+        .button {
+            display: block;
+            margin: 0 auto;
+        }
+    }
+}

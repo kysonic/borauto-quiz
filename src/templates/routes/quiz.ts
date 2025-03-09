@@ -25,6 +25,19 @@ AFRAME.registerTemplate(
             width="1.5"
             color="#FFF"
         ></a-text>
+        <!-- Sounds -->
+        <a-sound
+            id="yeap-sound-e"
+            src="#yeap-sound"
+            position="0 1 0"
+            volume="0.6"
+        ></a-sound>
+        <a-sound
+            id="nope-sound-e"
+            src="#nope-sound"
+            position="0 1 0"
+            volume="0.6"
+        ></a-sound>
         <!-- Buttons -->
         <a-text
             position="0.5 1 -0.43"

@@ -10,6 +10,7 @@ AFRAME.registerComponent('car', {
 
     init() {
         this.enabled = false;
+        this.gasSoundStarted = false;
         this.nitro = false;
         this.t = 0;
         this.isLapping = true;
@@ -20,6 +21,8 @@ AFRAME.registerComponent('car', {
         this.isShifting = false;
         this.lastTime = performance.now();
         this.progress = 0;
+        // Sounds
+        this.sounds();
         // Controls
         this.controls();
         // Handlers
@@ -37,6 +40,31 @@ AFRAME.registerComponent('car', {
         // Render dom state
         const isInVR = this.el.sceneEl.is('vr-mode');
         !isInVR && this.renderDom();
+        // Start
+        this.start();
+    },
+
+    sounds() {
+        // Sounds
+        this.idleSound = document.getElementById('idle-sound-e');
+        this.startSound = document.getElementById('start-sound-e');
+        this.gearboxSound = document.getElementById('gearbox-sound-e');
+        this.gasStartSound = document.getElementById('gas-start-e');
+        this.gasTopSound = document.getElementById('gas-top-e');
+        // this.gasTopIdleSound = document.getElementById('gas-top-idle-sound-e');
+        this.gasGearSound = document.getElementById('gas-gear-e');
+        this.nitroSound = document.getElementById('nitro-sound-e');
+    },
+
+    start() {
+        // Sounds
+        setTimeout(() => {
+            this.startSound.components.sound.playSound();
+
+            setTimeout(() => {
+                this.idleSound.components.sound.playSound();
+            }, 1000);
+        }, 500);
     },
 
     renderDom() {
@@ -56,9 +84,11 @@ AFRAME.registerComponent('car', {
 
         this.rightController.addEventListener('triggerdown', () => {
             this.throttle = 1;
+            this.startGasSound();
         });
         this.rightController.addEventListener('triggerup', () => {
             this.throttle = 0;
+            this.stopGasSound();
         });
         this.rightController.addEventListener('gripdown', () => {
             this.throttle = -1;
@@ -85,6 +115,7 @@ AFRAME.registerComponent('car', {
         );
 
         this.clearControls();
+        this.stopSounds();
     },
 
     clearControls() {
@@ -100,6 +131,7 @@ AFRAME.registerComponent('car', {
         switch (e.code) {
             case controls.desktop.accelerate:
                 this.throttle = 1;
+                this.startGasSound();
                 break;
             case controls.desktop.break:
                 this.throttle = -1;
@@ -122,6 +154,7 @@ AFRAME.registerComponent('car', {
             e.code === controls.desktop.break
         ) {
             this.throttle = 0;
+            this.stopGasSound();
         }
     },
 
@@ -134,6 +167,7 @@ AFRAME.registerComponent('car', {
         this.isShifting = true;
         this.currentGear = newGear;
         this.sendGear();
+        this.gearSound();
 
         setTimeout(() => {
             this.isShifting = false;
@@ -267,10 +301,58 @@ AFRAME.registerComponent('car', {
         if (!this.nitro && nitro > 0) {
             this.el.sceneEl.emit('useNitro');
             this.nitro = true;
+            this.startNitroSound();
 
             setTimeout(() => {
                 this.nitro = false;
             }, 1000);
         }
+    },
+
+    startGasSound() {
+        if (!this.gasSoundStarted) {
+            this.gasSoundStarted = true;
+            this.gasStartSound.components.sound.playSound();
+
+            setTimeout(() => {
+                this.gasTopSound.components.sound.playSound();
+
+                // setTimeout(() => {
+                //     this.gasTopIdleSound.components.sound.playSound();
+                // }, 3000);
+            }, 500);
+        }
+    },
+
+    startNitroSound() {
+        this.nitroSound.components.sound.playSound();
+    },
+
+    stopGasSound() {
+        this.gasSoundStarted = false;
+        this.gasTopSound.components.sound.stopSound();
+        // this.gasTopIdleSound.components.sound.stopSound();
+    },
+
+    gearSound() {
+        this.gearboxSound.components.sound.playSound();
+        this.gasTopSound.components.sound.stopSound();
+        // this.gasTopIdleSound.components.sound.stopSound();
+
+        setTimeout(() => {
+            this.gasSoundStarted = false;
+            this.gasGearSound.components.sound.playSound();
+            this.startGasSound();
+        }, 100);
+    },
+
+    stopSounds() {
+        this.idleSound.components.sound.stopSound();
+        this.startSound.components.sound.stopSound();
+        this.gearboxSound.components.sound.stopSound();
+        this.gasStartSound.components.sound.stopSound();
+        this.gasTopSound.components.sound.stopSound();
+        this.gasGearSound.components.sound.stopSound();
+        this.nitroSound.components.sound.stopSound();
     },
 });

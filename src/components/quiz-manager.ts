@@ -9,6 +9,9 @@ AFRAME.registerComponent('quiz-manager', {
     init() {
         this.answered = false;
         this.answerHandler = this.answer.bind(this);
+        // Sounds
+        this.yeapSound = document.getElementById('yeap-sound-e');
+        this.nopeSound = document.getElementById('nope-sound-e');
         // Events
         this.el.sceneEl.addEventListener('answer', this.answerHandler);
         // Init
@@ -58,6 +61,7 @@ AFRAME.registerComponent('quiz-manager', {
 
     success(answer) {
         this.el.sceneEl.emit('increaseNitro');
+        this.yeapSound.components.sound.playSound();
         const isInVR = this.el.sceneEl.is('vr-mode');
         isInVR ? this.vrSuccess(answer) : this.domSuccess(answer);
     },
@@ -78,6 +82,7 @@ AFRAME.registerComponent('quiz-manager', {
     },
 
     fail(answer) {
+        this.nopeSound.components.sound.playSound();
         const isInVR = this.el.sceneEl.is('vr-mode');
         isInVR ? this.vrFail(answer) : this.domFail(answer);
     },

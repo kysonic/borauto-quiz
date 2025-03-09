@@ -32,7 +32,7 @@ AFRAME.registerComponent('timer', {
     },
 
     setTime() {
-        this.time = 5 * 1000 + 1000;
+        this.time = 30 * 1000 + 1000;
     },
 
     update() {

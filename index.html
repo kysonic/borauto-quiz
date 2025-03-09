@@ -14,14 +14,8 @@
     <body>
         <!-- Desktop version of UI -->
         <div id="ui">
-            {{> loading}}
-            {{> start}}
-            {{> game}}
-            {{> quiz}}
-            {{> scores}}
-            {{> top-scores}}
-            {{> controls}}
-            {{> how-to-play}}
+            {{> loading}} {{> start}} {{> game}} {{> quiz}} {{> scores}} {{>
+            top-scores}} {{> controls}} {{> how-to-play}}
         </div>
         <!-- Desktop version of UI -->
         <a-scene
@@ -59,6 +53,7 @@
             <!-- Common Env -->
             <a-template name="env"></a-template>
             <a-template name="effects"></a-template>
+            <a-template name="preload"></a-template>
             <!-- Router -->
             <a-route id="start" template="start"></a-route>
             <a-route id="game" template="game"></a-route>

@@ -15,7 +15,9 @@ AFRAME.registerComponent('countdown', {
         // Events
         this.el.sceneEl.addEventListener('enter-vr', this.vrModeHandler);
         this.el.sceneEl.addEventListener('exit-vr', this.domModeHandler);
+        // Init
         this.i = setInterval(this.updateHandler, 1000);
+        this.sound();
     },
 
     nodes() {
@@ -29,12 +31,14 @@ AFRAME.registerComponent('countdown', {
         );
         this.countdownGoDOMNode = document.getElementById('countdown-go-dom');
         this.countdownGoVRNode = document.getElementById('countdown-go-vr');
+        this.countdownSound = document.getElementById('countdown-sound-e');
     },
 
     remove() {
         this.el.sceneEl.removeEventListener('enter-vr', this.vrModeHandler);
         this.el.sceneEl.removeEventListener('exit-vr', this.domModeHandler);
         clearInterval(this.i);
+        this.countdownSound.components.sound.stopSound();
     },
 
     update() {
@@ -113,5 +117,9 @@ AFRAME.registerComponent('countdown', {
         isInVR ? this.VRClear() : this.DOMClear();
         this.el.setAttribute('visible', 'false');
         domUi.hideNode(this.countdownDOMNode);
+    },
+
+    sound() {
+        this.countdownSound.components.sound.playSound();
     },
 });

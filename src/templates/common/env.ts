@@ -31,5 +31,13 @@ AFRAME.registerTemplate(
         scale="0.03 0.03 0.03"
         position="0 0.51 0.03"
     ></a-entity>
+    <!-- Sounds -->
+    <a-sound
+        id="main-theme-sound"
+        src="#main-theme"
+        position="0 1 0"
+        volume="0.3"
+        loop="true"
+    ></a-sound>
     `,
 );

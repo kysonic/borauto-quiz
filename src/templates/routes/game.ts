@@ -15,6 +15,70 @@ AFRAME.registerTemplate(
     <a-entity game-runner timer></a-entity>
     <!-- Car -->
     <a-entity id="car" gltf-model="#carModel" car scale="0.1 0.1 0.1"></a-entity>
+    <!-- Sounds -->
+    <a-sound
+        id="idle-sound-e"
+        src="#idle-sound"
+        position="0 1 0"
+        volume="1"
+        loop="true"
+    ></a-sound>
+    <a-sound
+        id="start-sound-e"
+        src="#start-sound"
+        position="0 1 0"
+        volume="0.8"
+    ></a-sound>
+    <a-sound
+        id="gearbox-sound-e"
+        src="#gearbox-sound"
+        position="0 1 0"
+        volume="0.6"
+    ></a-sound>
+    <a-sound
+        id="gas-start-e"
+        src="#gas-start-sound"
+        position="0 1 0"
+        volume="1.2"
+    ></a-sound>
+    <a-sound
+        id="gas-top-e"
+        src="#gas-top-sound"
+        position="0 1 0"
+        volume="1.5"
+        loop="true"
+    ></a-sound>
+    <a-sound
+        id="countdown-sound-e"
+        src="#countdown-sound"
+        position="0 1 0"
+        volume="0.3"
+    ></a-sound>
+    <!--a-sound
+        id="gas-top-idle-sound-e"
+        src="#gas-top-idle-sound"
+        position="0 1 0"
+        volume="0.05"
+        loop="true"
+    ></!--a-sound-->
+    <a-sound
+        id="gas-gear-e"
+        src="#gas-gear-sound"
+        position="0 1 0"
+        volume="1"
+    ></a-sound>
+    <a-sound
+        id="nitro-sound-e"
+        src="#nitro-sound"
+        position="0 1 0"
+        volume="0.6"
+    ></a-sound>
+    <a-sound
+        id="confetti-sound-e"
+        src="#confetti-sound"
+        position="0 1 0"
+        volume="0.7"
+    ></a-sound>
     <!-- Confetti -->
     <a-entity id="confetti"></a-entity>
     <!-- UI -->

@@ -2,7 +2,7 @@ AFRAME.registerComponent('game-runner', {
     init() {
         this.car = document.getElementById('car');
         this.confetti = document.getElementById('confetti');
-
+        this.confettiSound = document.getElementById('confetti-sound-e');
         // Handlers
         this.endCycleHandler = this.endCycle.bind(this);
         //Events
@@ -17,6 +17,7 @@ AFRAME.registerComponent('game-runner', {
         const carPosition = this.car.object3D.position;
 
         this.car.parentNode.removeChild(this.car);
+        this.confettiSound.components.sound.playSound();
 
         this.confetti.setAttribute(
             'confetti-effect',

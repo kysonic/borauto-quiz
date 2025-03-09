@@ -32,7 +32,7 @@ AFRAME.registerComponent('timer', {
     },
 
     setTime() {
-        this.time = 30 * 1000 + 1000;
+        this.time = 5 * 1000 + 1000;
     },
 
     update() {
@@ -43,8 +43,7 @@ AFRAME.registerComponent('timer', {
         if (this.time <= 0) {
             clearInterval(this.i);
             this.i = null;
-            this.setTime();
-            this.el.sceneEl.emit('timer-finished');
+            this.el.sceneEl.emit('timer-done');
         }
     },
 });

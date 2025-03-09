@@ -1,15 +1,5 @@
 import { Font } from '../../config';
 
-// <a-entity
-//     confetti-effect="
-//       position: 0 0.5 -1;
-//       particleCount: 200;
-//       size: 0.01;
-//       border: 0.2;
-//       gravity: 0.0005;
-//       bounce: 0.1"
-//   ></a-entity>
-
 AFRAME.registerTemplate(
     'start',
     /*html*/ ` 

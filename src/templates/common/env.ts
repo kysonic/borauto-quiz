@@ -4,10 +4,6 @@ AFRAME.registerTemplate(
     <!-- Assets --> 
     <a-assets>
         <a-asset-item
-            id="car"
-            src="/assets/models/cars/simple.glb"
-        ></a-asset-item>
-        <a-asset-item
             id="track"
             src="/assets/models/env/track.glb"
         ></a-asset-item>

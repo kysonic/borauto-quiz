@@ -13,6 +13,7 @@ AFRAME.registerSystem('game-manager', {
         this.quizFinishedHandler = this.quizFinished.bind(this);
         this.backToStartHandler = this.backToStart.bind(this);
         this.scoresSavedHandler = this.scoresSaved.bind(this);
+        this.sceneLoadedHandler = this.sceneLoaded.bind(this);
         // Events
         this.sceneEl.addEventListener('game-start', this.startGameHandler);
         this.sceneEl.addEventListener(
@@ -25,6 +26,7 @@ AFRAME.registerSystem('game-manager', {
         );
         this.sceneEl.addEventListener('scores-saved', this.scoresSavedHandler);
         this.sceneEl.addEventListener('back-to-start', this.backToStartHandler);
+        this.sceneEl.addEventListener('loaded', this.sceneLoadedHandler);
     },
 
     remove() {
@@ -77,6 +79,10 @@ AFRAME.registerSystem('game-manager', {
     clearState() {
         this.gameCycles = 0;
         this.sceneEl.emit('setNitro', { nitro: 1 });
-        this.sceneEl.emit('setLaps', { nitro: 0 });
+        this.sceneEl.emit('setLaps', { laps: 0 });
+    },
+
+    sceneLoaded() {
+        document.getElementById('loading-dom').style.display = 'none';
     },
 });

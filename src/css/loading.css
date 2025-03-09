@@ -1,0 +1,36 @@
+.loading {
+    &.screen {
+        background-color: #fff;
+        color: #995cff;
+
+        .block {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    .logo {
+        width: 50px;
+        height: 50px;
+        background-image: url('/assets/img/b-logo-small.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        animation: spin 0.5s ease-in-out infinite;
+    }
+
+    .text {
+        text-transform: uppercase;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

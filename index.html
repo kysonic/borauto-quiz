@@ -14,6 +14,7 @@
     <body>
         <!-- Desktop version of UI -->
         <div id="ui">
+            {{> loading}}
             {{> start}}
             {{> game}}
             {{> quiz}}
@@ -26,6 +27,7 @@
             renderer="antialias: true"
             light="defaultLightsEnabled: false"
             fog="type: linear; color: #64c2c4; far: 5; near: 0; density: 6.45025"
+            loading-screen="enabled: false"
         >
             <!-- Camera cannot be added to template so how a-frame will do it otherwise -->
             <a-entity id="rig" camera-holder>

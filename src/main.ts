@@ -23,6 +23,7 @@ import './components/quiz-manager';
 import './components/score-manager';
 import './components/top-score-manager';
 import './components/confetti-effect';
+import './components/game-runner';
 // Primitives
 import './primitives/track';
 // Routes

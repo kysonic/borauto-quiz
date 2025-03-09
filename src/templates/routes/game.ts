@@ -4,13 +4,19 @@ AFRAME.registerTemplate(
     'game',
     /*html*/ ` 
     <a-assets>
+        <a-asset-item
+            id="carModel"
+            src="/assets/models/cars/simple.glb"
+        ></a-asset-item>
         <img id="tachometer-img" src="/assets/img/tachometer.png">
         <img id="arrow-img" src="/assets/img/arrow.png">
     </a-assets>
+    <!-- Manager -->
+    <a-entity game-runner timer></a-entity>
     <!-- Car -->
-    <a-entity  gltf-model="#car" car scale="0.1 0.1 0.1"></a-entity>
-    <!-- Timer -->
-    <a-entity timer></a-entity>
+    <a-entity id="car" gltf-model="#carModel" car scale="0.1 0.1 0.1"></a-entity>
+    <!-- Confetti -->
+    <a-entity id="confetti"></a-entity>
     <!-- UI -->
     <a-entity
         ui-switcher="ui: game"

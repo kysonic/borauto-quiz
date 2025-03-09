@@ -9,10 +9,6 @@ AFRAME.registerComponent('camera-holder', {
             'game-start',
             this.startGame.bind(this),
         );
-        // this.el.sceneEl.addEventListener(
-        //     'quiz-start',
-        //     this.startGame.bind(this),
-        // );
     },
 
     setVrCameraConfig() {

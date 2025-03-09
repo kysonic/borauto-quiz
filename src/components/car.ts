@@ -264,8 +264,6 @@ AFRAME.registerComponent('car', {
     useNitro() {
         const nitro = this.el.sceneEl.systems['state'].state.nitro;
 
-        console.log(nitro, '<<<');
-
         if (!this.nitro && nitro > 0) {
             this.el.sceneEl.emit('useNitro');
             this.nitro = true;

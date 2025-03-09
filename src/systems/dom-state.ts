@@ -8,6 +8,7 @@ const stateMap = {
     setQuestionNumber: 'questionNumber',
     increaseNitro: 'nitro',
     useNitro: 'nitro',
+    setTopScores: 'topScores',
 };
 
 const nitroHandler = (value) => {
@@ -58,6 +59,21 @@ const config = {
 
     increaseNitro: nitroHandler,
     useNitro: nitroHandler,
+
+    setTopScores: (value) => {
+        const resultsNode = document.getElementById('top-scores-results-dom');
+        resultsNode.innerHTML = '';
+
+        for (let result of value) {
+            const div = document.createElement('div');
+            div.classList.add('result');
+            div.innerHTML = `
+                <div class='name'>${result.name}</div>
+                <div class='laps'>${result.score}</div>
+            `;
+            resultsNode.appendChild(div);
+        }
+    },
 };
 
 AFRAME.registerSystem('dom-state', {

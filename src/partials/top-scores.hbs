@@ -1,0 +1,17 @@
+<link rel='stylesheet' href='./src/css/top-scores.css' />
+
+<div class='ui screen top-scores' id='top-scores-dom'>
+    <div class='block'>
+        <div class='data'>
+            <div class='title'>Лучшие 10 результатов</div>
+            <div class='results' id='top-scores-results-dom'>
+                <div class="loading">Загрузка...</div>
+            </div>
+            <button
+                class='btn button'
+                onclick="domUi.emit('back-to-start')"
+            >НАЗАД</button>
+        </div>
+        <div class='backdrop'></div>
+    </div>
+</div>

@@ -13,7 +13,13 @@
     </head>
     <body>
         <!-- Desktop version of UI -->
-        <div id="ui">{{> start}} {{> game}} {{> quiz}} {{> scores}}</div>
+        <div id="ui">
+            {{> start}}
+            {{> game}}
+            {{> quiz}}
+            {{> scores}}
+            {{> top-scores}}
+        </div>
         <!-- Desktop version of UI -->
         <a-scene
             id="scene"
@@ -54,6 +60,7 @@
             <a-route id="game" template="game"></a-route>
             <a-route id="quiz" template="quiz"></a-route>
             <a-route id="scores" template="scores"></a-route>
+            <a-route id="top-scores" template="top-scores"></a-route>
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
     </body>

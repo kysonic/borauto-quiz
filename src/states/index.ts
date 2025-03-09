@@ -12,6 +12,7 @@ AFRAME.registerState({
         alreadyTakenQuestions: [],
         questionNumber: 0,
         nitro: 1,
+        topScores: [],
     },
 
     handlers: {
@@ -53,6 +54,10 @@ AFRAME.registerState({
 
         useNitro(state) {
             state.nitro--;
+        },
+
+        setTopScores(state, action) {
+            state.topScores = action.topScores;
         },
     },
 

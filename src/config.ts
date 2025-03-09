@@ -9,11 +9,12 @@ export const pages = {
     Quiz: 'quiz',
     Game: 'game',
     Scores: 'scores',
+    TopScores: 'top-scores',
     Controls: 'controls',
     HowToPlay: 'how-to-play',
 };
 
-export const startPage = pages.Scores;
+export const startPage = pages.Start;
 
 export const gearSettings = {
     1: {

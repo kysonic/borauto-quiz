@@ -4,7 +4,6 @@ import 'aframe-event-set-component';
 import 'a-frame-router-templates';
 import 'aframe-orbit-controls';
 import 'aframe-state-component';
-import 'aframe-slice9-component';
 // libs
 import './lib/dom-ui';
 // State
@@ -22,6 +21,7 @@ import './components/countdown';
 import './components/timer';
 import './components/quiz-manager';
 import './components/score-manager';
+import './components/top-score-manager';
 // Primitives
 import './primitives/track';
 // Routes
@@ -29,6 +29,7 @@ import './templates/routes/start';
 import './templates/routes/game';
 import './templates/routes/quiz';
 import './templates/routes/scores';
+import './templates/routes/top-scores';
 // Templates
 import './templates/common/env';
 import './templates/common/effects';

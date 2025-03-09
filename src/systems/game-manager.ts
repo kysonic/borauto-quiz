@@ -1,4 +1,3 @@
-import { startPage } from '../config';
 import { domUi } from '../lib/dom-ui';
 
 AFRAME.registerSystem('game-manager', {
@@ -12,6 +11,7 @@ AFRAME.registerSystem('game-manager', {
         this.startGameHandler = this.startGame.bind(this);
         this.timerFinishedHandler = this.timerFinished.bind(this);
         this.quizFinishedHandler = this.quizFinished.bind(this);
+        this.backToStartHandler = this.backToStart.bind(this);
         // Events
         this.sceneEl.addEventListener('game-start', this.startGameHandler);
         this.sceneEl.addEventListener(
@@ -22,10 +22,11 @@ AFRAME.registerSystem('game-manager', {
             'quiz-finished',
             this.quizFinishedHandler,
         );
-        // Init
+        this.sceneEl.addEventListener('back-to-start', this.backToStartHandler);
+
         setTimeout(() => {
-            this.router.changeRoute(startPage);
-        }, 1000);
+            this.router.changeRoute('top-scores');
+        }, 2000);
     },
 
     remove() {
@@ -38,9 +39,14 @@ AFRAME.registerSystem('game-manager', {
             'quiz-finished',
             this.quizFinishedHandler,
         );
+        this.sceneEl.removeEventListener(
+            'back-to-start',
+            this.backToStartHandler,
+        );
     },
 
     startGame() {
+        this.gameCycles = 0;
         this.router.changeRoute('game');
     },
 
@@ -56,5 +62,9 @@ AFRAME.registerSystem('game-manager', {
 
     quizFinished() {
         this.router.changeRoute('game');
+    },
+
+    backToStart() {
+        this.router.changeRoute('start');
     },
 });

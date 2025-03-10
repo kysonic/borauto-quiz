@@ -17,7 +17,6 @@ AFRAME.registerSystem('game-manager', {
         this.sceneLoadedHandler = this.sceneLoaded.bind(this);
         this.controlsHandler = this.controls.bind(this);
         this.howToPlayHandler = this.howToPlay.bind(this);
-        this.onGestureHandler = this.onGesture.bind(this);
         // Events
         this.sceneEl.addEventListener('game-start', this.startGameHandler);
         this.sceneEl.addEventListener(
@@ -36,7 +35,10 @@ AFRAME.registerSystem('game-manager', {
             'how-to-play-start',
             this.howToPlayHandler,
         );
-        window.addEventListener('click', this.onGestureHandler);
+
+        // setTimeout(() => {
+        //     this.router.changeRoute('controls');
+        // }, 1000);
     },
 
     remove() {
@@ -67,6 +69,7 @@ AFRAME.registerSystem('game-manager', {
 
     startGame() {
         this.clearState();
+        this.startSounds();
         this.router.changeRoute('game');
     },
 
@@ -108,10 +111,5 @@ AFRAME.registerSystem('game-manager', {
 
     howToPlay() {
         this.router.changeRoute('how-to-play');
-    },
-
-    onGesture() {
-        window.removeEventListener('mousemove', this.onGestureHandler);
-        this.startSounds();
     },
 });

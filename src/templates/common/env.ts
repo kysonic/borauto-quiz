@@ -36,7 +36,7 @@ AFRAME.registerTemplate(
         id="main-theme-sound"
         src="#main-theme"
         position="0 1 0"
-        volume="0.3"
+        volume="0.4"
         loop="true"
     ></a-sound>
     `,

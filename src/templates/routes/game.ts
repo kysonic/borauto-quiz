@@ -20,39 +20,39 @@ AFRAME.registerTemplate(
         id="idle-sound-e"
         src="#idle-sound"
         position="0 1 0"
-        volume="1"
+        volume="1.1"
         loop="true"
     ></a-sound>
     <a-sound
         id="start-sound-e"
         src="#start-sound"
         position="0 1 0"
-        volume="0.8"
+        volume="0.9"
     ></a-sound>
     <a-sound
         id="gearbox-sound-e"
         src="#gearbox-sound"
         position="0 1 0"
-        volume="0.6"
+        volume="0.8"
     ></a-sound>
     <a-sound
         id="gas-start-e"
         src="#gas-start-sound"
         position="0 1 0"
-        volume="1.2"
+        volume="1.5"
     ></a-sound>
     <a-sound
         id="gas-top-e"
         src="#gas-top-sound"
         position="0 1 0"
-        volume="1.5"
+        volume="2"
         loop="true"
     ></a-sound>
     <a-sound
         id="countdown-sound-e"
         src="#countdown-sound"
         position="0 1 0"
-        volume="0.3"
+        volume="0.4"
     ></a-sound>
     <!--a-sound
         id="gas-top-idle-sound-e"
@@ -65,19 +65,19 @@ AFRAME.registerTemplate(
         id="gas-gear-e"
         src="#gas-gear-sound"
         position="0 1 0"
-        volume="1"
+        volume="1.1"
     ></a-sound>
     <a-sound
         id="nitro-sound-e"
         src="#nitro-sound"
         position="0 1 0"
-        volume="0.6"
+        volume="0.7"
     ></a-sound>
     <a-sound
         id="confetti-sound-e"
         src="#confetti-sound"
         position="0 1 0"
-        volume="0.7"
+        volume="0.8"
     ></a-sound>
     <!-- Confetti -->
     <a-entity id="confetti"></a-entity>

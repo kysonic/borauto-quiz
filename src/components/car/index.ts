@@ -1,5 +1,6 @@
-import { controls, gearSettings, nitroMultiplayer } from '../config';
-import { shapePoints3D, totalPoints } from '../primitives/track-points';
+import { gearSettings, nitroMultiplayer } from '../../config';
+import { shapePoints3D, totalPoints } from '../../primitives/track-points';
+import { ControlsMixin } from './controls';
 
 const pointsLength = 10;
 const dropPoints = [pointsLength + 1, pointsLength + pointsLength + 1];
@@ -24,7 +25,9 @@ AFRAME.registerComponent('car', {
         // Sounds
         this.sounds();
         // Controls
-        this.controls();
+        this.el.sceneEl.is('vr-mode')
+            ? this.setupVrControls()
+            : this.setupDomControls();
         // Handlers
         this.enableCarHandler = this.enableCar.bind(this);
         this.clearHandler = this.clear.bind(this);
@@ -71,91 +74,31 @@ AFRAME.registerComponent('car', {
         this.el.sceneEl.systems['dom-state'].renderStateHandler('useNitro');
     },
 
-    controls() {
-        // Handlers
-        this.keydownHandler = this.onKeyDown.bind(this);
-        this.keyupHandler = this.onKeyUp.bind(this);
-
-        window.addEventListener('keydown', this.keydownHandler);
-        window.addEventListener('keyup', this.keyupHandler);
-
-        this.rightController =
-            this.el.sceneEl.querySelector('#right-controller');
-
-        this.rightController.addEventListener('triggerdown', () => {
-            this.throttle = 1;
-            this.startGasSound();
-        });
-        this.rightController.addEventListener('triggerup', () => {
-            this.throttle = 0;
-            this.stopGasSound();
-        });
-        this.rightController.addEventListener('gripdown', () => {
-            this.throttle = -1;
-        });
-        this.rightController.addEventListener('gripup', () => {
-            this.throttle = 0;
-        });
-
-        this.rightController.addEventListener('thumbstickmoved', (evt) => {
-            const { y } = evt.detail;
-
-            if (y > 0.5) {
-                this.shiftGear(false);
-            } else if (y < -0.5) {
-                this.shiftGear(true);
-            }
-        });
-    },
-
     remove() {
         this.el.sceneEl.removeEventListener(
             'countdown-finished',
             this.enableCarHandler,
         );
 
-        this.clearControls();
         this.stopSounds();
+        // Controls
+        this.el.sceneEl.is('vr-mode')
+            ? this.clearVrControls()
+            : this.clearDomControls();
     },
 
-    clearControls() {
-        window.removeEventListener('keydown', this.keydownHandler);
-        window.removeEventListener('keyup', this.keyupHandler);
+    accelerate() {
+        this.throttle = 1;
+        this.startGasSound();
     },
 
-    onKeyDown(e) {
-        if (!this.enabled) {
-            return false;
-        }
-
-        switch (e.code) {
-            case controls.desktop.accelerate:
-                this.throttle = 1;
-                this.startGasSound();
-                break;
-            case controls.desktop.break:
-                this.throttle = -1;
-                break;
-            case controls.desktop.gearUp:
-                this.shiftGear(true);
-                break;
-            case controls.desktop.gearDown:
-                this.shiftGear(false);
-                break;
-            case controls.desktop.nitro:
-                this.useNitro();
-                break;
-        }
+    break() {
+        this.throttle = -1;
     },
 
-    onKeyUp(e) {
-        if (
-            e.code === controls.desktop.accelerate ||
-            e.code === controls.desktop.break
-        ) {
-            this.throttle = 0;
-            this.stopGasSound();
-        }
+    leave() {
+        this.throttle = 0;
+        this.stopGasSound();
     },
 
     shiftGear(up) {
@@ -316,10 +259,6 @@ AFRAME.registerComponent('car', {
 
             setTimeout(() => {
                 this.gasTopSound.components.sound.playSound();
-
-                // setTimeout(() => {
-                //     this.gasTopIdleSound.components.sound.playSound();
-                // }, 3000);
             }, 500);
         }
     },
@@ -355,4 +294,6 @@ AFRAME.registerComponent('car', {
         this.gasGearSound.components.sound.stopSound();
         this.nitroSound.components.sound.stopSound();
     },
+
+    ...ControlsMixin,
 });

@@ -10,6 +10,8 @@ AFRAME.registerTemplate(
         ></a-asset-item>
         <img id="tachometer-img" src="/assets/img/tachometer.png">
         <img id="arrow-img" src="/assets/img/arrow.png">
+        <img id="nos" src="/assets/img/nos.svg">
+        <img id="nos-active" src="/assets/img/nos-active.svg">
     </a-assets>
     <!-- Manager -->
     <a-entity game-runner timer></a-entity>
@@ -101,7 +103,6 @@ AFRAME.registerTemplate(
             bind__value="speed"
             width="0.5"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text>  
         <a-text
             id="gear-number-vr"
@@ -113,7 +114,6 @@ AFRAME.registerTemplate(
             bind__value="gear"
             width="0.5"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text>  
         <!-- info -->
         <a-text
@@ -126,7 +126,6 @@ AFRAME.registerTemplate(
             bind__value="formattedTime"
             width="1"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text>  
         <a-text
             position="-0.31 0.16 0.03"
@@ -136,7 +135,6 @@ AFRAME.registerTemplate(
             value="КРУГОВ ПРОИДЕНО:"
             width="0.5"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text>
         <a-text
             id="laps-number-vr"
@@ -147,9 +145,23 @@ AFRAME.registerTemplate(
             bind__value="laps"
             width="2"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text>
-    </a-entity>
+        <a-text
+            position="0 0.12 0.03"
+            rotation="0 0 0"
+            align="center"
+            font="${Font}"
+            value="NOS"
+            width="1"
+            color="#FFF"
+        ></a-text>
+      
+        <a-entity bind-for="for: item; in: nosItems; key: key;">
+            <template>
+                <a-image position="{{x}} 0.05 0.02" width="0.03" height="0.03" rotation="0 0 0" src="{{img}}"></a-image> 
+            </template>
+        </a-entity>
+    <!-- Countdown Traffic Light -->
     <a-entity countdown>
         <a-rounded position="-0.15 0.8 -0.6" opacity="0.2" color="#000" width="0.3" height="0.5" radius="0.1"></a-rounded>
         <a-rounded position="-0.1 1.06 -0.61" opacity="0.9" color="red" width="0.2" height="0.2" radius="0.09"></a-rounded>
@@ -163,7 +175,6 @@ AFRAME.registerTemplate(
             value="4"
             width="2"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text> 
         <a-text
             id="countdown-go-vr"
@@ -174,7 +185,6 @@ AFRAME.registerTemplate(
             value=""
             width="2"
             color="#FFF"
-            material="color: #FFF;"
         ></a-text> 
     </a-entity>
   `,

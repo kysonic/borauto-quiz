@@ -1,5 +1,6 @@
 import { formatTime } from '../lib/time';
 import questions from '../data/questions.json';
+import { maxNitro } from '../config';
 
 AFRAME.registerState({
     initialState: {
@@ -74,5 +75,14 @@ AFRAME.registerState({
         newState.domRpm = (newState.rpm / 1000) * 45;
         newState.formattedTime = formatTime(newState.time);
         newState.questionNumberVr = `Вопрос номер ${newState.questionNumber}:`;
+        newState.nosItems = Array.from({ length: maxNitro }).map(
+            (_, index) => ({
+                index,
+                key: `${index} + ${index < newState.nitro}`,
+                x: index * 0.03 - 0.119,
+                img: index < newState.nitro ? '#nos-active' : '#nos',
+                isActive: index < newState.nitro,
+            }),
+        );
     },
 });

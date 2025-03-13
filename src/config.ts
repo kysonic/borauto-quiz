@@ -67,3 +67,5 @@ export const controls = {
 export const questionPerRound = 3;
 
 export const nitroMultiplayer = 2;
+
+export const maxNitro = 9;

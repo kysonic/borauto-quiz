@@ -21,7 +21,7 @@ AFRAME.registerTemplate(
             material="color: red;"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 event-emit__common="__event: mouseup; __emit: back-to-start"
                 event-set__mouseenter="material.opacity: 0.5"
                 event-set__mouseleave="material.opacity: 1"

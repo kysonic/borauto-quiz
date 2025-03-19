@@ -37,8 +37,8 @@ AFRAME.registerSystem('game-manager', {
         );
 
         // setTimeout(() => {
-        //     this.router.changeRoute('game');
-        // }, 1000);
+        //     this.router.changeRoute('scores');
+        // }, 5000);
     },
 
     remove() {

@@ -22,7 +22,7 @@ AFRAME.registerTemplate(
             color="#FFF"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 event-emit__common="__event: mouseup; __emit: game-start"
                 event-set__mouseenter="material.opacity: 0.5"
                 event-set__mouseleave="material.opacity: 1"
@@ -45,7 +45,7 @@ AFRAME.registerTemplate(
             color="#FFF"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 event-emit__common="__event: mouseup; __emit: controls-start"
                 event-set__mouseenter="material.opacity: 0.5"
                 event-set__mouseleave="material.opacity: 1"
@@ -67,7 +67,7 @@ AFRAME.registerTemplate(
             color="#FFF"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 event-emit__common="__event: mouseup; __emit: how-to-play-start"
                 event-set__mouseenter="material.opacity: 0.5"
                 event-set__mouseleave="material.opacity: 1"

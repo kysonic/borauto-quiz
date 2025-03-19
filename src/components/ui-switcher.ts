@@ -28,8 +28,8 @@ AFRAME.registerComponent('ui-switcher', {
     },
 
     domMode() {
-        this.el.setAttribute('visible', 'false');
-        // domUi.hideAll();
-        domUi.changeScreen(this.data.ui);
+        this.el.setAttribute('visible', 'true');
+        domUi.hideAll();
+        // domUi.changeScreen(this.data.ui);
     },
 });

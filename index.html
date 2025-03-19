@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Borauto Quiz</title>
+        <meta charset="utf-8" />
         <link rel="stylesheet" href="./src/css/main.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -9,7 +10,6 @@
             href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
             rel="stylesheet"
         />
-        <meta charset="utf-8" />
     </head>
     <body>
         <!-- Desktop version of UI -->
@@ -30,24 +30,24 @@
                 <a-entity
                     camera
                     look-controls="enabled: false"
-                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 2 -3; rotateSpeed: 0.5; maxPolarAngle: 90; autoRotate: true;"
+                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 2 -3; rotateSpeed: 0.5; maxPolarAngle: 90; autoRotate: false;"
                 >
                 </a-entity>
                 <!-- Debug controllers -->
                 <!-- <a-camera position="0 1.2 -1.5">
                     <a-cursor
-                        raycaster="objects: .intersect; far: 3"
+                        raycaster="objects: .collidable; far: 3"
                     ></a-cursor>
                 </a-camera> -->
                 <a-entity
                     id="right-controller"
                     laser-controls="hand: right"
-                    raycaster="objects: .intersect; far: 3"
+                    raycaster="objects: .collidable; far: 3"
                 ></a-entity>
                 <a-entity
                     id="left-controller"
                     laser-controls="hand: left"
-                    raycaster="objects: .intersect; far: 3"
+                    raycaster="objects: .collidable; far: 3"
                 ></a-entity>
             </a-entity>
             <!-- Common Env -->
@@ -62,7 +62,10 @@
             <a-route id="top-scores" template="top-scores"></a-route>
             <a-route id="controls" template="controls"></a-route>
             <a-route id="how-to-play" template="how-to-play"></a-route>
+
+            <!-- <a-entity a-input="id: enterName; position: 0.4 1.6 -0.6; rotation: 0 180 0; scale: 0.5 0.5 0.5;" ></a-entity> -->
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
+        <script src="/vendor/aframe-keyboard.js" defer></script>
     </body>
 </html>

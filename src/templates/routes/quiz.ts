@@ -51,7 +51,7 @@ AFRAME.registerTemplate(
         >
             <a-box
                 id="answer-1-vr"
-                class="intersect"
+                class="collidable"
                 event-emit__common="__event: mouseup; __emit: answer; detail: { answer: 1 }"
                 event-set__mouseenter="material.opacity: 0.5"
                 event-set__mouseleave="material.opacity: 1"
@@ -74,7 +74,7 @@ AFRAME.registerTemplate(
             color="#FFF"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 id="answer-2-vr"
                 event-emit__common="__event: mouseup; __emit: answer; detail: { answer: 2 }"
                 event-set__mouseenter="material.opacity: 0.5"
@@ -98,7 +98,7 @@ AFRAME.registerTemplate(
             color="#FFF"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 id="answer-3-vr"
                 event-emit__common="__event: mouseup; __emit: answer; detail: { answer: 3 }"
                 event-set__mouseenter="material.opacity: 0.5"
@@ -122,7 +122,7 @@ AFRAME.registerTemplate(
             color="#FFF"
         >
             <a-box
-                class="intersect"
+                class="collidable"
                 id="answer-4-vr"
                 event-emit__common="__event: mouseup; __emit: answer; detail: { answer: 4 }"
                 event-set__mouseenter="material.opacity: 0.5"

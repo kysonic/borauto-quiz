@@ -117,10 +117,6 @@ export const ControlsMixin = {
     },
 
     onKeyDown(e) {
-        if (!this.enabled) {
-            return false;
-        }
-
         switch (e.code) {
             case controls.desktop.accelerate:
                 this.accelerate();

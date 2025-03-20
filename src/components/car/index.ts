@@ -47,6 +47,19 @@ AFRAME.registerComponent('car', {
         this.start();
     },
 
+    remove() {
+        this.el.sceneEl.removeEventListener(
+            'countdown-finished',
+            this.enableCarHandler,
+        );
+
+        this.stopSounds();
+        // Controls
+        this.el.sceneEl.is('vr-mode')
+            ? this.clearVrControls()
+            : this.clearDomControls();
+    },
+
     sounds() {
         // Sounds
         this.idleSound = document.getElementById('idle-sound-e');
@@ -72,19 +85,6 @@ AFRAME.registerComponent('car', {
 
     renderDom() {
         this.el.sceneEl.systems['dom-state'].renderStateHandler('useNitro');
-    },
-
-    remove() {
-        this.el.sceneEl.removeEventListener(
-            'countdown-finished',
-            this.enableCarHandler,
-        );
-
-        this.stopSounds();
-        // Controls
-        this.el.sceneEl.is('vr-mode')
-            ? this.clearVrControls()
-            : this.clearDomControls();
     },
 
     accelerate() {

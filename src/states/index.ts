@@ -14,6 +14,8 @@ AFRAME.registerState({
         questionNumber: 0,
         nitro: 1,
         topScores: [],
+        nosItems: [],
+        topScoresItems: [],
     },
 
     handlers: {
@@ -71,18 +73,29 @@ AFRAME.registerState({
     },
 
     computeState(newState) {
-        newState.vrRpm = `0 0 ${-((newState.rpm / 1000) * 45)}`;
-        newState.domRpm = (newState.rpm / 1000) * 45;
-        newState.formattedTime = formatTime(newState.time);
-        newState.questionNumberVr = `Вопрос номер ${newState.questionNumber}:`;
-        newState.nosItems = Array.from({ length: maxNitro }).map(
-            (_, index) => ({
-                index,
-                key: `${index} + ${index < newState.nitro}`,
-                x: index * 0.03 - 0.119,
-                img: index < newState.nitro ? '#nos-active' : '#nos',
-                isActive: index < newState.nitro,
-            }),
-        );
+        // newState.vrRpm = `0 0 ${-((newState.rpm / 1000) * 45)}`;
+        // newState.domRpm = (newState.rpm / 1000) * 45;
+        // newState.formattedTime = formatTime(newState.time);
+        // newState.questionNumberVr = `Вопрос номер ${newState.questionNumber}:`;
+        // https://github.com/supermedium/superframe/tree/master/components/state/#detecting-changes-in-arrays
+        // newState.nosItems.splice(0, 0);
+        // newState.nosItems.push(
+        //     ...Array.from({ length: maxNitro }).map((_, index) => ({
+        //         index,
+        //         key: `${index} + ${index < newState.nitro}`,
+        //         x: index * 0.03 - 0.119,
+        //         img: index < newState.nitro ? '#nos-active' : '#nos',
+        //         isActive: index < newState.nitro,
+        //     })),
+        // );
+        // newState.topScoresItems.splice(0, 0);
+        // newState.topScoresItems.push(
+        //     ...newState.topScores.map((topScore, index) => ({
+        //         id: topScore.id,
+        //         name: topScore.name,
+        //         score: topScore.score,
+        //         y: -(index + 1) * 0.1 + 1.9,
+        //     })),
+        // );
     },
 });

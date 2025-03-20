@@ -8,7 +8,7 @@ AFRAME.registerState({
         gear: 1,
         rpm: 800,
         time: 30 * 1000,
-        laps: 0,
+        laps: 16,
         currentQuestion: questions[0],
         alreadyTakenQuestions: [],
         questionNumber: 0,

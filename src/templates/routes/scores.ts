@@ -33,6 +33,44 @@ AFRAME.registerTemplate(
             width="2"
             color="#FFF"
         ></a-text>
+        <a-entity
+            id="enter-name-input-vr"
+            a-input="id: enterName; position: 0.32 1.4 -0.6; rotation: 0 180 0; scale: 0.5 0.5 0.5; placeholder: Введите имя; max: 20;"
+        ></a-entity>
+        <a-text
+            id="error-text-vr"
+            position="-0.05 1.35 -0.43"
+            rotation="0 180 0"
+            align="center"
+            font="${Font}"
+            value=""
+            width="1.5"
+            color="#cbbae7"
+        ></a-text>
+        <a-text
+            id="send-score-button-vr"
+            position="-0.05 1.15 -0.43"
+            rotation="0 180 0"
+            align="center"
+            font="${Font}"
+            value="ОТПРАВИТЬ"
+            width="1.5"
+            color="#FFF"
+        >
+            <a-box
+                class="collidable"
+                id="answer-4-vr"
+                event-emit__common="__event: mouseup; __emit: submit-score"
+                event-set__mouseenter="material.opacity: 0.5"
+                event-set__mouseleave="material.opacity: 1"
+                material="color: #995cff;"
+                position="0 0 -0.01"
+                width="0.7"
+                height="0.15"
+                depth="0.01"
+            >
+            </a-box>
+        </a-text>
     </a-entity>
   `,
 );

@@ -30,15 +30,16 @@
                 <a-entity
                     camera
                     look-controls="enabled: false"
-                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 2 -3; rotateSpeed: 0.5; maxPolarAngle: 90; autoRotate: false;"
+                    orbit-controls="target: 0 1 0; minDistance: 1; maxDistance: 2; initialPosition: 0 2 -3; rotateSpeed: 0.5; maxPolarAngle: 90; autoRotate: true;"
                 >
                 </a-entity>
-                <!-- Debug controllers -->
+                <!-- Debug camera and controls -->
                 <!-- <a-camera position="0 1.2 -1.5">
                     <a-cursor
                         raycaster="objects: .collidable; far: 3"
                     ></a-cursor>
                 </a-camera> -->
+                <!-- Debug camera and controls -->
                 <a-entity
                     id="right-controller"
                     laser-controls="hand: right"
@@ -62,8 +63,6 @@
             <a-route id="top-scores" template="top-scores"></a-route>
             <a-route id="controls" template="controls"></a-route>
             <a-route id="how-to-play" template="how-to-play"></a-route>
-
-            <!-- <a-entity a-input="id: enterName; position: 0.4 1.6 -0.6; rotation: 0 180 0; scale: 0.5 0.5 0.5;" ></a-entity> -->
         </a-scene>
         <script type="module" src="/src/main.ts"></script>
         <script src="/vendor/aframe-keyboard.js" defer></script>

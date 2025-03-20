@@ -1,33 +1,5 @@
 import { Font } from '../config';
 
-// var input = '';
-// function updateInput(e) {
-//     var code = parseInt(e.detail.code);
-//     switch (code) {
-//         case 8:
-//             input = input.slice(0, -1);
-//             break;
-//         case 06:
-//             alert('submitted');
-//             var keyboard = document.querySelector('#keyboard');
-//             document
-//                 .querySelector('#input')
-//                 .setAttribute('value', input);
-//             document
-//                 .querySelector('#input')
-//                 .setAttribute('color', 'blue');
-//             keyboard.parentNode.removeChild(keyboard);
-//             return;
-//         default:
-//             input = input + e.detail.value;
-//             break;
-//     }
-//     document
-//         .querySelector('#input')
-//         .setAttribute('value', input + '_');
-// }
-// document.addEventListener('a-keyboard-update', updateInput);
-
 AFRAME.registerTemplate(
     'input',
     ({ id, color, placeholder, position, rotation, scale }) => /*html*/ ` 
@@ -84,6 +56,10 @@ AFRAME.registerComponent('a-input', {
             type: 'string',
             default: '1 1 1',
         },
+        max: {
+            type: 'number',
+            default: 200,
+        },
     },
 
     init() {
@@ -101,18 +77,20 @@ AFRAME.registerComponent('a-input', {
         );
         this.el.appendChild(this.template);
         // Elements
+        this.holder = this.el.sceneEl.querySelector(
+            `#a-input-holder-${this.data.id}`,
+        );
         this.text = this.el.sceneEl.querySelector(
             `#a-input-text-${this.data.id}`,
         );
         this.keyboard = this.el.sceneEl.querySelector(
             `#a-input-keyboard-${this.data.id}`,
         );
-        this.holder = this.el.sceneEl.querySelector(
-            `#a-input-holder-${this.data.id}`,
-        );
         // Handlers
         this.onHolderClickHandler = this.onHolderClick.bind(this);
         this.onKeyboardUpdateHandler = this.onKeyboardUpdate.bind(this);
+        this.vrModeHandler = this.vrMode.bind(this);
+        this.domModeHandler = this.domMode.bind(this);
         // Events
         this.holder.addEventListener(
             'a-input-click',
@@ -122,6 +100,11 @@ AFRAME.registerComponent('a-input', {
             'a-keyboard-update',
             this.onKeyboardUpdateHandler,
         );
+        // Fixme - this code could be deleted if a-frame-router-template will support parent visibility
+        this.holder.setAttribute('visible', this.el.sceneEl.is('vr-mode'));
+        this.text.setAttribute('visible', this.el.sceneEl.is('vr-mode'));
+        this.el.sceneEl.addEventListener('enter-vr', this.vrModeHandler);
+        this.el.sceneEl.addEventListener('exit-vr', this.domModeHandler);
     },
 
     remove() {
@@ -133,6 +116,8 @@ AFRAME.registerComponent('a-input', {
             'a-keyboard-update',
             this.onKeyboardUpdateHandler,
         );
+        this.el.sceneEl.removeEventListener('enter-vr', this.vrModeHandler);
+        this.el.sceneEl.removeEventListener('exit-vr', this.domModeHandler);
         this.el.removeChild(this.template);
     },
 
@@ -156,6 +141,22 @@ AFRAME.registerComponent('a-input', {
                 this.value = this.value + e.detail.value;
                 break;
         }
-        this.text.setAttribute('value', this.value);
+
+        if (this.data.max && this.value.length > this.data.max) {
+            this.value = this.value.substr(0, this.data.max);
+        }
+
+        this.text.setAttribute('value', this.value + '_');
+        this.el.sceneEl.emit('change-input-text', { value: this.value });
+    },
+
+    vrMode() {
+        this.holder.setAttribute('visible', true);
+        this.text.setAttribute('visible', true);
+    },
+
+    domMode() {
+        this.holder.setAttribute('visible', false);
+        this.text.setAttribute('visible', false);
     },
 });

@@ -1,4 +1,5 @@
 import { gearSettings, nitroMultiplayer } from '../../config';
+import { throttle } from '../../lib/common';
 import { shapePoints3D, totalPoints } from '../../primitives/track-points';
 import { ControlsMixin } from './controls';
 
@@ -31,6 +32,7 @@ AFRAME.registerComponent('car', {
         // Handlers
         this.enableCarHandler = this.enableCar.bind(this);
         this.clearHandler = this.clear.bind(this);
+        this.sendEventsThrottled = throttle(() => this.sendEvents(), 40);
         // Events
         this.el.sceneEl.addEventListener(
             'countdown-finished',
@@ -126,7 +128,7 @@ AFRAME.registerComponent('car', {
         if (this.enabled) {
             this.updatePhysics(deltaTime);
             this.updatePosition();
-            this.sendEvents();
+            this.sendEventsThrottled();
         }
     },
 

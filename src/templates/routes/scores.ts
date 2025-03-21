@@ -35,7 +35,10 @@ AFRAME.registerTemplate(
         ></a-text>
         <a-entity
             id="enter-name-input-vr"
-            a-input="id: enterName; position: 0.32 1.4 -0.6; rotation: 0 180 0; scale: 0.5 0.5 0.5; placeholder: Введите имя; max: 20;"
+            position="0.32 1.4 -0.6"
+            rotation="0 180 0"
+            scale="0.5 0.5 0.5"
+            a-input="id: enterName; placeholder: Введите имя; max: 20;"
         ></a-entity>
         <a-text
             id="error-text-vr"

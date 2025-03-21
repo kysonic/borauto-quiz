@@ -35,10 +35,6 @@ AFRAME.registerSystem('game-manager', {
             'how-to-play-start',
             this.howToPlayHandler,
         );
-
-        // setTimeout(() => {
-        //     this.router.changeRoute('top-scores');
-        // }, 1000);
     },
 
     remove() {

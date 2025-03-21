@@ -14,28 +14,7 @@ AFRAME.registerTemplate(
             width="2"
             color="#FFF"
         ></a-text>
-        <a-entity bind-for="for: item; in: topScoresItems; key: name;">
-            <template>
-                <a-text
-                    position="0.8 {{y}} -0.5"
-                    rotation="0 180 0"
-                    align="left"
-                    font="${Font}"
-                    value="{{item.name}}"
-                    width="2"
-                    color="#FFF"
-                ></a-text>
-                <a-text
-                    position="-0.7 {{y}} -0.5"
-                    rotation="0 180 0"
-                    align="left"
-                    font="${Font}"
-                    value="{{item.score}}"
-                    width="2"
-                    color="#FFF"
-                ></a-text>
-            </template>
-        </a-entity>
+        <a-entity id="top-scores-list"></a-entity>
         <a-text
             position="0 0.75 -0.43"
             rotation="0 180 0"

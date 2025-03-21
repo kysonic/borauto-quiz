@@ -156,10 +156,8 @@ AFRAME.registerTemplate(
             color="#FFF"
         ></a-text>
       
-        <a-entity bind-for="for: item; in: nosItems; key: key;">
-            <template>
-                <a-image position="{{x}} 0.05 0.02" width="0.03" height="0.03" rotation="0 0 0" src="{{img}}"></a-image> 
-            </template>
+        <a-entity id="nos-list">
+            
         </a-entity>
     <!-- Countdown Traffic Light -->
     <a-entity countdown>

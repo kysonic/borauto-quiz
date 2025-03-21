@@ -1,34 +1,5 @@
 import { Font } from '../config';
-
-AFRAME.registerTemplate(
-    'input',
-    ({ id, color, placeholder, position, rotation, scale }) => /*html*/ ` 
-  <a-entity scale="${scale}" position="${position}" rotation="${rotation}">
-      <a-rounded 
-        id="${`a-input-holder-${id}`}"
-        class="collidable"
-        event-emit__common="__event: mouseup; __emit: a-input-click"
-        event-set__mouseenter="material.opacity: 0.3"
-        event-set__mouseleave="material.opacity: 0.2"
-        opacity="0.2" color="#000" width="1.5" height="0.3" radius="0.1"></a-rounded>
-      <a-text
-          id="${`a-input-text-${id}`}"
-          font="${Font}"
-          color="${color}"
-          value="${placeholder}"
-          width="3"
-          position="0.1 0.15 0"
-      ></a-text>
-      <a-entity
-          id="${`a-input-keyboard-${id}`}"
-          scale="2 2 2"
-          position="0.3 -0.1 0"
-          visible="false"
-          a-keyboard
-      />
-  </a-entity>
-`,
-);
+import { createHTMLFromString } from '../lib/dom';
 
 AFRAME.registerComponent('a-input', {
     schema: {
@@ -44,18 +15,6 @@ AFRAME.registerComponent('a-input', {
             type: 'string',
             default: 'Enter text...',
         },
-        position: {
-            type: 'string',
-            default: '0 0 0',
-        },
-        rotation: {
-            type: 'string',
-            default: '0 0 0',
-        },
-        scale: {
-            type: 'string',
-            default: '1 1 1',
-        },
         max: {
             type: 'number',
             default: 200,
@@ -64,33 +23,11 @@ AFRAME.registerComponent('a-input', {
 
     init() {
         this.value = '';
-        this.template = document.createElement('a-template');
-        this.template.setAttribute('name', 'input');
-        this.template.setAttribute(
-            'options',
-            `id: ${this.data.id};
-             color: ${this.data.textColor};
-             placeholder: ${this.data.placeholder};
-             position: ${this.data.position};
-             rotation: ${this.data.rotation};
-             scale: ${this.data.scale}`,
-        );
-        this.el.appendChild(this.template);
         // Elements
-        this.holder = this.el.sceneEl.querySelector(
-            `#a-input-holder-${this.data.id}`,
-        );
-        this.text = this.el.sceneEl.querySelector(
-            `#a-input-text-${this.data.id}`,
-        );
-        this.keyboard = this.el.sceneEl.querySelector(
-            `#a-input-keyboard-${this.data.id}`,
-        );
+        this.createElements();
         // Handlers
         this.onHolderClickHandler = this.onHolderClick.bind(this);
         this.onKeyboardUpdateHandler = this.onKeyboardUpdate.bind(this);
-        this.vrModeHandler = this.vrMode.bind(this);
-        this.domModeHandler = this.domMode.bind(this);
         // Events
         this.holder.addEventListener(
             'a-input-click',
@@ -100,11 +37,6 @@ AFRAME.registerComponent('a-input', {
             'a-keyboard-update',
             this.onKeyboardUpdateHandler,
         );
-        // Fixme - this code could be deleted if a-frame-router-template will support parent visibility
-        this.holder.setAttribute('visible', this.el.sceneEl.is('vr-mode'));
-        this.text.setAttribute('visible', this.el.sceneEl.is('vr-mode'));
-        this.el.sceneEl.addEventListener('enter-vr', this.vrModeHandler);
-        this.el.sceneEl.addEventListener('exit-vr', this.domModeHandler);
     },
 
     remove() {
@@ -116,9 +48,56 @@ AFRAME.registerComponent('a-input', {
             'a-keyboard-update',
             this.onKeyboardUpdateHandler,
         );
-        this.el.sceneEl.removeEventListener('enter-vr', this.vrModeHandler);
-        this.el.sceneEl.removeEventListener('exit-vr', this.domModeHandler);
         this.el.removeChild(this.template);
+    },
+
+    createElements() {
+        this.createHolder();
+        this.createText();
+        this.createKeyboard();
+    },
+
+    createHolder() {
+        this.holder = createHTMLFromString(/*html*/ `
+            <a-rounded 
+                id="${`a-input-holder-${this.data.id}`}"
+                class="collidable"
+                event-emit__common="__event: mouseup; __emit: a-input-click"
+                event-set__mouseenter="material.opacity: 0.3"
+                event-set__mouseleave="material.opacity: 0.2"
+                opacity="0.2" color="#000" width="1.5" height="0.3" radius="0.1"></a-rounded>
+            `);
+
+        this.el.appendChild(this.holder);
+    },
+
+    createText() {
+        this.text = createHTMLFromString(/*html*/ `
+            <a-text
+                id="${`a-input-text-${this.data.id}`}"
+                font="${Font}"
+                color="${this.data.textColor}"
+                value="${this.data.placeholder}"
+                width="3"
+                position="0.1 0.15 0"
+            ></a-text>
+        `);
+
+        this.el.appendChild(this.text);
+    },
+
+    createKeyboard() {
+        this.keyboard = createHTMLFromString(/*html*/ `
+            <a-entity
+                id="${`a-input-keyboard-${this.data.id}`}"
+                scale="2 2 2"
+                position="0.3 -0.1 0"
+                visible="false"
+                a-keyboard
+            />
+        `);
+
+        this.el.appendChild(this.keyboard);
     },
 
     onHolderClick() {
@@ -148,15 +127,5 @@ AFRAME.registerComponent('a-input', {
 
         this.text.setAttribute('value', this.value + '_');
         this.el.sceneEl.emit('change-input-text', { value: this.value });
-    },
-
-    vrMode() {
-        this.holder.setAttribute('visible', true);
-        this.text.setAttribute('visible', true);
-    },
-
-    domMode() {
-        this.holder.setAttribute('visible', false);
-        this.text.setAttribute('visible', false);
     },
 });

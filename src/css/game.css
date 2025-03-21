@@ -87,23 +87,23 @@
         }
 
         .timer {
-          position: relative;
-          z-index: 11;
-          font-size: 20px;
+            position: relative;
+            z-index: 11;
+            font-size: 20px;
         }
 
         .laps {
-          position: relative;
-          z-index: 11;
-          font-size: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
+            position: relative;
+            z-index: 11;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
 
-          #laps-number-dom {
-            font-size: 40px;
-          }
+            #laps-number-dom {
+                font-size: 40px;
+            }
         }
     }
 

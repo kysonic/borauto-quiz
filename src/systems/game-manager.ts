@@ -98,7 +98,11 @@ AFRAME.registerSystem('game-manager', {
     },
 
     sceneLoaded() {
-        document.getElementById('loading-dom').style.display = 'none';
+        this.trackModel = document.getElementById('track-model');
+        this.trackModel.addEventListener('model-loaded', () => {
+            this.router.changeRoute('start');
+            document.getElementById('loading-dom').style.display = 'none';
+        });
     },
 
     controls() {

@@ -27,6 +27,7 @@ AFRAME.registerTemplate(
     ></a-plane>
     <!-- Env Models --> 
     <a-entity
+        id="track-model"
         gltf-model="#track"
         scale="0.03 0.03 0.03"
         position="0 0.51 0.03"

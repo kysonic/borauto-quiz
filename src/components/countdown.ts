@@ -3,11 +3,8 @@ import { domUi } from '../lib/dom-ui';
 AFRAME.registerComponent('countdown', {
     init() {
         this.countdown = 4;
-        const isInVR = this.el.sceneEl.is('vr-mode');
         // Nodes
         this.nodes();
-        // Setup ui
-        isInVR ? this.vrMode() : this.domMode();
         // Handlers
         this.vrModeHandler = this.vrMode.bind(this);
         this.domModeHandler = this.domMode.bind(this);
@@ -18,6 +15,9 @@ AFRAME.registerComponent('countdown', {
         // Init
         this.i = setInterval(this.updateHandler, 1000);
         this.sound();
+        this.el.sceneEl.is('vr-mode')
+            ? this.vrModeHandler()
+            : this.domModeHandler();
     },
 
     nodes() {

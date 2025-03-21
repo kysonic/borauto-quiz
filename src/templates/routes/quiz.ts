@@ -57,7 +57,7 @@ AFRAME.registerTemplate(
                 event-set__mouseleave="material.opacity: 1"
                 material="color: #995cff;"
                 position="0 0 -0.01"
-                width="0.7"
+                width="0.9"
                 height="0.15"
                 depth="0.01"
             >
@@ -81,7 +81,7 @@ AFRAME.registerTemplate(
                 event-set__mouseleave="material.opacity: 1"
                 material="color: #995cff;"
                 position="0 0 -0.01"
-                width="0.7"
+                width="0.9"
                 height="0.15"
                 depth="0.01"
             >
@@ -105,7 +105,7 @@ AFRAME.registerTemplate(
                 event-set__mouseleave="material.opacity: 1"
                 material="color: #995cff;"
                 position="0 0 -0.01"
-                width="0.7"
+                width="0.9"
                 height="0.15"
                 depth="0.01"
             >
@@ -129,7 +129,7 @@ AFRAME.registerTemplate(
                 event-set__mouseleave="material.opacity: 1"
                 material="color: #995cff;"
                 position="0 0 -0.01"
-                width="0.7"
+                width="0.9"
                 height="0.15"
                 depth="0.01"
             >

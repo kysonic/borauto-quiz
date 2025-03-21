@@ -1,0 +1,1 @@
+AFRAME.registerTemplate('loading', /*html*/ ``);

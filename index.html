@@ -39,7 +39,6 @@
                         raycaster="objects: .collidable; far: 3"
                     ></a-cursor>
                 </a-camera> -->
-                <!-- Debug camera and controls -->
                 <a-entity
                     id="right-controller"
                     laser-controls="hand: right"
@@ -56,6 +55,7 @@
             <a-template name="effects"></a-template>
             <a-template name="preload"></a-template>
             <!-- Router -->
+            <a-route id="loading" template="loading"></a-route>
             <a-route id="start" template="start"></a-route>
             <a-route id="game" template="game"></a-route>
             <a-route id="quiz" template="quiz"></a-route>

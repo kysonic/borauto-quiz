@@ -35,6 +35,7 @@ import './templates/routes/scores';
 import './templates/routes/top-scores';
 import './templates/routes/controls';
 import './templates/routes/how-to-play';
+import './templates/routes/loading';
 // Templates
 import './templates/common/env';
 import './templates/common/effects';

@@ -51,10 +51,10 @@ AFRAME.registerComponent('quiz-manager', {
 
             currentQuestion.correct === answer
                 ? this.success(answer)
-                : this.fail(answer);
+                : this.fail(answer, currentQuestion.correct);
             // Give some time to check answer
             setTimeout(() => {
-                this.answeredQuestion(answer);
+                this.answeredQuestion(answer, currentQuestion.correct);
             }, 1000);
         }
     },
@@ -81,28 +81,33 @@ AFRAME.registerComponent('quiz-manager', {
         );
     },
 
-    fail(answer) {
+    fail(answer, correct) {
         this.nopeSound.components.sound.playSound();
         const isInVR = this.el.sceneEl.is('vr-mode');
-        isInVR ? this.vrFail(answer) : this.domFail(answer);
+        isInVR ? this.vrFail(answer, correct) : this.domFail(answer, correct);
     },
 
-    domFail(answer) {
+    domFail(answer, correct) {
         document.getElementById(`answer-${answer}-dom`).classList.add('fail');
+        document
+            .getElementById(`answer-${correct}-dom`)
+            .classList.add('success');
     },
 
-    vrFail(answer) {
+    vrFail(answer, correct) {
         const buttonNode = document.getElementById(`answer-${answer}-vr`);
         buttonNode.setAttribute('material', 'color: red');
         buttonNode.setAttribute(
             'animation',
             'property: rotation; to: 0 0 2; dur: 250; easing: linear; loop: true',
         );
+        const correctButton = document.getElementById(`answer-${correct}-vr`);
+        correctButton.setAttribute('material', 'color: green');
     },
 
-    answeredQuestion(answer) {
+    answeredQuestion(answer, correct) {
         this.answered = false;
-        this.clear(answer);
+        this.clear(answer, correct);
         const questionNumber =
             this.el.sceneEl.systems.state.state.questionNumber;
         if (questionNumber >= questionPerRound) {
@@ -114,25 +119,28 @@ AFRAME.registerComponent('quiz-manager', {
         this.takeQuestion();
     },
 
-    clear(answer) {
+    clear(answer, correct) {
         const isInVR = this.el.sceneEl.is('vr-mode');
-        isInVR ? this.vrClear(answer) : this.domClear(answer);
+        isInVR ? this.vrClear(answer, correct) : this.domClear(answer, correct);
     },
 
-    vrClear(answer) {
+    vrClear(answer, correct) {
         const buttonNode = document.getElementById(`answer-${answer}-vr`);
-        buttonNode.setAttribute('material', 'color: #995cff');
-        buttonNode.setAttribute('scale', '1 1 1');
-        buttonNode.setAttribute('rotation', '0 0 0');
-        buttonNode.removeAttribute('animation');
+        const correctNode = document.getElementById(`answer-${correct}-vr`);
+        [buttonNode, correctNode].forEach((node) => {
+            node.setAttribute('material', 'color: #995cff');
+            node.setAttribute('scale', '1 1 1');
+            node.setAttribute('rotation', '0 0 0');
+            node.removeAttribute('animation');
+        });
     },
 
-    domClear(answer) {
-        document
-            .getElementById(`answer-${answer}-dom`)
-            .classList.remove('success');
-        document
-            .getElementById(`answer-${answer}-dom`)
-            .classList.remove('fail');
+    domClear(answer, correct) {
+        const answerNode = document.getElementById(`answer-${answer}-dom`);
+        const correctNode = document.getElementById(`answer-${correct}-dom`);
+        [answerNode, correctNode].forEach((node) => {
+            node.classList.remove('success');
+            node.classList.remove('fail');
+        });
     },
 });

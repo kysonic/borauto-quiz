@@ -42,9 +42,6 @@ AFRAME.registerComponent('car', {
         this.updatePhysics(0);
         this.updatePosition();
         this.clear();
-        // Render dom state
-        const isInVR = this.el.sceneEl.is('vr-mode');
-        !isInVR && this.renderDom();
         // Init
         this.startSounds();
     },
@@ -72,10 +69,6 @@ AFRAME.registerComponent('car', {
             this.updatePosition();
             this.sendEventsThrottled();
         }
-    },
-
-    renderDom() {
-        this.el.sceneEl.systems['dom-state'].renderStateHandler('useNitro');
     },
 
     accelerate() {
@@ -221,7 +214,7 @@ AFRAME.registerComponent('car', {
     useNitro() {
         const nitro = this.el.sceneEl.systems['state'].state.nitro;
 
-        if (!this.nitro && nitro > 0) {
+        if (!this.nitro && nitro > 0 && this.enabled) {
             this.el.sceneEl.emit('useNitro');
             this.nitro = true;
             this.startNitroSound();

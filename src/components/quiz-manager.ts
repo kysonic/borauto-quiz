@@ -82,7 +82,10 @@ AFRAME.registerComponent('quiz-manager', {
     },
 
     fail(answer, correct) {
-        this.nopeSound.components.sound.playSound();
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
+        if (enabled) {
+            this.nopeSound.components.sound.playSound();
+        }
         const isInVR = this.el.sceneEl.is('vr-mode');
         isInVR ? this.vrFail(answer, correct) : this.domFail(answer, correct);
     },

@@ -59,8 +59,13 @@ AFRAME.registerSystem('game-manager', {
     },
 
     startSounds() {
-        const mainTheme = document.getElementById('main-theme-sound') as any;
-        mainTheme.components.sound.playSound();
+        const enabled = this.sceneEl.systems.state.state.soundEnabled;
+        if (enabled) {
+            const mainTheme = document.getElementById(
+                'main-theme-sound',
+            ) as any;
+            mainTheme.components.sound.playSound();
+        }
     },
 
     startGame() {

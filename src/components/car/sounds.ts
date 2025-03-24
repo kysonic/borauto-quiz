@@ -24,6 +24,10 @@ export const SoundsMixin = {
     },
 
     startSounds() {
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
+        if (!enabled) {
+            return false;
+        }
         setTimeout(() => {
             this.startSound.components.sound.playSound();
 
@@ -34,6 +38,10 @@ export const SoundsMixin = {
     },
 
     startGasSound() {
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
+        if (!enabled) {
+            return false;
+        }
         if (!this.gasSoundStarted) {
             this.gasSoundStarted = true;
             this.gasStartSound.components.sound.playSound();
@@ -45,6 +53,10 @@ export const SoundsMixin = {
     },
 
     startNitroSound() {
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
+        if (!enabled) {
+            return false;
+        }
         this.nitroSound.components.sound.playSound();
     },
 
@@ -55,6 +67,10 @@ export const SoundsMixin = {
     },
 
     gearSound() {
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
+        if (!enabled) {
+            return false;
+        }
         this.gearboxSound.components.sound.playSound();
         this.gasTopSound.components.sound.stopSound();
         // this.gasTopIdleSound.components.sound.stopSound();

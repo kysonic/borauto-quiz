@@ -30,9 +30,13 @@ AFRAME.registerComponent('game-runner', {
 
     endCycle() {
         const carPosition = this.car.object3D.position;
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
 
         this.car.parentNode.removeChild(this.car);
-        this.confettiSound.components.sound.playSound();
+
+        if (enabled) {
+            this.confettiSound.components.sound.playSound();
+        }
 
         this.confetti.setAttribute(
             'confetti-effect',

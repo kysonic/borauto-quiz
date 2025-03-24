@@ -1,11 +1,17 @@
 <link rel='stylesheet' href='./src/css/top-scores.css' />
 
-<div class='ui screen top-scores' id='top-scores-dom'>
+<div x-data class='ui screen top-scores' id='top-scores-dom'>
     <div class='block'>
         <div class='data'>
             <div class='title'>Лучшие 10 результатов</div>
             <div class='results' id='top-scores-results-dom'>
-                <div class="loading">Загрузка...</div>
+                <div class="loading" x-show="!$store.state.topScores.length">Загрузка...</div>
+                <template x-for="item in $store.state.topScores">
+                    <div class="result">
+                        <div class='name' x-text="item.name"></div>
+                        <div class='laps' x-text="item.score"></div>
+                    </div>
+                </template>
             </div>
             <button
                 class='btn button'

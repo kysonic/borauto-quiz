@@ -4,13 +4,13 @@ import 'aframe-event-set-component';
 import 'a-frame-router-templates';
 import 'aframe-orbit-controls';
 import 'aframe-state-component';
+import Alpine from 'alpinejs';
 // libs
 import './lib/dom-ui';
 // State
 import './states/index';
 // Systems
 import './systems/game-manager';
-import './systems/dom-state';
 // Components
 import './components/car';
 import './components/camera-holder';
@@ -40,3 +40,9 @@ import './templates/routes/loading';
 import './templates/common/env';
 import './templates/common/effects';
 import './templates/common/preload';
+
+// Alpine
+window.Alpine = Alpine;
+window.addEventListener('DOMContentLoaded', () => {
+    window.Alpine.start();
+});

@@ -120,6 +120,10 @@ AFRAME.registerComponent('countdown', {
     },
 
     sound() {
+        const enabled = this.el.sceneEl.systems.state.state.soundEnabled;
+        if (!enabled) {
+            return false;
+        }
         this.countdownSound.components.sound.playSound();
     },
 });

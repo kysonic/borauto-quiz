@@ -1,6 +1,12 @@
 <link rel='stylesheet' href='./src/css/start.css' />
 
-<div class='ui screen start' id='start-dom'>
+<div
+    x-data
+    x-bind:data-page="$store.state.selectedPages.Start"
+    :class="{ 'show': $store.state.uiMode === 'DOM' && $store.state.selectedPages.Start }"
+    class='ui screen start'
+    id='start-dom'
+>
     <div class='block'>
         <div class='title'>
             <img class='logo' src='/assets/img/b-logo-w.png' alt='' />
@@ -15,7 +21,8 @@
                 class='btn'
                 onclick="domUi.emit('controls-start')"
             >Управление</button>
-            <button class='btn' onclick="domUi.emit('how-to-play-start')">Как играть?</button>
+            <button class='btn' onclick="domUi.emit('how-to-play-start')">Как
+                играть?</button>
         </div>
         <div class='backdrop'></div>
     </div>

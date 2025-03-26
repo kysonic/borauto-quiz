@@ -1,19 +1,18 @@
-import { Font } from '../../config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'game',
     /*html*/ ` 
     <a-assets>
-    <a-asset-item
-        id="carModel"
-        src="/assets/models/cars/simple.glb"
-    ></a-asset-item>
-    <img id="tachometer-img" src="/assets/img/tachometer.png" />
-    <img id="arrow-img" src="/assets/img/arrow.png" />
-    <img id="nos" src="/assets/img/nos.svg" />
-    <img id="nos-active" src="/assets/img/nos-active.svg" />
-    <img id="exit" src="/assets/img/exit.svg" />
-</a-assets>
+        <a-asset-item
+            id="carModel"
+            src="/assets/models/cars/simple.glb"
+        ></a-asset-item>
+        <img id="tachometer-img" src="/assets/img/tachometer.png" />
+        <img id="arrow-img" src="/assets/img/arrow.png" />
+        <img id="nos" src="/assets/img/nos.svg" />
+        <img id="nos-active" src="/assets/img/nos-active.svg" />
+    </a-assets>
 <!-- Manager -->
 <a-entity game-runner timer></a-entity>
 <!-- Car -->
@@ -86,9 +85,9 @@ AFRAME.registerTemplate(
 <a-entity id="confetti"></a-entity>
 <!-- UI -->
 <a-entity
-    ui-switcher="ui: game"
     position="0.02719 0.49 -1.48"
     rotation="-99 0 180"
+    bind__visible="uiMode === 'VR' && selectedPages.Game"
 >
     <a-rounded
         position="-0.5 0 0"
@@ -120,7 +119,7 @@ AFRAME.registerTemplate(
         position="0.36 0.12 0.03"
         rotation="0 0 0"
         align="center"
-        font="${Font}"
+        font="${config.common.ui.Font}"
         value="0 kmh"
         bind__value="speed"
         width="0.5"
@@ -131,7 +130,7 @@ AFRAME.registerTemplate(
         position="0.36 0.09 0.03"
         rotation="0 0 0"
         align="center"
-        font="${Font}"
+        font="${config.common.ui.Font}"
         value="1"
         bind__value="gear"
         width="0.5"
@@ -143,7 +142,7 @@ AFRAME.registerTemplate(
         position="-0.31 0.22 0.03"
         rotation="0 0 0"
         align="center"
-        font="${Font}"
+        font="${config.common.ui.Font}"
         value="00:30:00"
         bind__value="formattedTime"
         width="1"
@@ -153,7 +152,7 @@ AFRAME.registerTemplate(
         position="-0.31 0.16 0.03"
         rotation="0 0 0"
         align="center"
-        font="${Font}"
+        font="${config.common.ui.Font}"
         value="КРУГОВ ПРОИДЕНО:"
         width="0.5"
         color="#FFF"
@@ -163,7 +162,7 @@ AFRAME.registerTemplate(
         position="-0.31 0.09 0.03"
         rotation="0 0 0"
         align="center"
-        font="${Font}"
+        font="${config.common.ui.Font}"
         bind__value="laps"
         width="2"
         color="#FFF"
@@ -172,7 +171,7 @@ AFRAME.registerTemplate(
         position="0 0.12 0.03"
         rotation="0 0 0"
         align="center"
-        font="${Font}"
+        font="${config.common.ui.Font}"
         value="NOS"
         width="1"
         color="#FFF"
@@ -180,53 +179,56 @@ AFRAME.registerTemplate(
     <a-entity id="nos-list"></a-entity>
 </a-entity>
 
-    <!-- Countdown Traffic Light -->
-    <a-entity countdown>
-      <a-rounded
-          position="-0.15 0.8 -0.6"
-          opacity="0.2"
-          color="#000"
-          width="0.3"
-          height="0.5"
-          radius="0.1"
-      ></a-rounded>
-      <a-rounded
-          position="-0.1 1.06 -0.61"
-          opacity="0.9"
-          color="red"
-          width="0.2"
-          height="0.2"
-          radius="0.09"
-      ></a-rounded>
-      <a-rounded
-          id="countdown-go-circle-vr"
-          position="-0.1 0.83 -0.61"
-          opacity="0.9"
-          color="#ccc"
-          width="0.2"
-          height="0.2"
-          radius="0.09"
-      ></a-rounded>
-      <a-text
-          id="countdown-number-vr"
-          position="0.005 1.16 -0.62"
-          rotation="0 180 0"
-          align="center"
-          font="${Font}"
-          value="4"
-          width="2"
-          color="#FFF"
-      ></a-text>
-      <a-text
-          id="countdown-go-vr"
-          position="0 0.93 -0.62"
-          rotation="0 180 0"
-          align="center"
-          font="${Font}"
-          value=""
-          width="2"
-          color="#FFF"
-      ></a-text>
-  </a-entity>
+<!-- Countdown Traffic Light -->
+<a-entity countdown bind__visible="uiMode === 'VR' && showCountdown">
+    <a-rounded
+        position="-0.15 0.8 -0.6"
+        opacity="0.2"
+        color="#000"
+        width="0.3"
+        height="0.5"
+        radius="0.1"
+    ></a-rounded>
+    <a-rounded
+        position="-0.1 1.06 -0.61"
+        opacity="0.9"
+        color="red"
+        bind__color="countdownColors.first"
+        width="0.2"
+        height="0.2"
+        radius="0.09"
+    ></a-rounded>
+    <a-rounded
+        id="countdown-go-circle-vr"
+        position="-0.1 0.83 -0.61"
+        opacity="0.9"
+        color="#ccc"
+        bind__color="countdownColors.second"
+        width="0.2"
+        height="0.2"
+        radius="0.09"
+    ></a-rounded>
+    <a-text
+        id="countdown-number-vr"
+        position="0.005 1.16 -0.62"
+        rotation="0 180 0"
+        align="center"
+        bind__value="countdown"
+        font="${config.common.ui.Font}"
+        value="4"
+        width="2"
+        color="#FFF"
+    ></a-text>
+    <a-text
+        id="countdown-go-vr"
+        position="0 0.93 -0.62"
+        rotation="0 180 0"
+        align="center"
+        font="${config.common.ui.Font}"
+        value=""
+        width="2"
+        color="#FFF"
+    ></a-text>
+</a-entity>
   `,
 );

@@ -1,4 +1,4 @@
-import { Font } from '../../config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'start',
@@ -8,7 +8,7 @@ AFRAME.registerTemplate(
         <img id="quiz-img" src="/assets/img/quiz.png">
     </a-assets>
     
-    <a-entity id="start-vr" ui-switcher="ui: start">
+    <a-entity id="start-vr" bind__visible="uiMode === 'VR' && selectedPages.Start">
         <a-rounded position="-0.65 0.8 -0.4" opacity="0.2" color="#000" width="1.3" height="1.2" radius="0.1"></a-rounded>
         <a-image position="0 1.8 -0.41" width="0.8" height="0.2" rotation="0 180 0" src="#logo-img"></a-image>
         <a-image position="-0.48 1.88 -0.42" width=0.5" height="0.19" rotation="0 180 -45" src="#quiz-img"></a-image>
@@ -16,7 +16,7 @@ AFRAME.registerTemplate(
             position="0 1.5 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="НАЧАТЬ"
             width="2"
             color="#FFF"
@@ -39,7 +39,7 @@ AFRAME.registerTemplate(
             position="0 1.3 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="УПРАВЛЕНИЕ"
             width="2"
             color="#FFF"
@@ -61,7 +61,7 @@ AFRAME.registerTemplate(
             position="0 1.1 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="КАК ИГРАТЬ?"
             width="2"
             color="#FFF"

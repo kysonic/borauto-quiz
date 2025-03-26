@@ -1,25 +1,25 @@
 <link rel='stylesheet' href='./src/css/game.css' />
 <link rel='stylesheet' href='./src/css/countdown.css' />
 
-<div class='ui game' id='game-dom'>
+<div x-data :class="{ 'show': $store.state.uiMode === 'DOM' && $store.state.selectedPages.Game }" class='ui game' id='game-dom'>
     <div class='tachometer'>
         <img src='/assets/img/tachometer.png' alt='' />
-        <img id='arrow-dom' class='arrow' src='/assets/img/arrow.png' alt='' />
+        <img :style="`transform: rotate(${($store.state.rpm / 1000) * 45}deg)`"  id='arrow-dom' class='arrow' src='/assets/img/arrow.png' alt='' />
         <div class='speed'>
-            <div id='speed-number-dom'>10</div><div class='kmh'>kmh</div>
+            <div x-text="$store.state.speed">10</div><div class='kmh'>kmh</div>
         </div>
         <div class='gear'>
-            <div id='gear-number-dom'>1</div>
+            <div x-text="$store.state.gear" id='gear-number-dom'>1</div>
         </div>
         <div class='backdrop'></div>
     </div>
     <div class='info'>
         <div class='timer'>
-            <div id='timer-number-dom'>01:00:00</div>
+            <div x-text="$store.state.formattedTime" id='timer-number-dom'>01:00:00</div>
         </div>
         <div class='laps'>
             <div>КРУГОВ ПРОЙДЕНО:</div>
-            <div id='laps-number-dom'>0</div>
+            <div x-text="$store.state.laps" id='laps-number-dom'>0</div>
         </div>
         <div class='backdrop'></div>
     </div>
@@ -27,25 +27,23 @@
         <div class="nitro-data">
             <div class='nos-title'>NOS</div>
             <div class='nos-items'>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
-                <div class="nos-item">{{> nos}}</div>
+                <template x-for="nos in 9">
+                    <div :class="{ 'nos-item': true, 'active': nos <= $store.state.nitro }">{{> nos}}</div>
+                </template>
             </div>
         </div>
         <div class='backdrop'></div>
     </div>
 </div>
 
-<div class='ui countdown' id='countdown-dom'>
+<div x-data 
+    :class="{ 'show': $store.state.uiMode === 'DOM' && $store.state.showCountdown }" 
+    class='ui countdown'
+    id='countdown-dom'
+    >
     <div class='traffic-light'>
-        <div id='countdown-number-dom' class='circle red active'>3</div>
-        <div id='countdown-go-dom' class='circle green'></div>
+        <div id='countdown-number-dom' :class="{'active': $store.state.countdown !== 0}" x-text="$store.state.countdown" class='circle red'>3</div>
+        <div id='countdown-go-dom' :class="{'active': $store.state.countdown === 0}" x-text="$store.state.countdown === 0 ? 'GO!' : ''" class='circle green'></div>
         <div class='backdrop'></div>
     </div>
 </div>

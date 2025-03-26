@@ -1,15 +1,15 @@
-import { Font } from '../../config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'scores',
     /*html*/ ` 
-    <a-entity id="scores-vr" ui-switcher="ui: scores" score-manager>
+    <a-entity id="scores-vr" bind__visible="uiMode === 'VR' && selectedPages.Scores" score-manager>
         <a-rounded position="-1 1 -0.4" opacity="0.2" color="#000" width="2" height="1" radius="0.1"></a-rounded>
         <a-text
             position="0.2 1.9 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="Вы проехали"
             width="2"
             color="#FFF"
@@ -18,7 +18,7 @@ AFRAME.registerTemplate(
             position="-0.15 1.9 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="10"
             bind__value="laps"
             width="3"
@@ -28,7 +28,7 @@ AFRAME.registerTemplate(
             position="-0.38 1.9 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="кругов"
             width="2"
             color="#FFF"
@@ -45,7 +45,7 @@ AFRAME.registerTemplate(
             position="-0.05 1.35 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value=""
             width="1.5"
             color="#cbbae7"
@@ -55,7 +55,7 @@ AFRAME.registerTemplate(
             position="-0.05 1.15 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ОТПРАВИТЬ"
             width="1.5"
             color="#FFF"

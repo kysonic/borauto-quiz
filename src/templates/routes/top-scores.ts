@@ -1,15 +1,15 @@
-import { Font } from '../../config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'top-scores',
     /*html*/ ` 
-    <a-entity id="top-scores-vr" ui-switcher="ui: top-scores" top-scores-manager>
+    <a-entity id="top-scores-vr" bind__visible="uiMode === 'VR' && selectedPages.TopScores" top-scores-manager>
         <a-rounded position="-1 0.6 -0.4" opacity="0.2" color="#000" width="2" height="1.5" radius="0.1"></a-rounded>
         <a-text
             position="0 2 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ЛУЧШИЕ 10 РЕЗУЛЬТАТОВ"
             width="2"
             color="#FFF"
@@ -19,7 +19,7 @@ AFRAME.registerTemplate(
             position="0 0.75 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="НАЗАД"
             width="1.5"
             color="#FFF"

@@ -40,7 +40,7 @@ AFRAME.registerComponent<ICarExtended>('car', {
         // Handlers
         this.enableCarHandler = this.enableCar.bind(this);
         this.clearHandler = this.clear.bind(this);
-        this.sendEventsThrottled = throttle(() => this.sendEvents(), 40);
+        this.sendEventsThrottled = throttle(() => this.sendEvents(), 24);
         // Events
         this.el?.sceneEl?.addEventListener(
             'countdown-finished',

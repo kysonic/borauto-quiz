@@ -9,7 +9,7 @@ export interface ScoreManagerComponent {
     saveButtonDom: HTMLElement | null;
     nameErrorVr: Entity | null;
     nameInputVr: Entity<{
-        input: AInputComponent;
+        'a-input': AInputComponent;
     }> | null;
     sendScoreButtonVr: Entity | null;
 

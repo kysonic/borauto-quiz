@@ -50,7 +50,7 @@ AFRAME.registerComponent<ScoreManagerComponent>('score-manager', {
         );
         this.nameInputVr = AssertType<
             Entity<{
-                input: AInputComponent;
+                'a-input': AInputComponent;
             }>
         >(document.getElementById('enter-name-input-vr'));
 
@@ -154,7 +154,7 @@ AFRAME.registerComponent<ScoreManagerComponent>('score-manager', {
         this.saveVr();
 
         const error = await this.saveToDatabase(
-            this.nameInputVr?.components.input.value ?? '',
+            this.nameInputVr?.components['a-input'].value ?? '',
         );
 
         this.isSending = false;

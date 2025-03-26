@@ -22,7 +22,7 @@ export const initialState = {
     topScores: [] as TopScore[],
     nosItems: [],
     topScoresItems: [],
-    soundEnabled: false,
+    soundEnabled: true,
     uiMode: UIMode.dom,
     page: config.pages.Start,
     selectedPages: mapObjectValues(

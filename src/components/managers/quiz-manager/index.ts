@@ -89,11 +89,11 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
         this.playYeapSound();
     },
 
-    playYeapSound: function (this: IQuizManagerComponent) {
+    playYeapSound: wrapWithSoundEnabler(function (this: IQuizManagerComponent) {
         AssertType<ISoundComponent>(
             this.yeapSound?.components,
         ).sound.playSound();
-    },
+    }),
 
     fail() {
         this.playNopeSound();

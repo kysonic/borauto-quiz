@@ -1,4 +1,4 @@
-import { Font } from '@/config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'start',
@@ -16,7 +16,7 @@ AFRAME.registerTemplate(
             position="0 1.5 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="НАЧАТЬ"
             width="2"
             color="#FFF"
@@ -39,7 +39,7 @@ AFRAME.registerTemplate(
             position="0 1.3 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="УПРАВЛЕНИЕ"
             width="2"
             color="#FFF"
@@ -61,7 +61,7 @@ AFRAME.registerTemplate(
             position="0 1.1 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="КАК ИГРАТЬ?"
             width="2"
             color="#FFF"

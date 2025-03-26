@@ -1,9 +1,10 @@
 import type { Entity } from 'aframe';
-import { controls } from '@/config';
+import { config } from '@/config';
 import { ICarControlsMixin } from './types';
 
 export const ControlsMixin: ICarControlsMixin = {
     el: {} as Entity,
+
     triggerDownHandler: () => {},
     triggerUpHandler: () => {},
     gripDownHandler: () => {},
@@ -134,19 +135,19 @@ export const ControlsMixin: ICarControlsMixin = {
 
     onKeyDown(e: KeyboardEvent) {
         switch (e.code) {
-            case controls.desktop.accelerate:
+            case config.car.controls.desktop.accelerate:
                 this.accelerate();
                 break;
-            case controls.desktop.break:
+            case config.car.controls.desktop.break:
                 this.break();
                 break;
-            case controls.desktop.gearUp:
+            case config.car.controls.desktop.gearUp:
                 this.shiftGear(true);
                 break;
-            case controls.desktop.gearDown:
+            case config.car.controls.desktop.gearDown:
                 this.shiftGear(false);
                 break;
-            case controls.desktop.nitro:
+            case config.car.controls.desktop.nitro:
                 this.useNitro();
                 break;
         }
@@ -154,8 +155,8 @@ export const ControlsMixin: ICarControlsMixin = {
 
     onKeyUp(e: KeyboardEvent) {
         if (
-            e.code === controls.desktop.accelerate ||
-            e.code === controls.desktop.break
+            e.code === config.car.controls.desktop.accelerate ||
+            e.code === config.car.controls.desktop.break
         ) {
             this.leave();
         }

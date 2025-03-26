@@ -1,5 +1,5 @@
 import type { Entity } from 'aframe';
-import { questionPerRound } from '@/config';
+import { config } from '@/config';
 import questions from '@/data/questions.json';
 import { AssertType, ISoundComponent } from '@/types/common';
 import { StateSystem } from '@/states/type';
@@ -144,7 +144,7 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
             this.el?.sceneEl?.systems.state,
         ).state.questionNumber;
 
-        if (questionNumber >= questionPerRound) {
+        if (questionNumber >= config.common.questionPerRound) {
             this.el?.sceneEl?.emit('setQuestionNumber', {
                 number: 0,
             });

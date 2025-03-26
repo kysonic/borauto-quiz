@@ -1,4 +1,4 @@
-import { Font } from '@/config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'top-scores',
@@ -9,7 +9,7 @@ AFRAME.registerTemplate(
             position="0 2 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ЛУЧШИЕ 10 РЕЗУЛЬТАТОВ"
             width="2"
             color="#FFF"
@@ -19,7 +19,7 @@ AFRAME.registerTemplate(
             position="0 0.75 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="НАЗАД"
             width="1.5"
             color="#FFF"

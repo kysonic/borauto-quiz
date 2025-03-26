@@ -1,4 +1,4 @@
-import { Font } from '@/config';
+import { config } from '@/config';
 import { supabase } from '@/lib/db';
 import { createHTMLFromString } from '@/lib/dom';
 import { IStateUpdateEvent, StateSystem } from '@/states/type';
@@ -64,7 +64,7 @@ AFRAME.registerComponent<TopScoresManagerComponent>('top-scores-manager', {
                                 position="0.8 ${y} -0.5"
                                 rotation="0 180 0"
                                 align="left"
-                                font="${Font}"
+                                font="${config.common.ui.Font}"
                                 value="${item.name}"
                                 width="2"
                                 color="#FFF"
@@ -73,7 +73,7 @@ AFRAME.registerComponent<TopScoresManagerComponent>('top-scores-manager', {
                                 position="-0.7 ${y} -0.5"
                                 rotation="0 180 0"
                                 align="left"
-                                font="${Font}"
+                                font="${config.common.ui.Font}"
                                 value="${item?.score}"
                                 width="2"
                                 color="#FFF"

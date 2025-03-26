@@ -1,13 +1,6 @@
-import {
-    AvailableGears,
-    gearSettings,
-    GearType,
-    maxGear,
-    minGear,
-    nitroMultiplayer,
-} from '@/config';
+import { config, AvailableGears, GearType, maxGear, minGear } from '@/config';
 import { throttle } from '@/lib/common';
-import { shapePoints3D, totalPoints } from '@/primitives/track/track-points';
+import { shapePoints3D, totalPoints } from '@/config/track-points';
 import { StateSystem } from '@/states/type';
 import { AssertType } from '@/types/common';
 import { ControlsMixin } from './controls';
@@ -133,10 +126,10 @@ AFRAME.registerComponent<ICarExtended>('car', {
     },
 
     updatePhysics(deltaTime: number) {
-        const gear = gearSettings[this.currentGear];
+        const gear = config.car.gearSettings[this.currentGear];
         const speedRatio = this.speed / gear.maxSpeed;
 
-        const multiplayer = this.nitro ? nitroMultiplayer : 1;
+        const multiplayer = this.nitro ? config.car.nitroMultiplayer : 1;
         // Calculate acceleration
         const accelerationFactor = this.getAccelerationFactor(gear, speedRatio);
         const peakAcceleration = this.nitro
@@ -188,7 +181,7 @@ AFRAME.registerComponent<ICarExtended>('car', {
         const deltaX = nextPoint.x - point.x;
         const deltaZ = nextPoint.z - point.z;
         // If null the rotation would be incorrect
-        if (this.el?.object3D.rotation.y && Math.atan2(deltaX, deltaZ)) {
+        if (this.el && Math.atan2(deltaX, deltaZ)) {
             this.el.object3D.rotation.y = Math.atan2(deltaX, deltaZ);
         }
         // Laps counting

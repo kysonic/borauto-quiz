@@ -1,4 +1,4 @@
-import { shapePoints } from './track-points';
+import { shapePoints } from '../../config/track-points';
 import { TrackComponent } from './type';
 
 AFRAME.registerComponent<TrackComponent>('track', {

@@ -1,5 +1,5 @@
 import { Entity } from 'aframe';
-import { maxNitro } from '@/config';
+import { config } from '@/config';
 import { createHTMLFromString } from '@/lib/dom';
 import { AssertType, ISoundComponent } from '@/types/common';
 import { IStateUpdateEvent, StateSystem } from '@/states/type';
@@ -92,7 +92,7 @@ AFRAME.registerComponent<GameRunnerComponent>('game-runner', {
             this.el?.sceneEl?.systems['state'],
         ).state.nitro;
         // Render list
-        for (let i = 0; i <= maxNitro; i++) {
+        for (let i = 0; i <= config.car.maxNitro; i++) {
             const x = i * 0.03 - 0.119;
             const img = i < nitro ? '#nos-active' : '#nos';
 

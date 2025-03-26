@@ -1,4 +1,4 @@
-import { car } from '@/config';
+import { config } from '@/config';
 
 const width = 1.5 * 2; // Full width by X
 const height = 0.76 * 2; // Full height by Z
@@ -38,5 +38,5 @@ shape.quadraticCurveTo(
 export const shapePoints = shape.getSpacedPoints(500);
 export const totalPoints = shapePoints.length;
 export const shapePoints3D = shapePoints.map(
-    (point) => new THREE.Vector3(point.x, car.top, point.y),
+    (point) => new THREE.Vector3(point.x, config.car.top, point.y),
 );

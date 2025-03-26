@@ -1,8 +1,8 @@
-import { pages } from '@/config';
+import { config } from '@/config';
 
 export const domUi = {
     current: 'start',
-    pages: Object.values(pages),
+    pages: Object.values(config.pages),
     nodes: {} as Record<string, HTMLElement>,
 
     init() {

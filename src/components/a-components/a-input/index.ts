@@ -1,5 +1,5 @@
 import type { Entity } from 'aframe';
-import { Font } from '@/config';
+import { config } from '@/config';
 import { createHTMLFromString } from '@/lib/dom';
 import { AInputComponent, IKeyboardEvent } from './type';
 
@@ -90,7 +90,7 @@ AFRAME.registerComponent<AInputComponent>('a-input', {
         this.text = createHTMLFromString<Entity>(/*html*/ `
             <a-text
                 id="${`a-input-text-${this.data.id}`}"
-                font="${Font}"
+                font="${config.common.ui.Font}"
                 color="${this.data.textColor}"
                 value="${this.data.placeholder}"
                 width="3"

@@ -1,4 +1,4 @@
-import { Font } from '@/config';
+import { config } from '@/config';
 
 AFRAME.registerTemplate(
     'quiz',
@@ -9,7 +9,7 @@ AFRAME.registerTemplate(
             position="0 2 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="Вопрос номер 0:"
             bind__value="questionNumberVr"
             width="1.5"
@@ -19,7 +19,7 @@ AFRAME.registerTemplate(
             position="0 1.6 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных?"
             bind__value="currentQuestion.question"
             width="1.5"
@@ -43,7 +43,7 @@ AFRAME.registerTemplate(
             position="0.5 1 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ОТВЕТ 1"
             bind__value="currentQuestion.answers[0]"
             width="1.5"
@@ -67,7 +67,7 @@ AFRAME.registerTemplate(
             position="-0.5 1 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ОТВЕТ 2"
             bind__value="currentQuestion.answers[1]"
             width="1.5"
@@ -91,7 +91,7 @@ AFRAME.registerTemplate(
             position="0.5 0.8 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ОТВЕТ 3"
             bind__value="currentQuestion.answers[2]"
             width="1.5"
@@ -115,7 +115,7 @@ AFRAME.registerTemplate(
             position="-0.5 0.8 -0.43"
             rotation="0 180 0"
             align="center"
-            font="${Font}"
+            font="${config.common.ui.Font}"
             value="ОТВЕТ 4"
             bind__value="currentQuestion.answers[3]"
             width="1.5"

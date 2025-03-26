@@ -1,7 +1,15 @@
-import { Font } from '../config';
-import { createHTMLFromString } from '../lib/dom';
+import type { Entity } from 'aframe';
+import { Font } from '@/config';
+import { createHTMLFromString } from '@/lib/dom';
+import { AInputComponent, IKeyboardEvent } from './type';
 
-AFRAME.registerComponent('a-input', {
+export interface IChangeInputText {
+    value: string;
+}
+
+AFRAME.registerComponent<AInputComponent>('a-input', {
+    el: {} as Entity,
+
     schema: {
         id: {
             type: 'string',
@@ -21,6 +29,14 @@ AFRAME.registerComponent('a-input', {
         },
     },
 
+    value: '',
+    holder: null,
+    text: null,
+    keyboard: null,
+    data: {},
+    onHolderClickHandler: () => {},
+    onKeyboardUpdateHandler: (e: Event) => {},
+
     init() {
         this.value = '';
         // Elements
@@ -29,7 +45,7 @@ AFRAME.registerComponent('a-input', {
         this.onHolderClickHandler = this.onHolderClick.bind(this);
         this.onKeyboardUpdateHandler = this.onKeyboardUpdate.bind(this);
         // Events
-        this.holder.addEventListener(
+        this.holder?.addEventListener(
             'a-input-click',
             this.onHolderClickHandler,
         );
@@ -40,15 +56,14 @@ AFRAME.registerComponent('a-input', {
     },
 
     remove() {
-        this.holder.removeEventListener(
+        this.holder?.removeEventListener(
             'a-input-click',
-            this.onKeyboardClickHandler,
+            this.onHolderClickHandler,
         );
         document.removeEventListener(
             'a-keyboard-update',
             this.onKeyboardUpdateHandler,
         );
-        this.el.removeChild(this.template);
     },
 
     createElements() {
@@ -58,7 +73,7 @@ AFRAME.registerComponent('a-input', {
     },
 
     createHolder() {
-        this.holder = createHTMLFromString(/*html*/ `
+        this.holder = createHTMLFromString<Entity>(/*html*/ `
             <a-rounded 
                 id="${`a-input-holder-${this.data.id}`}"
                 class="collidable"
@@ -72,7 +87,7 @@ AFRAME.registerComponent('a-input', {
     },
 
     createText() {
-        this.text = createHTMLFromString(/*html*/ `
+        this.text = createHTMLFromString<Entity>(/*html*/ `
             <a-text
                 id="${`a-input-text-${this.data.id}`}"
                 font="${Font}"
@@ -87,7 +102,7 @@ AFRAME.registerComponent('a-input', {
     },
 
     createKeyboard() {
-        this.keyboard = createHTMLFromString(/*html*/ `
+        this.keyboard = createHTMLFromString<Entity>(/*html*/ `
             <a-entity
                 id="${`a-input-keyboard-${this.data.id}`}"
                 scale="2 2 2"
@@ -101,14 +116,16 @@ AFRAME.registerComponent('a-input', {
     },
 
     onHolderClick() {
-        this.keyboard.setAttribute(
+        this.keyboard?.setAttribute(
             'visible',
             !Boolean(this.keyboard.getAttribute('visible')),
         );
     },
 
-    onKeyboardUpdate(e) {
-        const code = parseInt(e.detail.code);
+    onKeyboardUpdate(e: Event) {
+        const customEvent = e as CustomEvent<IKeyboardEvent>;
+        const code = parseInt(customEvent.detail.code);
+
         switch (code) {
             case 8:
                 this.value = this.value.slice(0, -1);
@@ -117,7 +134,7 @@ AFRAME.registerComponent('a-input', {
                 this.onHolderClick();
                 return;
             default:
-                this.value = this.value + e.detail.value;
+                this.value = this.value + customEvent.detail.value;
                 break;
         }
 
@@ -125,7 +142,7 @@ AFRAME.registerComponent('a-input', {
             this.value = this.value.substr(0, this.data.max);
         }
 
-        this.text.setAttribute('value', this.value + '_');
-        this.el.sceneEl.emit('change-input-text', { value: this.value });
+        this.text?.setAttribute('value', this.value + '_');
+        this.el?.sceneEl?.emit('change-input-text', { value: this.value });
     },
 });

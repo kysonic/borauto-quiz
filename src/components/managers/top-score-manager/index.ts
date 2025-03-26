@@ -1,14 +1,21 @@
-import { Font } from '../config';
-import { supabase } from '../lib/db';
-import { createHTMLFromString } from '../lib/dom';
+import { Font } from '@/config';
+import { supabase } from '@/lib/db';
+import { createHTMLFromString } from '@/lib/dom';
+import { IStateUpdateEvent, StateSystem } from '@/states/type';
+import { AssertType } from '@/types/common';
+import { TopScoresManagerComponent } from './type';
 
-AFRAME.registerComponent('top-scores-manager', {
+AFRAME.registerComponent<TopScoresManagerComponent>('top-scores-manager', {
+    topScoresList: null,
+
+    stateUpdateHandler: (e: Event) => {},
+
     async init() {
         this.topScoresList = document.getElementById('top-scores-list');
         // Handlers
         this.stateUpdateHandler = this.stateUpdate.bind(this);
         // Events
-        this.el.sceneEl.addEventListener(
+        this.el?.sceneEl?.addEventListener(
             'stateupdate',
             this.stateUpdateHandler,
         );
@@ -23,11 +30,12 @@ AFRAME.registerComponent('top-scores-manager', {
             .order('score', { ascending: false })
             .limit(10);
 
-        this.el.sceneEl.emit('setTopScores', { topScores: data });
+        this.el?.sceneEl?.emit('setTopScores', { topScores: data });
     },
 
     stateUpdate(e) {
-        const action = e.detail.action;
+        const customEvent = e as CustomEvent<IStateUpdateEvent>;
+        const action = customEvent.detail.action;
         // Because a-frame-state cannot handle arrays
         if (action === 'setTopScores') {
             this.renderTopScores();
@@ -35,17 +43,22 @@ AFRAME.registerComponent('top-scores-manager', {
     },
 
     renderTopScores() {
+        if (!this.topScoresList) {
+            return false;
+        }
         // Clear container
         this.topScoresList.innerHTML = '';
         // Get state
-        const topScores = this.el.sceneEl.systems['state'].state.topScores;
+        const topScores = AssertType<StateSystem>(
+            this.el?.sceneEl?.systems['state'],
+        ).state.topScores;
         // Render list
         for (let index in topScores) {
             const item = topScores[index];
             const y = -(index + 1) * 0.01 + 1.85;
 
             this.topScoresList.appendChild(
-                createHTMLFromString(/*html*/ `
+                createHTMLFromString<HTMLElement>(/*html*/ `
                         <a-entity>
                             <a-text
                                 position="0.8 ${y} -0.5"

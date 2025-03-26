@@ -1,9 +1,22 @@
-import { controls } from '../../config';
+import type { Entity } from 'aframe';
+import { controls } from '@/config';
+import { ICarControlsMixin } from './types';
 
-export const ControlsMixin = {
+export const ControlsMixin: ICarControlsMixin = {
+    el: {} as Entity,
+    triggerDownHandler: () => {},
+    triggerUpHandler: () => {},
+    gripDownHandler: () => {},
+    gripUpHandler: () => {},
+    thumbStickMovedHandler: () => {},
+    aButtonDownHandler: () => {},
+    aButtonUpHandler: () => {},
+    keydownHandler: () => {},
+    keyupHandler: () => {},
+
     setupVrControls() {
         this.rightController =
-            this.el.sceneEl.querySelector('#right-controller');
+            this.el?.sceneEl?.querySelector('#right-controller');
         // Handlers
         this.triggerDownHandler = this.triggerDown.bind(this);
         this.triggerUpHandler = this.triggerUp.bind(this);
@@ -13,25 +26,28 @@ export const ControlsMixin = {
         this.aButtonDownHandler = this.aButtonDown.bind(this);
         this.aButtonUpHandler = this.aButtonUp.bind(this);
         // Events
-        this.rightController.addEventListener(
+        this.rightController?.addEventListener(
             'triggerdown',
             this.triggerDownHandler,
         );
-        this.rightController.addEventListener(
+        this.rightController?.addEventListener(
             'triggerup',
             this.triggerUpHandler,
         );
-        this.rightController.addEventListener('gripdown', this.gripDownHandler);
-        this.rightController.addEventListener('gripup', this.gripUpHandler);
-        this.rightController.addEventListener(
+        this.rightController?.addEventListener(
+            'gripdown',
+            this.gripDownHandler,
+        );
+        this.rightController?.addEventListener('gripup', this.gripUpHandler);
+        this.rightController?.addEventListener(
             'thumbstickmoved',
             this.thumbStickMovedHandler,
         );
-        this.rightController.addEventListener(
+        this.rightController?.addEventListener(
             'abuttondown',
             this.aButtonDownHandler,
         );
-        this.rightController.addEventListener(
+        this.rightController?.addEventListener(
             'abuttonup',
             this.aButtonUpHandler,
         );
@@ -47,28 +63,28 @@ export const ControlsMixin = {
     },
 
     clearVrControls() {
-        this.rightController.removeEventListener(
+        this.rightController?.removeEventListener(
             'triggerdown',
             this.triggerDownHandler,
         );
-        this.rightController.removeEventListener(
+        this.rightController?.removeEventListener(
             'triggerup',
             this.triggerUpHandler,
         );
-        this.rightController.removeEventListener(
+        this.rightController?.removeEventListener(
             'gripdown',
             this.gripDownHandler,
         );
-        this.rightController.removeEventListener('gripup', this.gripUpHandler);
-        this.rightController.removeEventListener(
+        this.rightController?.removeEventListener('gripup', this.gripUpHandler);
+        this.rightController?.removeEventListener(
             'thumbstickmoved',
             this.thumbStickMovedHandler,
         );
-        this.rightController.removeEventListener(
+        this.rightController?.removeEventListener(
             'abuttondown',
             this.aButtonDownHandler,
         );
-        this.rightController.removeEventListener(
+        this.rightController?.removeEventListener(
             'abuttonup',
             this.aButtonUpHandler,
         );
@@ -98,8 +114,8 @@ export const ControlsMixin = {
         this.leave();
     },
 
-    thumbStickMoved(evt) {
-        const { y } = evt.detail;
+    thumbStickMoved(e: CustomEvent) {
+        const { y } = e.detail;
 
         if (y > 0.5) {
             this.shiftGear(false);
@@ -113,10 +129,10 @@ export const ControlsMixin = {
     },
 
     aButtonUp() {
-        this.useNitro();
+        // this.useNitro();
     },
 
-    onKeyDown(e) {
+    onKeyDown(e: KeyboardEvent) {
         switch (e.code) {
             case controls.desktop.accelerate:
                 this.accelerate();
@@ -136,7 +152,7 @@ export const ControlsMixin = {
         }
     },
 
-    onKeyUp(e) {
+    onKeyUp(e: KeyboardEvent) {
         if (
             e.code === controls.desktop.accelerate ||
             e.code === controls.desktop.break

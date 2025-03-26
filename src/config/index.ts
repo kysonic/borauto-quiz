@@ -35,24 +35,39 @@ export const gearSettings = {
         maxSpeed: 50,
         peakAcceleration: 2.5,
         optimalRPM: 4500,
-        maxRPM: 6200,
+        maxRPM: 6000,
         curve: [0.01, 0.4, 0.8, 0.95, 0.6, 0.3, 0.05],
     },
     4: {
         maxSpeed: 70,
         peakAcceleration: 1.8,
         optimalRPM: 5000,
-        maxRPM: 6200,
+        maxRPM: 6300,
         curve: [0.01, 0.3, 0.7, 0.9, 0.8, 0.4, 0.08],
     },
     5: {
         maxSpeed: 130,
         peakAcceleration: 1.2,
         optimalRPM: 5500,
-        maxRPM: 6200,
+        maxRPM: 6300,
         curve: [0.001, 0.2, 0.6, 0.85, 0.5, 0.3, 0.08],
     },
+    6: {
+        maxSpeed: 180,
+        peakAcceleration: 1.01,
+        optimalRPM: 5800,
+        maxRPM: 6500,
+        curve: [0.001, 0.2, 0.6, 0.85, 0.5, 0.2, 0.02],
+    },
 };
+
+export type GearType = (typeof gearSettings)['1'];
+export type AvailableGears = keyof typeof gearSettings;
+
+const gearConfig = Object.keys(gearSettings);
+
+export const minGear = +gearConfig[0];
+export const maxGear = +gearConfig[gearConfig.length - 1];
 
 export const controls = {
     desktop: {
@@ -66,6 +81,6 @@ export const controls = {
 
 export const questionPerRound = 3;
 
-export const nitroMultiplayer = 2;
+export const nitroMultiplayer = 4;
 
 export const maxNitro = 9;

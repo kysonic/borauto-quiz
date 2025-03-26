@@ -1,4 +1,4 @@
-import { Font } from '../../config';
+import { Font } from '@/config';
 
 AFRAME.registerTemplate(
     'how-to-play',

@@ -1,6 +1,11 @@
+import { DomStateSystem, IStateUpdateEvent } from './type';
+
 // So how aframe-state-component (which is system) doesn't support two states (single state tree)
 // - we can use one state in Alpine.js
-export const DoubleState = (initialState, handlers) => {
+export const DoubleState = (
+    initialState: Record<string, unknown>,
+    handlers: Record<string, Function>,
+) => {
     AFRAME.registerState({
         initialState,
         handlers,
@@ -14,23 +19,30 @@ export const DoubleState = (initialState, handlers) => {
     });
 };
 
-AFRAME.registerSystem('dom-state', {
+AFRAME.registerSystem<DomStateSystem>('dom-state', {
+    stateUpdateHandler: () => {},
+
     init() {
         this.stateUpdateHandler = this.stateUpdate.bind(this);
-        this.sceneEl.addEventListener('stateupdate', this.stateUpdateHandler);
+        this.el?.sceneEl?.addEventListener(
+            'stateupdate',
+            this.stateUpdateHandler,
+        );
     },
 
     remove() {
-        this.sceneEl.removeEventListener(
+        this.el?.sceneEl?.removeEventListener(
             'stateupdate',
             this.stateUpdateHandler,
         );
     },
 
     stateUpdate(e) {
-        window.Alpine.store('state')?.[e.detail.action]?.(
+        const customEvent = e as CustomEvent<IStateUpdateEvent>;
+
+        window.Alpine.store('state')?.[customEvent.detail.action]?.(
             window.Alpine.store('state'),
-            e.detail.payload,
+            customEvent.detail.payload,
         );
     },
 });

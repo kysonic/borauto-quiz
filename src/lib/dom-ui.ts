@@ -1,9 +1,9 @@
-import { pages } from '../config';
+import { pages } from '@/config';
 
 export const domUi = {
     current: 'start',
     pages: Object.values(pages),
-    nodes: {},
+    nodes: {} as Record<string, HTMLElement>,
 
     init() {
         for (let id of this.pages) {
@@ -35,10 +35,10 @@ export const domUi = {
         node.style.display = 'flex';
     },
 
-    emit(event, payload) {
+    emit(event: string, payload: any) {
         document
             .getElementById('scene')
-            .dispatchEvent(new CustomEvent(event, { detail: payload }));
+            ?.dispatchEvent(new CustomEvent(event, { detail: payload }));
     },
 };
 

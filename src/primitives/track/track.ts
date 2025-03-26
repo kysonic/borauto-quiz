@@ -1,9 +1,13 @@
 import { shapePoints } from './track-points';
+import { TrackComponent } from './type';
 
-AFRAME.registerComponent('track', {
+AFRAME.registerComponent<TrackComponent>('track', {
+    line: null,
+
     schema: {
         color: { type: 'color', default: '#FFF' },
     },
+
     init() {
         const geometry = new THREE.BufferGeometry().setFromPoints(shapePoints);
         const material = new THREE.LineBasicMaterial({

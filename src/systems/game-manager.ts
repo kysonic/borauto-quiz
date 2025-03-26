@@ -1,13 +1,24 @@
-import { domUi } from '../lib/dom-ui';
+import { AssertType, IRouter } from '@/types/common';
+import { GameManagerSystem } from './type';
+import { StateSystem } from '@/states/type';
 
-AFRAME.registerSystem('game-manager', {
+AFRAME.registerSystem<GameManagerSystem>('game-manager', {
     router: null,
-    domUi,
+    gameCycles: 0,
+    trackModel: null,
+
+    startGameHandler: () => {},
+    timerFinishedHandler: () => {},
+    quizFinishedHandler: () => {},
+    backToStartHandler: () => {},
+    scoresSavedHandler: () => {},
+    sceneLoadedHandler: () => {},
+    controlsHandler: () => {},
+    howToPlayHandler: () => {},
 
     init() {
-        this.paused = 0;
         this.gameCycles = 0;
-        this.router = this.el.systems.router;
+        this.router = AssertType<IRouter>(this.el?.sceneEl?.systems.router);
         // Handlers
         this.startGameHandler = this.startGame.bind(this);
         this.timerFinishedHandler = this.timerFinished.bind(this);
@@ -18,48 +29,60 @@ AFRAME.registerSystem('game-manager', {
         this.controlsHandler = this.controls.bind(this);
         this.howToPlayHandler = this.howToPlay.bind(this);
         // Events
-        this.sceneEl.addEventListener('game-start', this.startGameHandler);
-        this.sceneEl.addEventListener(
+        this.el?.sceneEl?.addEventListener('game-start', this.startGameHandler);
+        this.el?.sceneEl?.addEventListener(
             'timer-finished',
             this.timerFinishedHandler,
         );
-        this.sceneEl.addEventListener(
+        this.el?.sceneEl?.addEventListener(
             'quiz-finished',
             this.quizFinishedHandler,
         );
-        this.sceneEl.addEventListener('scores-saved', this.scoresSavedHandler);
-        this.sceneEl.addEventListener('back-to-start', this.backToStartHandler);
-        this.sceneEl.addEventListener('loaded', this.sceneLoadedHandler);
-        this.sceneEl.addEventListener('controls-start', this.controlsHandler);
-        this.sceneEl.addEventListener(
+        this.el?.sceneEl?.addEventListener(
+            'scores-saved',
+            this.scoresSavedHandler,
+        );
+        this.el?.sceneEl?.addEventListener(
+            'back-to-start',
+            this.backToStartHandler,
+        );
+        this.el?.sceneEl?.addEventListener('loaded', this.sceneLoadedHandler);
+        this.el?.sceneEl?.addEventListener(
+            'controls-start',
+            this.controlsHandler,
+        );
+        this.el?.sceneEl?.addEventListener(
             'how-to-play-start',
             this.howToPlayHandler,
         );
     },
 
     remove() {
-        this.sceneEl.removeEventListener('game-start', this.startGameHandler);
-        this.sceneEl.removeEventListener(
+        this.el?.sceneEl?.removeEventListener(
+            'game-start',
+            this.startGameHandler,
+        );
+        this.el?.sceneEl?.removeEventListener(
             'timer-finished',
             this.timerFinishedHandler,
         );
-        this.sceneEl.removeEventListener(
+        this.el?.sceneEl?.removeEventListener(
             'quiz-finished',
             this.quizFinishedHandler,
         );
-        this.sceneEl.removeEventListener(
+        this.el?.sceneEl?.removeEventListener(
             'scores-saved',
             this.scoresSavedHandler,
         );
-        this.sceneEl.removeEventListener(
+        this.el?.sceneEl?.removeEventListener(
             'back-to-start',
             this.backToStartHandler,
         );
-        window.removeEventListener('mousemove', this.onGestureHandler);
     },
 
     startSounds() {
-        const enabled = this.sceneEl.systems.state.state.soundEnabled;
+        const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
+            .state.soundEnabled;
         if (enabled) {
             const mainTheme = document.getElementById(
                 'main-theme-sound',
@@ -71,50 +94,54 @@ AFRAME.registerSystem('game-manager', {
     startGame() {
         this.clearState();
         this.startSounds();
-        this.router.changeRoute('game');
+        this.router?.changeRoute('game');
     },
 
     timerFinished() {
         this.gameCycles++;
 
         if (this.gameCycles >= 3) {
-            return this.router.changeRoute('scores');
+            return this.router?.changeRoute('scores');
         }
 
-        this.router.changeRoute('quiz');
+        this.router?.changeRoute('quiz');
     },
 
     quizFinished() {
-        this.router.changeRoute('game');
+        this.router?.changeRoute('game');
     },
 
     backToStart() {
-        this.router.changeRoute('start');
+        this.router?.changeRoute('start');
     },
 
     scoresSaved() {
-        this.router.changeRoute('top-scores');
+        this.router?.changeRoute('top-scores');
     },
 
     clearState() {
         this.gameCycles = 0;
-        this.sceneEl.emit('setNitro', { nitro: 1 });
-        this.sceneEl.emit('setLaps', { laps: 0 });
+        this.el?.sceneEl?.emit('setNitro', { nitro: 1 });
+        this.el?.sceneEl?.emit('setLaps', { laps: 0 });
     },
 
     sceneLoaded() {
         this.trackModel = document.getElementById('track-model');
-        this.trackModel.addEventListener('model-loaded', () => {
-            this.router.changeRoute('start');
-            document.getElementById('loading-dom').style.display = 'none';
+        this.trackModel?.addEventListener('model-loaded', () => {
+            const loadingNode = document.getElementById('loading-dom');
+            if (loadingNode) {
+                loadingNode.style.display = 'none';
+            }
+
+            this.router?.changeRoute('start');
         });
     },
 
     controls() {
-        this.router.changeRoute('controls');
+        this.router?.changeRoute('controls');
     },
 
     howToPlay() {
-        this.router.changeRoute('how-to-play');
+        this.router?.changeRoute('how-to-play');
     },
 });

@@ -1,4 +1,14 @@
 AFRAME.registerComponent('confetti-effect', {
+    particleGroup: new THREE.Group(),
+    particles: new THREE.Points(),
+    velocities: [
+        {
+            x: 0,
+            y: 0,
+            z: 0,
+        },
+    ],
+
     schema: {
         position: { type: 'vec3', default: { x: 0, y: 0, z: 0 } },
         particleCount: { type: 'number', default: 1000 },

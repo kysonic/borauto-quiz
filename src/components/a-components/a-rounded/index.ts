@@ -1,4 +1,52 @@
-AFRAME.registerComponent('rounded', {
+import type { Entity } from 'aframe';
+import type * as THREET from 'three';
+import { AssertType } from '@/types/common';
+import { ARoundedComponent } from './type';
+
+function roundedRect(
+    ctx: THREET.Shape,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    topLeftRadius: number,
+    topRightRadius: number,
+    bottomLeftRadius: number,
+    bottomRightRadius: number,
+) {
+    if (!topLeftRadius) {
+        topLeftRadius = 0.00001;
+    }
+    if (!topRightRadius) {
+        topRightRadius = 0.00001;
+    }
+    if (!bottomLeftRadius) {
+        bottomLeftRadius = 0.00001;
+    }
+    if (!bottomRightRadius) {
+        bottomRightRadius = 0.00001;
+    }
+    ctx.moveTo(x, y + topLeftRadius);
+    ctx.lineTo(x, y + height - topLeftRadius);
+    ctx.quadraticCurveTo(x, y + height, x + topLeftRadius, y + height);
+    ctx.lineTo(x + width - topRightRadius, y + height);
+    ctx.quadraticCurveTo(
+        x + width,
+        y + height,
+        x + width,
+        y + height - topRightRadius,
+    );
+    ctx.lineTo(x + width, y + bottomRightRadius);
+    ctx.quadraticCurveTo(x + width, y, x + width - bottomRightRadius, y);
+    ctx.lineTo(x + bottomLeftRadius, y);
+    ctx.quadraticCurveTo(x, y, x, y + bottomLeftRadius);
+}
+
+AFRAME.registerComponent<ARoundedComponent>('rounded', {
+    el: {} as Entity,
+    data: {},
+    rounded: null,
+
     schema: {
         enabled: { default: true },
         width: { type: 'number', default: 1 },
@@ -27,26 +75,36 @@ AFRAME.registerComponent('rounded', {
             if (this.rounded) {
                 this.rounded.visible = true;
                 this.rounded.geometry = this.draw();
-                this.rounded.material.color = new THREE.Color(this.data.color);
+                // For some reason there is no color in material in THREE types (?)
+                AssertType<any>(this.rounded.material).color = new THREE.Color(
+                    this.data.color,
+                );
                 this.updateOpacity();
             }
         } else {
-            this.rounded.visible = false;
+            if (this.rounded) {
+                this.rounded.visible = false;
+            }
         }
     },
     updateOpacity: function () {
-        if (this.data.opacity < 0) {
-            this.data.opacity = 0;
+        if (this.rounded) {
+            if (this.data.opacity < 0) {
+                this.data.opacity = 0;
+            }
+            if (this.data.opacity > 1) {
+                this.data.opacity = 1;
+            }
+            if (this.data.opacity < 1) {
+                AssertType<THREET.Material>(this.rounded.material).transparent =
+                    true;
+            } else {
+                AssertType<THREET.Material>(this.rounded.material).transparent =
+                    false;
+            }
+            AssertType<THREET.Material>(this.rounded.material).opacity =
+                this.data.opacity;
         }
-        if (this.data.opacity > 1) {
-            this.data.opacity = 1;
-        }
-        if (this.data.opacity < 1) {
-            this.rounded.material.transparent = true;
-        } else {
-            this.rounded.material.transparent = false;
-        }
-        this.rounded.material.opacity = this.data.opacity;
     },
     remove: function () {
         if (!this.rounded) {
@@ -56,52 +114,9 @@ AFRAME.registerComponent('rounded', {
         this.rounded = null;
     },
     draw: function () {
-        var roundedRectShape = new THREE.Shape();
-        function roundedRect(
-            ctx,
-            x,
-            y,
-            width,
-            height,
-            topLeftRadius,
-            topRightRadius,
-            bottomLeftRadius,
-            bottomRightRadius,
-        ) {
-            if (!topLeftRadius) {
-                topLeftRadius = 0.00001;
-            }
-            if (!topRightRadius) {
-                topRightRadius = 0.00001;
-            }
-            if (!bottomLeftRadius) {
-                bottomLeftRadius = 0.00001;
-            }
-            if (!bottomRightRadius) {
-                bottomRightRadius = 0.00001;
-            }
-            ctx.moveTo(x, y + topLeftRadius);
-            ctx.lineTo(x, y + height - topLeftRadius);
-            ctx.quadraticCurveTo(x, y + height, x + topLeftRadius, y + height);
-            ctx.lineTo(x + width - topRightRadius, y + height);
-            ctx.quadraticCurveTo(
-                x + width,
-                y + height,
-                x + width,
-                y + height - topRightRadius,
-            );
-            ctx.lineTo(x + width, y + bottomRightRadius);
-            ctx.quadraticCurveTo(
-                x + width,
-                y,
-                x + width - bottomRightRadius,
-                y,
-            );
-            ctx.lineTo(x + bottomLeftRadius, y);
-            ctx.quadraticCurveTo(x, y, x, y + bottomLeftRadius);
-        }
+        const roundedRectShape = new THREE.Shape();
 
-        var corners = [
+        const corners = [
             this.data.radius,
             this.data.radius,
             this.data.radius,
@@ -131,6 +146,7 @@ AFRAME.registerComponent('rounded', {
             corners[2],
             corners[3],
         );
+
         return new THREE.ShapeGeometry(roundedRectShape);
     },
 });

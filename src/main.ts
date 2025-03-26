@@ -5,14 +5,12 @@ import 'a-frame-router-templates';
 import 'aframe-orbit-controls';
 import 'aframe-state-component';
 import Alpine from 'alpinejs';
-// libs
-import './lib/dom-ui';
 // State
 import './states/index';
 // Systems
 import './systems/game-manager';
+import './systems/ui-switcher';
 // Components
-import './components/common/ui-switcher';
 import './components/common/confetti-effect';
 import './components/common/camera-holder';
 import './components/a-components/a-rounded';

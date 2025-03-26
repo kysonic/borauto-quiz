@@ -8,3 +8,17 @@ export function throttle(func: Function, delay: number) {
         }
     };
 }
+
+export function mapObjectValues(object: object, fn: Function) {
+    return Object.fromEntries(
+        Object.entries(object).map(([k, v]) => [k, fn(v)]),
+    );
+}
+
+window.domUi = {
+    emit: (event: string, payload: any) => {
+        document
+            .getElementById('scene')
+            ?.dispatchEvent(new CustomEvent(event, { detail: payload }));
+    },
+};

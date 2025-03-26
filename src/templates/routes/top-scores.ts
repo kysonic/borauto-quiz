@@ -3,7 +3,7 @@ import { config } from '@/config';
 AFRAME.registerTemplate(
     'top-scores',
     /*html*/ ` 
-    <a-entity id="top-scores-vr" ui-switcher="ui: top-scores" top-scores-manager>
+    <a-entity id="top-scores-vr" bind__visible="uiMode === 'VR' && selectedPages.TopScores" top-scores-manager>
         <a-rounded position="-1 0.6 -0.4" opacity="0.2" color="#000" width="2" height="1.5" radius="0.1"></a-rounded>
         <a-text
             position="0 2 -0.43"

@@ -1,6 +1,6 @@
-import { domUi } from '@/lib/dom-ui';
+import { UIMode } from '@/types/common';
 
-AFRAME.registerComponent('ui-switcher', {
+AFRAME.registerSystem('ui-switcher', {
     vrModeHandler: () => {},
     domModeHandler: () => {},
 
@@ -9,8 +9,7 @@ AFRAME.registerComponent('ui-switcher', {
     },
 
     init() {
-        const isInVR = this.el?.sceneEl?.is('vr-mode');
-        isInVR ? this.vrMode() : this.domMode();
+        this.el?.sceneEl?.is('vr-mode') ? this.vrMode() : this.domMode();
 
         // Handlers
         this.vrModeHandler = this.vrMode.bind(this);
@@ -26,13 +25,10 @@ AFRAME.registerComponent('ui-switcher', {
     },
 
     vrMode() {
-        this.el.setAttribute('visible', 'true');
-        domUi.hideAll();
+        this.el?.sceneEl?.emit('setUiMode', { mode: UIMode.vr });
     },
 
     domMode() {
-        this.el.setAttribute('visible', 'false');
-        // domUi.hideAll();
-        domUi.changeScreen(this.data.ui);
+        this.el?.sceneEl?.emit('setUiMode', { mode: UIMode.dom });
     },
 });

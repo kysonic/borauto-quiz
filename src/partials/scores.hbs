@@ -1,11 +1,20 @@
 <link rel='stylesheet' href='./src/css/scores.css' />
 
-<div x-data class='ui screen scores' id='scores-dom'>
+<div
+    x-data
+    class='ui screen scores'
+    :class="{ 'show': $store.state.uiMode === 'DOM' && $store.state.selectedPages.Scores }"
+    id='scores-dom'
+>
     <div class='block'>
         <div class='data'>
             <div class='text'>
                 <div class='scores-title'>ВЫ ПРОЕХАЛИ</div>
-                <div x-text="$store.state.laps" id='scores-laps-number-dom' class='scores-number'>2</div>
+                <div
+                    x-text='$store.state.laps'
+                    id='scores-laps-number-dom'
+                    class='scores-number'
+                >2</div>
                 <div class='scores-subtitle'>КРУГА (ОВ)</div>
             </div>
             <form class='form'>
@@ -17,7 +26,10 @@
                     class='inpt input'
                 />
                 <div id='name-error-dom' class='name-error'></div>
-                <button id="save-score-button-dom" class='btn button'>ОТПРАВИТЬ</button>
+                <button
+                    id='save-score-button-dom'
+                    class='btn button'
+                >ОТПРАВИТЬ</button>
             </form>
         </div>
         <div class='backdrop'></div>

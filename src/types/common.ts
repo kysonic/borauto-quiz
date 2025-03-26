@@ -34,3 +34,8 @@ export type Question = (typeof questions)[0];
 export type IRouter = {
     changeRoute(name: string): void;
 };
+
+export enum UIMode {
+    dom = 'DOM',
+    vr = 'VR',
+}

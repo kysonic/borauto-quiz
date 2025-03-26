@@ -1,6 +1,7 @@
 import { AssertType, IRouter } from '@/types/common';
-import { GameManagerSystem } from './type';
 import { StateSystem } from '@/states/type';
+import { config } from '@/config';
+import { GameManagerSystem } from './type';
 
 AFRAME.registerSystem<GameManagerSystem>('game-manager', {
     router: null,
@@ -80,6 +81,11 @@ AFRAME.registerSystem<GameManagerSystem>('game-manager', {
         );
     },
 
+    changeRoute(page: string) {
+        this.router?.changeRoute(page);
+        this.el?.sceneEl?.emit('setPage', { page });
+    },
+
     startSounds() {
         const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
             .state.soundEnabled;
@@ -94,29 +100,29 @@ AFRAME.registerSystem<GameManagerSystem>('game-manager', {
     startGame() {
         this.clearState();
         this.startSounds();
-        this.router?.changeRoute('game');
+        this.changeRoute(config.pages.Game);
     },
 
     timerFinished() {
         this.gameCycles++;
 
         if (this.gameCycles >= 3) {
-            return this.router?.changeRoute('scores');
+            return this.changeRoute(config.pages.Scores);
         }
 
-        this.router?.changeRoute('quiz');
+        this.changeRoute(config.pages.Quiz);
     },
 
     quizFinished() {
-        this.router?.changeRoute('game');
+        this.changeRoute(config.pages.Game);
     },
 
     backToStart() {
-        this.router?.changeRoute('start');
+        this.changeRoute(config.pages.Start);
     },
 
     scoresSaved() {
-        this.router?.changeRoute('top-scores');
+        this.changeRoute(config.pages.TopScores);
     },
 
     clearState() {
@@ -133,15 +139,20 @@ AFRAME.registerSystem<GameManagerSystem>('game-manager', {
                 loadingNode.style.display = 'none';
             }
 
-            this.router?.changeRoute('start');
+            const uiNode = document.getElementById('ui');
+            if (uiNode) {
+                uiNode.style.display = 'block';
+            }
+
+            this.router?.changeRoute(config.pages.Start);
         });
     },
 
     controls() {
-        this.router?.changeRoute('controls');
+        this.changeRoute(config.pages.Controls);
     },
 
     howToPlay() {
-        this.router?.changeRoute('how-to-play');
+        this.changeRoute(config.pages.HowToPlay);
     },
 });

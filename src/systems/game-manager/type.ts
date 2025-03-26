@@ -1,3 +1,4 @@
+import { PagesType } from '@/config';
 import { IRouter } from '@/types/common';
 
 export interface GameManagerSystem {
@@ -25,4 +26,5 @@ export interface GameManagerSystem {
     remove: () => void;
     startSounds: () => void;
     clearState: () => void;
+    changeRoute: (page: PagesType) => void;
 }

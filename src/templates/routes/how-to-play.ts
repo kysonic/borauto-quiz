@@ -3,7 +3,7 @@ import { config } from '@/config';
 AFRAME.registerTemplate(
     'how-to-play',
     /*html*/ ` 
-    <a-entity id="how-to-play-vr" ui-switcher="ui: how-to-play">
+    <a-entity bind__visible="uiMode === 'VR' && selectedPages.HotToPlay">
         <a-rounded position="-0.8 0.5 -0.3" opacity="0.2" color="#000" width="1.6" height="1.6" radius="0.1"></a-rounded>
         <a-text
             position="0.72 1.9 -0.33"

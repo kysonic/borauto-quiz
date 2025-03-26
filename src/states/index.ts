@@ -1,8 +1,10 @@
 import { formatTime } from '@/lib/time';
 import questions from '@/data/questions.json';
 import { DoubleState } from './double-state';
-import { Question, TopScore } from '@/types/common';
+import { Question, TopScore, UIMode } from '@/types/common';
 import { ActionType, StateType } from './type';
+import { config, PagesType } from '@/config';
+import { mapObjectValues } from '@/lib/common';
 
 export const initialState = {
     speed: 0,
@@ -20,7 +22,18 @@ export const initialState = {
     topScores: [] as TopScore[],
     nosItems: [],
     topScoresItems: [],
-    soundEnabled: true,
+    soundEnabled: false,
+    uiMode: UIMode.dom,
+    page: config.pages.Start,
+    selectedPages: {
+        Start: true,
+    },
+    showCountdown: false,
+    countdown: 3,
+    countdownColors: {
+        first: 'red',
+        second: '#ccc',
+    },
 };
 
 const handlers = {
@@ -77,6 +90,30 @@ const handlers = {
 
     setTopScores(state: StateType, action: ActionType<TopScore[]>) {
         state.topScores = action.topScores;
+    },
+
+    setUiMode(state: StateType, action: ActionType<UIMode>) {
+        state.uiMode = action.mode;
+    },
+
+    setPage(state: StateType, action: ActionType<PagesType>) {
+        state.page = action.page;
+        state.selectedPages = mapObjectValues(
+            config.pages,
+            (page: string) => state.page === page,
+        );
+    },
+
+    setShowCountdown(state: StateType, action: ActionType<boolean>) {
+        state.showCountdown = action.show;
+    },
+
+    setCountdown(state: StateType, action: ActionType<number>) {
+        state.countdown = action.countdown;
+        state.countdownColors = {
+            first: state.countdown ? 'red' : '#ccc',
+            second: !state.countdown ? 'green' : '#ccc',
+        };
     },
 };
 

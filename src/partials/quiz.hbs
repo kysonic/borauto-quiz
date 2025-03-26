@@ -1,12 +1,24 @@
 <link rel='stylesheet' href='./src/css/quiz.css' />
 
-<div x-data class='ui screen quiz' id='quiz-dom'>
+<div
+    x-data
+    class='ui screen quiz'
+    :class="{ 'show': $store.state.uiMode === 'DOM' && $store.state.selectedPages.Quiz }"
+    id='quiz-dom'
+>
     <div class='block'>
         <div class='question-number'>
             Вопрос номер
-            <span x-text="$store.state.questionNumber" id='question-number-dom'>0</span>:
+            <span
+                x-text='$store.state.questionNumber'
+                id='question-number-dom'
+            >0</span>:
         </div>
-        <div x-text="$store.state.currentQuestion.question" id='question-text-dom' class='question'>
+        <div
+            x-text='$store.state.currentQuestion.question'
+            id='question-text-dom'
+            class='question'
+        >
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo
             modi minima at placeat, soluta a, illum corporis delectus saepe
             ipsam similique odio facilis quam assumenda libero animi
@@ -15,25 +27,25 @@
         <div class='buttons'>
             <button
                 id='answer-1-dom'
-                x-text="$store.state.currentQuestion.answers[0]"
+                x-text='$store.state.currentQuestion.answers[0]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 1 })"
             >Ответ 1</button>
             <button
                 id='answer-2-dom'
-                x-text="$store.state.currentQuestion.answers[1]"
+                x-text='$store.state.currentQuestion.answers[1]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 2 })"
             >Ответ 2</button>
             <button
                 id='answer-3-dom'
-                x-text="$store.state.currentQuestion.answers[2]"
+                x-text='$store.state.currentQuestion.answers[2]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 3 })"
             >Ответ 3</button>
             <button
                 id='answer-4-dom'
-                x-text="$store.state.currentQuestion.answers[3]"
+                x-text='$store.state.currentQuestion.answers[3]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 4 })"
             >Ответ 4</button>

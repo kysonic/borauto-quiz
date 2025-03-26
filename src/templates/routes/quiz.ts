@@ -3,7 +3,7 @@ import { config } from '@/config';
 AFRAME.registerTemplate(
     'quiz',
     /*html*/ ` 
-    <a-entity id="quiz-vr" ui-switcher="ui: quiz" quiz-manager>
+    <a-entity id="quiz-vr" bind__visible="uiMode === 'VR' && selectedPages.Quiz" quiz-manager>
         <a-rounded position="-1 0.6 -0.4" opacity="0.2" color="#000" width="2" height="1.5" radius="0.1"></a-rounded>
         <a-text
             position="0 2 -0.43"

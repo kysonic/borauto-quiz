@@ -3,6 +3,10 @@
   align-items: center;
   justify-content: center;
 
+  &.show {
+    display: flex;
+  }
+
   .traffic-light {
     position: relative;
     display: flex;

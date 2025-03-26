@@ -85,9 +85,9 @@ AFRAME.registerTemplate(
 <a-entity id="confetti"></a-entity>
 <!-- UI -->
 <a-entity
-    ui-switcher="ui: game"
     position="0.02719 0.49 -1.48"
     rotation="-99 0 180"
+    bind__visible="uiMode === 'VR' && selectedPages.Game"
 >
     <a-rounded
         position="-0.5 0 0"
@@ -179,53 +179,56 @@ AFRAME.registerTemplate(
     <a-entity id="nos-list"></a-entity>
 </a-entity>
 
-    <!-- Countdown Traffic Light -->
-    <a-entity countdown>
-      <a-rounded
-          position="-0.15 0.8 -0.6"
-          opacity="0.2"
-          color="#000"
-          width="0.3"
-          height="0.5"
-          radius="0.1"
-      ></a-rounded>
-      <a-rounded
-          position="-0.1 1.06 -0.61"
-          opacity="0.9"
-          color="red"
-          width="0.2"
-          height="0.2"
-          radius="0.09"
-      ></a-rounded>
-      <a-rounded
-          id="countdown-go-circle-vr"
-          position="-0.1 0.83 -0.61"
-          opacity="0.9"
-          color="#ccc"
-          width="0.2"
-          height="0.2"
-          radius="0.09"
-      ></a-rounded>
-      <a-text
-          id="countdown-number-vr"
-          position="0.005 1.16 -0.62"
-          rotation="0 180 0"
-          align="center"
-          font="${config.common.ui.Font}"
-          value="4"
-          width="2"
-          color="#FFF"
-      ></a-text>
-      <a-text
-          id="countdown-go-vr"
-          position="0 0.93 -0.62"
-          rotation="0 180 0"
-          align="center"
-          font="${config.common.ui.Font}"
-          value=""
-          width="2"
-          color="#FFF"
-      ></a-text>
-  </a-entity>
+<!-- Countdown Traffic Light -->
+<a-entity countdown bind__visible="uiMode === 'VR' && showCountdown">
+    <a-rounded
+        position="-0.15 0.8 -0.6"
+        opacity="0.2"
+        color="#000"
+        width="0.3"
+        height="0.5"
+        radius="0.1"
+    ></a-rounded>
+    <a-rounded
+        position="-0.1 1.06 -0.61"
+        opacity="0.9"
+        color="red"
+        bind__color="countdownColors.first"
+        width="0.2"
+        height="0.2"
+        radius="0.09"
+    ></a-rounded>
+    <a-rounded
+        id="countdown-go-circle-vr"
+        position="-0.1 0.83 -0.61"
+        opacity="0.9"
+        color="#ccc"
+        bind__color="countdownColors.second"
+        width="0.2"
+        height="0.2"
+        radius="0.09"
+    ></a-rounded>
+    <a-text
+        id="countdown-number-vr"
+        position="0.005 1.16 -0.62"
+        rotation="0 180 0"
+        align="center"
+        bind__value="countdown"
+        font="${config.common.ui.Font}"
+        value="4"
+        width="2"
+        color="#FFF"
+    ></a-text>
+    <a-text
+        id="countdown-go-vr"
+        position="0 0.93 -0.62"
+        rotation="0 180 0"
+        align="center"
+        font="${config.common.ui.Font}"
+        value=""
+        width="2"
+        color="#FFF"
+    ></a-text>
+</a-entity>
   `,
 );

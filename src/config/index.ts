@@ -82,3 +82,4 @@ export type AvailableGears = keyof typeof config.car.gearSettings;
 const gearConfig = Object.keys(config.car.gearSettings);
 export const minGear = +gearConfig[0];
 export const maxGear = +gearConfig[gearConfig.length - 1];
+export type PagesType = (typeof config.pages)[keyof typeof config.pages];

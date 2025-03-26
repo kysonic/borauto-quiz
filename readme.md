@@ -6,8 +6,7 @@ Web VR quiz about cars. Made specially for Borauto.
 
 ### Gameplay 
 
-The first phase of game it is race -  you need to change gears and pass as meany laps as you can. Second phase - quiz, 
-all correct answered question would give a nitro point to be faster in next phase.
+The first phase of the game is a race — you need to change gears and complete as many laps as possible. The second phase is a quiz, where each correct answer earns you a nitro point to boost your speed in the next race phase.
 
 ### Supported devices 
 

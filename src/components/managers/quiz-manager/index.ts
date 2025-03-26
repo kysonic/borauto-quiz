@@ -69,6 +69,13 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
             currentQuestion.correct === answer
                 ? this.success(answer)
                 : this.fail(answer, currentQuestion.correct);
+
+            this.el?.sceneEl?.emit('setQuiz', {
+                quiz: {
+                    success: currentQuestion.correct,
+                    fail: answer !== currentQuestion.correct ? answer : -1,
+                },
+            });
             // Give some time to check answer
             setTimeout(() => {
                 this.answeredQuestion(answer, currentQuestion.correct);
@@ -76,7 +83,7 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
         }
     },
 
-    success(answer) {
+    success() {
         const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
             .state.soundEnabled;
         this.el?.sceneEl?.emit('increaseNitro');
@@ -86,27 +93,9 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
                 this.yeapSound.components,
             ).sound.playSound();
         }
-
-        const isInVR = this.el?.sceneEl?.is('vr-mode');
-        isInVR ? this.vrSuccess(answer) : this.domSuccess(answer);
     },
 
-    domSuccess(answer) {
-        document
-            .getElementById(`answer-${answer}-dom`)
-            ?.classList.add('success');
-    },
-
-    vrSuccess(answer) {
-        const buttonNode = document.getElementById(`answer-${answer}-vr`);
-        buttonNode?.setAttribute('material', 'color: green');
-        buttonNode?.setAttribute(
-            'animation',
-            'property: scale; to: 1.1 1.1 1.1; dur: 1000; easing: linear; loop: true',
-        );
-    },
-
-    fail(answer, correct) {
+    fail() {
         const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
             .state.soundEnabled;
         if (enabled && this.nopeSound) {
@@ -114,32 +103,18 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
                 this.nopeSound.components,
             ).sound.playSound();
         }
-        this.el?.sceneEl?.is('vr-mode')
-            ? this.vrFail(answer, correct)
-            : this.domFail(answer, correct);
     },
 
-    domFail(answer, correct) {
-        document.getElementById(`answer-${answer}-dom`)?.classList.add('fail');
-        document
-            .getElementById(`answer-${correct}-dom`)
-            ?.classList.add('success');
-    },
-
-    vrFail(answer, correct) {
-        const buttonNode = document.getElementById(`answer-${answer}-vr`);
-        buttonNode?.setAttribute('material', 'color: red');
-        buttonNode?.setAttribute(
-            'animation',
-            'property: rotation; to: 0 0 2; dur: 250; easing: linear; loop: true',
-        );
-        const correctButton = document.getElementById(`answer-${correct}-vr`);
-        correctButton?.setAttribute('material', 'color: green');
-    },
-
-    answeredQuestion(answer, correct) {
+    answeredQuestion() {
         this.answered = false;
-        this.clear(answer, correct);
+
+        this.el?.sceneEl?.emit('setQuiz', {
+            quiz: {
+                success: -1,
+                fail: -1,
+            },
+        });
+
         const questionNumber = AssertType<StateSystem>(
             this.el?.sceneEl?.systems.state,
         ).state.questionNumber;
@@ -152,31 +127,5 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
         }
 
         this.takeQuestion();
-    },
-
-    clear(answer, correct) {
-        this.el?.sceneEl?.is('vr-mode')
-            ? this.vrClear(answer, correct)
-            : this.domClear(answer, correct);
-    },
-
-    vrClear(answer, correct) {
-        const buttonNode = document.getElementById(`answer-${answer}-vr`);
-        const correctNode = document.getElementById(`answer-${correct}-vr`);
-        [buttonNode, correctNode].forEach((node) => {
-            node?.setAttribute('material', 'color: #995cff');
-            node?.setAttribute('scale', '1 1 1');
-            node?.setAttribute('rotation', '0 0 0');
-            node?.removeAttribute('animation');
-        });
-    },
-
-    domClear(answer, correct) {
-        const answerNode = document.getElementById(`answer-${answer}-dom`);
-        const correctNode = document.getElementById(`answer-${correct}-dom`);
-        [answerNode, correctNode].forEach((node) => {
-            node?.classList.remove('success');
-            node?.classList.remove('fail');
-        });
     },
 });

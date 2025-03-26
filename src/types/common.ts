@@ -39,3 +39,8 @@ export enum UIMode {
     dom = 'DOM',
     vr = 'VR',
 }
+
+export interface IQuiz {
+    success: number;
+    fail: number;
+}

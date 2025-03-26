@@ -1,10 +1,10 @@
 import { formatTime } from '@/lib/time';
 import questions from '@/data/questions.json';
 import { DoubleState } from './double-state';
-import { Question, TopScore, UIMode } from '@/types/common';
-import { ActionType, StateType } from './type';
+import { IQuiz, Question, TopScore, UIMode } from '@/types/common';
 import { config, PagesType } from '@/config';
 import { mapObjectValues } from '@/lib/common';
+import { ActionType, StateType } from './type';
 
 export const initialState = {
     speed: 0,
@@ -22,17 +22,27 @@ export const initialState = {
     topScores: [] as TopScore[],
     nosItems: [],
     topScoresItems: [],
-    soundEnabled: false,
+    soundEnabled: true,
     uiMode: UIMode.dom,
     page: config.pages.Start,
-    selectedPages: {
-        Start: true,
-    },
+    selectedPages: mapObjectValues(
+        config.pages,
+        (page: string) => page === 'start',
+    ),
     showCountdown: false,
     countdown: 3,
+    // Because a-frame state component cannot interpolate conditions we have to use it in state...
     countdownColors: {
         first: 'red',
         second: '#ccc',
+    },
+    quiz: { success: -1, fail: -1 } as IQuiz,
+    // Because a-frame state component cannot interpolate conditions we have to use it in state...
+    quizButtons: {
+        one: '#995cff',
+        two: '#995cff',
+        three: '#995cff',
+        four: '#995cff',
     },
 };
 
@@ -110,9 +120,41 @@ const handlers = {
 
     setCountdown(state: StateType, action: ActionType<number>) {
         state.countdown = action.countdown;
+        // VR UI
         state.countdownColors = {
             first: state.countdown ? 'red' : '#ccc',
             second: !state.countdown ? 'green' : '#ccc',
+        };
+    },
+
+    setQuiz(state: StateType, action: ActionType<IQuiz>) {
+        state.quiz = action.quiz;
+        // VR UI
+        state.quizButtons = {
+            one:
+                state.quiz.success === 1
+                    ? 'green'
+                    : state.quiz.fail === 1
+                    ? 'red'
+                    : '#995cff',
+            two:
+                state.quiz.success === 2
+                    ? 'green'
+                    : state.quiz.fail === 2
+                    ? 'red'
+                    : '#995cff',
+            three:
+                state.quiz.success === 3
+                    ? 'green'
+                    : state.quiz.fail === 3
+                    ? 'red'
+                    : '#995cff',
+            four:
+                state.quiz.success === 4
+                    ? 'green'
+                    : state.quiz.fail === 4
+                    ? 'red'
+                    : '#995cff',
         };
     },
 };

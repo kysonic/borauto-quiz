@@ -30,24 +30,28 @@
                 x-text='$store.state.currentQuestion.answers[0]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 1 })"
+                :class="{'success': $store.state.quiz.success === 1, fail: $store.state.quiz.fail === 1 }"
             >Ответ 1</button>
             <button
                 id='answer-2-dom'
                 x-text='$store.state.currentQuestion.answers[1]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 2 })"
+                :class="{'success': $store.state.quiz.success === 2, fail: $store.state.quiz.fail === 2 }"
             >Ответ 2</button>
             <button
                 id='answer-3-dom'
                 x-text='$store.state.currentQuestion.answers[2]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 3 })"
+                :class="{'success': $store.state.quiz.success === 3, fail: $store.state.quiz.fail === 3 }"
             >Ответ 3</button>
             <button
                 id='answer-4-dom'
                 x-text='$store.state.currentQuestion.answers[3]'
                 class='btn'
                 onclick="domUi.emit('answer', { answer: 4 })"
+                :class="{'success': $store.state.quiz.success === 4, fail: $store.state.quiz.fail === 4 }"
             >Ответ 4</button>
         </div>
         <div class='backdrop'></div>

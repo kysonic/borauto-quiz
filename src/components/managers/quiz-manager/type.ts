@@ -16,4 +16,6 @@ export interface IQuizManagerComponent {
     success: (answer: number) => void;
     fail: (answer: number, correct: number) => void;
     answeredQuestion: (answer: number, correct: number) => void;
+    playYeapSound: () => void;
+    playNopeSound: () => void;
 }

@@ -2,6 +2,7 @@ import type { Entity } from 'aframe';
 import { AssertType, ISoundComponent } from '@/types/common';
 import { StateSystem } from '@/states/type';
 import { ICountdownComponent } from './type';
+import { wrapWithSoundEnabler } from '@/lib/common';
 
 AFRAME.registerComponent<ICountdownComponent>('countdown', {
     i: null,
@@ -57,12 +58,7 @@ AFRAME.registerComponent<ICountdownComponent>('countdown', {
         this.el?.sceneEl?.emit('setShowCountdown', { show: false });
     },
 
-    sound() {
-        const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
-            .state.soundEnabled;
-        if (!enabled) {
-            return false;
-        }
+    sound: wrapWithSoundEnabler(function (this: ICountdownComponent) {
         this.countdownSound?.components.sound.playSound();
-    },
+    }),
 });

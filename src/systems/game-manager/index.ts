@@ -1,7 +1,8 @@
-import { AssertType, IRouter } from '@/types/common';
-import { StateSystem } from '@/states/type';
+import { AssertType, IRouter, ISoundComponent } from '@/types/common';
 import { config } from '@/config';
+import { wrapWithSoundEnabler } from '@/lib/common';
 import { GameManagerSystem } from './type';
+import { Entity } from 'aframe';
 
 AFRAME.registerSystem<GameManagerSystem>('game-manager', {
     router: null,
@@ -86,22 +87,18 @@ AFRAME.registerSystem<GameManagerSystem>('game-manager', {
         this.el?.sceneEl?.emit('setPage', { page });
     },
 
-    startSounds() {
-        const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
-            .state.soundEnabled;
-        if (enabled) {
-            const mainTheme = document.getElementById(
-                'main-theme-sound',
-            ) as any;
-            mainTheme.components.sound.playSound();
-        }
-    },
-
     startGame() {
         this.clearState();
         this.startSounds();
         this.changeRoute(config.pages.Game);
     },
+
+    startSounds: wrapWithSoundEnabler(function () {
+        const mainTheme = AssertType<Entity<ISoundComponent>>(
+            document.getElementById('main-theme-sound'),
+        );
+        mainTheme.components.sound.playSound();
+    }),
 
     timerFinished() {
         this.gameCycles++;

@@ -4,6 +4,7 @@ import questions from '@/data/questions.json';
 import { AssertType, ISoundComponent } from '@/types/common';
 import { StateSystem } from '@/states/type';
 import { IAnswerEvent, IQuizManagerComponent } from './type';
+import { wrapWithSoundEnabler } from '@/lib/common';
 
 AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
     answered: false,
@@ -84,26 +85,25 @@ AFRAME.registerComponent<IQuizManagerComponent>('quiz-manager', {
     },
 
     success() {
-        const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
-            .state.soundEnabled;
         this.el?.sceneEl?.emit('increaseNitro');
+        this.playYeapSound();
+    },
 
-        if (enabled && this.yeapSound) {
-            AssertType<ISoundComponent>(
-                this.yeapSound.components,
-            ).sound.playSound();
-        }
+    playYeapSound: function (this: IQuizManagerComponent) {
+        AssertType<ISoundComponent>(
+            this.yeapSound?.components,
+        ).sound.playSound();
     },
 
     fail() {
-        const enabled = AssertType<StateSystem>(this.el?.sceneEl?.systems.state)
-            .state.soundEnabled;
-        if (enabled && this.nopeSound) {
-            AssertType<ISoundComponent>(
-                this.nopeSound.components,
-            ).sound.playSound();
-        }
+        this.playNopeSound();
     },
+
+    playNopeSound: wrapWithSoundEnabler(function (this: IQuizManagerComponent) {
+        AssertType<ISoundComponent>(
+            this.nopeSound?.components,
+        ).sound.playSound();
+    }),
 
     answeredQuestion() {
         this.answered = false;

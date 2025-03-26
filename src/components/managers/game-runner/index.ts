@@ -4,6 +4,7 @@ import { createHTMLFromString } from '@/lib/dom';
 import { AssertType, ISoundComponent } from '@/types/common';
 import { IStateUpdateEvent, StateSystem } from '@/states/type';
 import { GameRunnerComponent } from './type';
+import { wrapWithSoundEnabler } from '@/lib/common';
 
 AFRAME.registerComponent<GameRunnerComponent>('game-runner', {
     car: null,
@@ -51,16 +52,8 @@ AFRAME.registerComponent<GameRunnerComponent>('game-runner', {
         }
 
         const carPosition = this.car.object3D.position;
-        const enabled = AssertType<StateSystem>(this.el.sceneEl?.systems.state)
-            .state.soundEnabled;
-
         this.car.parentNode?.removeChild(this.car);
-
-        if (enabled) {
-            AssertType<ISoundComponent>(
-                this.confettiSound?.components,
-            ).sound.playSound();
-        }
+        this.playSound();
 
         this.confetti?.setAttribute(
             'confetti-effect',
@@ -105,4 +98,10 @@ AFRAME.registerComponent<GameRunnerComponent>('game-runner', {
             );
         }
     },
+
+    playSound: wrapWithSoundEnabler(function (this: GameRunnerComponent) {
+        AssertType<ISoundComponent>(
+            this.confettiSound?.components,
+        ).sound.playSound();
+    }),
 });

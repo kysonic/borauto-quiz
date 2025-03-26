@@ -12,4 +12,5 @@ export interface GameRunnerComponent {
     endCycle: () => void;
     stateUpdate: (e: Event) => void;
     renderNitro: () => void;
+    playSound: () => void;
 }

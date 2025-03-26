@@ -1,7 +1,8 @@
 import { Entity } from 'aframe';
 import { StateSystem } from '@/states/type';
 import { AssertType, ISoundComponent } from '@/types/common';
-import { ICarSoundsMixin } from './types';
+import { ICarExtended, ICarSoundsMixin } from './types';
+import { wrapWithSoundEnabler } from '@/lib/common';
 
 export const SoundsMixin: ICarSoundsMixin = {
     el: {} as Entity,
@@ -44,14 +45,7 @@ export const SoundsMixin: ICarSoundsMixin = {
         this.nitroSound?.components.sound.stopSound();
     },
 
-    startSounds() {
-        const stateSystem = AssertType<StateSystem>(
-            this.el?.sceneEl?.systems.state,
-        );
-        const enabled = stateSystem.state.soundEnabled;
-        if (!enabled) {
-            return false;
-        }
+    startSounds: wrapWithSoundEnabler(function (this: ICarExtended) {
         setTimeout(() => {
             this.startSound?.components.sound.playSound();
 
@@ -59,17 +53,9 @@ export const SoundsMixin: ICarSoundsMixin = {
                 this.idleSound?.components.sound.playSound();
             }, 1000);
         }, 500);
-    },
+    }),
 
-    startGasSound() {
-        const stateSystem = AssertType<StateSystem>(
-            this.el?.sceneEl?.systems.state,
-        );
-        const enabled = stateSystem.state.soundEnabled;
-
-        if (!enabled) {
-            return false;
-        }
+    startGasSound: wrapWithSoundEnabler(function (this: ICarExtended) {
         if (!this.gasSoundStarted) {
             this.gasSoundStarted = true;
             this.gasStartSound?.components.sound.playSound();
@@ -78,35 +64,13 @@ export const SoundsMixin: ICarSoundsMixin = {
                 this.gasTopSound?.components.sound.playSound();
             }, 500);
         }
-    },
+    }),
 
-    startNitroSound() {
-        const stateSystem = AssertType<StateSystem>(
-            this.el?.sceneEl?.systems.state,
-        );
-        const enabled = stateSystem.state.soundEnabled;
-        if (!enabled) {
-            return false;
-        }
-
+    startNitroSound: wrapWithSoundEnabler(function (this: ICarExtended) {
         this.nitroSound?.components.sound.playSound();
-    },
+    }),
 
-    stopGasSound() {
-        this.gasSoundStarted = false;
-        this.gasTopSound?.components.sound.stopSound();
-    },
-
-    gearSound() {
-        const stateSystem = AssertType<StateSystem>(
-            this.el?.sceneEl?.systems.state,
-        );
-        const enabled = stateSystem.state.soundEnabled;
-
-        if (!enabled) {
-            return false;
-        }
-
+    gearSound: wrapWithSoundEnabler(function (this: ICarExtended) {
         this.gearboxSound?.components.sound.playSound();
         this.gasTopSound?.components.sound.stopSound();
 
@@ -115,5 +79,10 @@ export const SoundsMixin: ICarSoundsMixin = {
             this.gasGearSound?.components.sound.playSound();
             this.startGasSound();
         }, 100);
+    }),
+
+    stopGasSound() {
+        this.gasSoundStarted = false;
+        this.gasTopSound?.components.sound.stopSound();
     },
 };

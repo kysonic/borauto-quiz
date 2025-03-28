@@ -57,6 +57,18 @@ AFRAME.registerSystem<GameManagerSystem>('game-manager', {
             'how-to-play-start',
             this.howToPlayHandler,
         );
+
+        // setTimeout(() => {
+        //     this.changeRoute('controls');
+
+        //     setTimeout(() => {
+        //         this.changeRoute('start');
+
+        //         setTimeout(() => {
+        //             this.changeRoute('controls');
+        //         }, 4000);
+        //     }, 4000);
+        // }, 1000);
     },
 
     remove() {

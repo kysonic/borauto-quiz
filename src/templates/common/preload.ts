@@ -2,7 +2,7 @@ AFRAME.registerTemplate(
     'preload',
     /*html*/ ` 
   <!-- Assets --> 
-  <a-assets>
+  <a-sub-assets>
     <audio
         id="main-theme"
         src="/assets/sounds/main-theme.mp3"
@@ -73,6 +73,18 @@ AFRAME.registerTemplate(
         src="/assets/sounds/nope.mp3"
         preload
     ></audio>
-  </a-assets>
+    <img id="controls-img" src="/assets/img/controls-vr.png" preload />
+        <a-asset-item
+        id="carModel"
+        src="/assets/models/cars/simple.glb"
+        preload
+    ></a-asset-item>
+    <img id="tachometer-img" src="/assets/img/tachometer.png" preload />
+    <img id="arrow-img" src="/assets/img/arrow.png" preload />
+    <img id="nos" src="/assets/img/nos.svg" preload />
+    <img id="nos-active" src="/assets/img/nos-active.svg" preload />
+    <img id="logo-img" src="/assets/img/b-logo-w.png" preload>
+    <img id="quiz-img" src="/assets/img/quiz.png" preload>
+  </a-sub-assets>
   `,
 );

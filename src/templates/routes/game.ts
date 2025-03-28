@@ -3,16 +3,6 @@ import { config } from '@/config';
 AFRAME.registerTemplate(
     'game',
     /*html*/ ` 
-    <a-assets>
-        <a-asset-item
-            id="carModel"
-            src="/assets/models/cars/simple.glb"
-        ></a-asset-item>
-        <img id="tachometer-img" src="/assets/img/tachometer.png" />
-        <img id="arrow-img" src="/assets/img/arrow.png" />
-        <img id="nos" src="/assets/img/nos.svg" />
-        <img id="nos-active" src="/assets/img/nos-active.svg" />
-    </a-assets>
 <!-- Manager -->
 <a-entity game-runner timer></a-entity>
 <!-- Car -->

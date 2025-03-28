@@ -3,10 +3,6 @@ import { config } from '@/config';
 AFRAME.registerTemplate(
     'controls',
     /*html*/ ` 
-    <a-assets>
-        <img id="controls-img" src="/assets/img/controls-vr.png">
-    </a-assets>
-    
     <a-entity id="controls-vr" bind__visible="uiMode === 'VR' && selectedPages.Controls">
         <a-rounded position="-0.75 0.8 -0.4" opacity="0.2" color="#000" width="1.5" height="1.3" radius="0.1"></a-rounded>
         <a-image position="0 1.6 -0.41" width="0.7" height="0.8" rotation="0 180 0" src="#controls-img"></a-image>

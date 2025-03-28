@@ -2,12 +2,12 @@ AFRAME.registerTemplate(
     'env',
     /*html*/ ` 
     <!-- Assets --> 
-    <a-assets>
+    <a-sub-assets>
         <a-asset-item
             id="track"
             src="/assets/models/env/track.glb"
         ></a-asset-item>
-    </a-assets>
+    </a-sub-assets>
     <!-- Basic primitives -->
     <a-box
         id="table"

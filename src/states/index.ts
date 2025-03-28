@@ -12,7 +12,7 @@ export const initialState = {
     rpm: 800,
     vrRpm: '',
     time: 30 * 1000,
-    formattedTime: '',
+    formattedTime: '00:30:00',
     laps: 0,
     currentQuestion: questions[0],
     alreadyTakenQuestions: [] as number[],

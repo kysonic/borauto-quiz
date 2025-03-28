@@ -3,11 +3,6 @@ import { config } from '@/config';
 AFRAME.registerTemplate(
     'start',
     /*html*/ ` 
-    <a-assets>
-        <img id="logo-img" src="/assets/img/b-logo-w.png">
-        <img id="quiz-img" src="/assets/img/quiz.png">
-    </a-assets>
-    
     <a-entity id="start-vr" bind__visible="uiMode === 'VR' && selectedPages.Start">
         <a-rounded position="-0.65 0.8 -0.4" opacity="0.2" color="#000" width="1.3" height="1.2" radius="0.1"></a-rounded>
         <a-image position="0 1.8 -0.41" width="0.8" height="0.2" rotation="0 180 0" src="#logo-img"></a-image>
